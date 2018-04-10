@@ -31,7 +31,7 @@ public class CatalogControllerImpl implements CatalogController {
     @Override
     @PostMapping(value = "/save")
     public ResponseView addCatalog(@RequestBody CatalogView view) {
-        return null;
+        return catalogService.addCatalog(view);
     }
 
     /**
@@ -58,7 +58,7 @@ public class CatalogControllerImpl implements CatalogController {
     @Override
     @GetMapping(value = "/{id}")
     public ResponseView getCatalogById(@PathVariable("id") String id) {
-        return new ResponseView(new CatalogView());
+        return catalogService.getCatalogById(id);
     }
 
     /**
@@ -67,6 +67,6 @@ public class CatalogControllerImpl implements CatalogController {
     @Override
     @PostMapping(value = "/list")
     public ResponseView getCatalogs(@RequestBody CatalogView view) {
-        return null;
+        return catalogService.getAllCatalogs(view);
     }
 }

@@ -20,6 +20,7 @@ import ru.bakhuss.library.view.PersonView;
 import ru.bakhuss.library.view.ResponseView;
 
 import javax.validation.constraints.Null;
+import java.util.HashSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -100,11 +101,13 @@ public class CatalogServiceImpl implements CatalogService {
      */
     @Override
     @Transactional(readOnly = true)
-    public ResponseView getCatalogById(Long id) {
+    public ResponseView getCatalogById(String id) {
         Catalog cat = null;
         try {
-            cat = catalogDao.findOne(id);
+            cat = catalogDao.findOne(Long.parseLong(id));
             cat.getId();
+        } catch (NumberFormatException ex) {
+            throw new ResponseErrorException("Catalog id must be a number(" + id + ")");
         } catch (NullPointerException ex) {
             throw new ResponseErrorException("Not found catalog by id: " + id);
         } catch (JpaSystemException ex) {
@@ -114,6 +117,7 @@ public class CatalogServiceImpl implements CatalogService {
         view.id = cat.getId().toString();
         view.bookId = cat.getBook().getId().toString();
         view.bookName = cat.getBook().getName();
+        view.description = cat.getDescription();
         Function<Person, PersonView> funcP = p -> {
             PersonView pV = new PersonView();
             pV.id = p.getId().toString();
@@ -126,6 +130,8 @@ public class CatalogServiceImpl implements CatalogService {
         view.writers = cat.getBook().getWriters().stream()
                 .map(funcP)
                 .collect(Collectors.toSet());
+        view.totalCount = cat.getTotalCount().toString();
+        view.subscribers = new HashSet<>();
 
         return new ResponseView(view);
     }
@@ -135,7 +141,7 @@ public class CatalogServiceImpl implements CatalogService {
      */
     @Override
     @Transactional(readOnly = true)
-    public ResponseView getAllCatalogs() {
+    public ResponseView getAllCatalogs(CatalogView view) {
         Function<Catalog, CatalogView> funcC = c -> {
             CatalogView cV = new CatalogView();
             cV.id = c.getId().toString();
@@ -148,12 +154,12 @@ public class CatalogServiceImpl implements CatalogService {
             cV.totalCount = c.getTotalCount().toString();
             return cV;
         };
-        ResponseView view = new ResponseView();
-        view.result = null;
-        view.data =
+        ResponseView viewR = new ResponseView();
+        viewR.result = null;
+        viewR.data =
                 StreamSupport.stream(catalogDao.findAll().spliterator(), false)
                         .map(funcC)
                         .collect(Collectors.toSet());
-        return view;
+        return viewR;
     }
 }

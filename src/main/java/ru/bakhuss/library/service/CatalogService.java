@@ -34,11 +34,11 @@ public interface CatalogService {
      * @param id
      * @return JSON catalog value
      */
-    ResponseView getCatalogById(Long id);
+    ResponseView getCatalogById(String id);
 
     /**
      * Получить все записи из каталога
      * @return JSON catalogs values
      */
-    ResponseView getAllCatalogs();
+    ResponseView getAllCatalogs(CatalogView view);
 }

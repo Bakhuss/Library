@@ -12,6 +12,7 @@ import ru.bakhuss.library.dao.BookDao;
 import ru.bakhuss.library.dao.CatalogDao;
 import ru.bakhuss.library.dao.PersonDao;
 import ru.bakhuss.library.dao.SubscriberDao;
+import ru.bakhuss.library.error.ResponseErrorException;
 import ru.bakhuss.library.service.impl.BookServiceImpl;
 import ru.bakhuss.library.service.impl.CatalogServiceImpl;
 import ru.bakhuss.library.service.impl.PersonServiceImpl;
@@ -31,7 +32,8 @@ import java.util.Date;
         CatalogServiceImpl.class, CatalogDao.class, CatalogControllerImpl.class,
         PersonServiceImpl.class, PersonDao.class,
         SubscriberServiceImpl.class, SubscriberDao.class,
-        SubscriberListServiceImpl.class, SubscriberDao.class
+        SubscriberListServiceImpl.class, SubscriberDao.class,
+        ResponseErrorException.class
 })
 public class Application {
 
@@ -60,6 +62,5 @@ public class Application {
         CatalogServiceImpl csi = context.getBean(CatalogServiceImpl.class);
 
         System.out.println("----Application----");
-        System.out.println(csi.getAllCatalogs());
     }
 }

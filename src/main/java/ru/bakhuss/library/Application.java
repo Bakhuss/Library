@@ -1,6 +1,5 @@
 package ru.bakhuss.library;
 
-import org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
@@ -8,11 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
+import ru.bakhuss.library.controller.impl.CatalogControllerImpl;
 import ru.bakhuss.library.dao.BookDao;
 import ru.bakhuss.library.dao.CatalogDao;
 import ru.bakhuss.library.dao.PersonDao;
 import ru.bakhuss.library.dao.SubscriberDao;
-import ru.bakhuss.library.model.Person;
 import ru.bakhuss.library.service.impl.BookServiceImpl;
 import ru.bakhuss.library.service.impl.CatalogServiceImpl;
 import ru.bakhuss.library.service.impl.PersonServiceImpl;
@@ -29,7 +28,7 @@ import java.util.Date;
 @SpringBootApplication
 @ComponentScan(basePackageClasses = {
         BookServiceImpl.class, BookDao.class,
-        CatalogServiceImpl.class, CatalogDao.class,
+        CatalogServiceImpl.class, CatalogDao.class, CatalogControllerImpl.class,
         PersonServiceImpl.class, PersonDao.class,
         SubscriberServiceImpl.class, SubscriberDao.class,
         SubscriberListServiceImpl.class, SubscriberDao.class
@@ -58,11 +57,9 @@ public class Application {
         p1.surname = "Ivanov";
         p1.birthday = new Date();
 
-        PersonServiceImpl psi = context.getBean(PersonServiceImpl.class);
+        CatalogServiceImpl csi = context.getBean(CatalogServiceImpl.class);
 
         System.out.println("----Application----");
-
-        System.out.println("------------------");
-        System.out.println(psi.getAllPersons());
+        System.out.println(csi.getAllCatalogs());
     }
 }

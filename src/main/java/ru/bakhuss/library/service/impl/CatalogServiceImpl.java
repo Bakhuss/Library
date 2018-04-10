@@ -13,11 +13,16 @@ import ru.bakhuss.library.dao.CatalogDao;
 import ru.bakhuss.library.error.ResponseErrorException;
 import ru.bakhuss.library.model.Book;
 import ru.bakhuss.library.model.Catalog;
+import ru.bakhuss.library.model.Person;
 import ru.bakhuss.library.service.CatalogService;
 import ru.bakhuss.library.view.CatalogView;
+import ru.bakhuss.library.view.PersonView;
 import ru.bakhuss.library.view.ResponseView;
 
 import javax.validation.constraints.Null;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
@@ -56,7 +61,11 @@ public class CatalogServiceImpl implements CatalogService {
         }
         tempC.setBook(b);
         tempC.setDescription(view.description);
-        tempC.setTotalCount(Integer.parseInt(view.totalCount));
+        try {
+            tempC.setTotalCount(Integer.parseInt(view.totalCount));
+        } catch (NumberFormatException ex) {
+            throw new ResponseErrorException("Total count must be a number(" + view.totalCount + ")");
+        }
         Catalog newC = null;
         try {
             newC = catalogDao.save(tempC);
@@ -92,7 +101,33 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     @Transactional(readOnly = true)
     public ResponseView getCatalogById(Long id) {
-        return null;
+        Catalog cat = null;
+        try {
+            cat = catalogDao.findOne(id);
+            cat.getId();
+        } catch (NullPointerException ex) {
+            throw new ResponseErrorException("Not found catalog by id: " + id);
+        } catch (JpaSystemException ex) {
+            throw new ResponseErrorException("Error getting catalog by id: " + id);
+        }
+        CatalogView view = new CatalogView();
+        view.id = cat.getId().toString();
+        view.bookId = cat.getBook().getId().toString();
+        view.bookName = cat.getBook().getName();
+        Function<Person, PersonView> funcP = p -> {
+            PersonView pV = new PersonView();
+            pV.id = p.getId().toString();
+            pV.firstName = p.getFirstName();
+            pV.secondName = p.getSecondName();
+            pV.surname = p.getSurname();
+            pV.birthday = p.getBirthday();
+            return pV;
+        };
+        view.writers = cat.getBook().getWriters().stream()
+                .map(funcP)
+                .collect(Collectors.toSet());
+
+        return new ResponseView(view);
     }
 
     /**
@@ -101,6 +136,24 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     @Transactional(readOnly = true)
     public ResponseView getAllCatalogs() {
-        return null;
+        Function<Catalog, CatalogView> funcC = c -> {
+            CatalogView cV = new CatalogView();
+            cV.id = c.getId().toString();
+            cV.bookId = c.getBook().getId().toString();
+            cV.bookName = c.getBook().getName();
+            cV.description = c.getDescription();
+            cV.writers = c.getBook().getWriters().stream()
+                    .map(PersonView.getFuncPersonToView())
+                    .collect(Collectors.toSet());
+            cV.totalCount = c.getTotalCount().toString();
+            return cV;
+        };
+        ResponseView view = new ResponseView();
+        view.result = null;
+        view.data =
+                StreamSupport.stream(catalogDao.findAll().spliterator(), false)
+                        .map(funcC)
+                        .collect(Collectors.toSet());
+        return view;
     }
 }

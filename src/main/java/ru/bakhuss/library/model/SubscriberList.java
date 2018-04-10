@@ -15,7 +15,7 @@ import java.util.Date;
 /**
  * Связь читателя с книгой
  */
-@Entity(name = "subscriber_list")
+@Entity(name = "Subscriber_List")
 public class SubscriberList {
 
     @Id
@@ -76,5 +76,18 @@ public class SubscriberList {
 
     public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "{id:" + getId() +
+                ";subscriber:" + getSubscriber() +
+                ";book:" + getCatalog() +
+                ";receiveDate:" + getReceiveDate() +
+                ";returnDate:" + getReturnDate() +
+                "}";
     }
 }

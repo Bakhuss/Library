@@ -11,8 +11,6 @@ public class BookView {
 
     public String name;
 
-    public String description;
-
     public String totalCount;
 
     public String availableCount;
@@ -20,4 +18,21 @@ public class BookView {
     public Set<PersonView> writers;
 
     public Set<PersonView> subscribers;
+
+    public Set<CatalogView> catalogs;
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "{id:" + id +
+                ";name:" + name +
+                ";totalCount:" + totalCount +
+                ";availableCount:" + availableCount +
+                ";writers:" + writers +
+                ";catalogs:" + catalogs +
+                "}";
+    }
 }

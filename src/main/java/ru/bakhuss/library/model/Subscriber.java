@@ -110,4 +110,17 @@ public class Subscriber {
     public void setSubscriberList(SubscriberList subscriberList) {
         this.subscriberList = subscriberList;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "{id:" + getId() +
+                ";person:" + getPerson() +
+                ";subscriberDate:" + getSubscribeDate() +
+                ";unsubscriberDate:" + getUnsubscribeDate() +
+                ";subscriberList:" + getSubscriberList() +
+                "}";
+    }
 }

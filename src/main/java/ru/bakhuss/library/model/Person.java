@@ -143,4 +143,17 @@ public class Person {
     public void setSubscriber(Subscriber subscriber) {
         this.subscriber = subscriber;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "{id:" + getId() +
+                ";firstName:" + getFirstName() +
+                ";secondName:" + getSecondName() +
+                ";surname:" + getSurname() +
+                ";birthday:" + getBirthday() +
+                "}";
+    }
 }

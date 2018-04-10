@@ -15,4 +15,14 @@ public class ResponseView {
     public ResponseView(Object data) {
         this.data = data;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "{result:" + result +
+                ";data:" + data +
+                "}";
+    }
 }

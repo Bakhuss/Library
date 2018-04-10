@@ -96,4 +96,17 @@ public class Catalog {
     public void setSubscriberList(SubscriberList subscriberList) {
         this.subscriberList = subscriberList;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "{id:" + getId() +
+                ";book:" + getBook() +
+                ";description:" + getDescription() +
+                ";totalCount:" + getTotalCount() +
+                ";subscriberList:" + getSubscriberList() +
+                "}";
+    }
 }

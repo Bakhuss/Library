@@ -21,4 +21,17 @@ public class PersonView {
     public Set<BookView> writtenBooks;
 
     public Set<BookView> subscribeBooks;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "{id:" + id +
+                ";firstName:" + firstName +
+                ";secondName:" + secondName +
+                ";surname:" + surname +
+                ";birthday:" + birthday +
+                "}";
+    }
 }

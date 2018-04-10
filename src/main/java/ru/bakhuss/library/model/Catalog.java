@@ -43,12 +43,6 @@ public class Catalog {
     @JoinColumn(name = "book_id")
     private Book book;
 
-//    /**
-//     * Читатели
-//     */
-//    @ManyToMany(mappedBy = "catalogs")
-//    private Set<Subscriber> subscribers;
-
     /**
      * Список читателей книги
      */
@@ -103,7 +97,7 @@ public class Catalog {
     @Override
     public String toString() {
         return "{id:" + getId() +
-                ";book:" + getBook() +
+                ";book:" + getBook().getName() +
                 ";description:" + getDescription() +
                 ";totalCount:" + getTotalCount() +
                 ";subscriberList:" + getSubscriberList() +

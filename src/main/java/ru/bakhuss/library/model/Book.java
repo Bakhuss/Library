@@ -112,4 +112,16 @@ public class Book {
         getCatalogs().remove(catalog);
         catalog.setBook(null);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "{id:" + getId() +
+                ";name:" + getName() +
+                ";writers:" + getWriters() +
+                ";catalogs:" + getCatalogs() +
+                "}";
+    }
 }

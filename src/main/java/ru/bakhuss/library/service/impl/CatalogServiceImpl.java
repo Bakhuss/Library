@@ -92,8 +92,15 @@ public class CatalogServiceImpl implements CatalogService {
      */
     @Override
     @Transactional
-    public ResponseView deleteCatalog(CatalogView catalogView) {
-        return null;
+    public ResponseView deleteCatalog(CatalogView view) {
+        try {
+            catalogDao.delete(Long.parseLong(view.id));
+        } catch (NumberFormatException ex) {
+            throw new ResponseErrorException("Catalog id must be a number(" + view.id + ")");
+        } catch (Exception ex) {
+            throw new ResponseErrorException("Error deleting catalog by id: " + view.id);
+        }
+        return new ResponseView();
     }
 
     /**
@@ -105,6 +112,10 @@ public class CatalogServiceImpl implements CatalogService {
         Catalog cat = null;
         try {
             cat = catalogDao.findOne(Long.parseLong(id));
+
+            /*
+             * Проверка на NPE
+             */
             cat.getId();
         } catch (NumberFormatException ex) {
             throw new ResponseErrorException("Catalog id must be a number(" + id + ")");

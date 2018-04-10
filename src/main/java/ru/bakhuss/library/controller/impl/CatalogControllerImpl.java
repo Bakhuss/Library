@@ -49,7 +49,7 @@ public class CatalogControllerImpl implements CatalogController {
     @Override
     @PostMapping(value = "/delete")
     public ResponseView deleteCatalog(@RequestBody CatalogView view) {
-        return null;
+        return catalogService.deleteCatalog(view);
     }
 
     /**

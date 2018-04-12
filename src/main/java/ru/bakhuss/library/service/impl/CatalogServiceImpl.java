@@ -19,7 +19,6 @@ import ru.bakhuss.library.view.CatalogView;
 import ru.bakhuss.library.view.PersonView;
 import ru.bakhuss.library.view.ResponseView;
 
-import javax.validation.constraints.Null;
 import java.util.HashSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -167,10 +166,14 @@ public class CatalogServiceImpl implements CatalogService {
         };
         ResponseView viewR = new ResponseView();
         viewR.result = null;
-        viewR.data =
-                StreamSupport.stream(catalogDao.findAll().spliterator(), false)
-                        .map(funcC)
-                        .collect(Collectors.toSet());
+        try {
+            viewR.data =
+                    StreamSupport.stream(catalogDao.findAll().spliterator(), false)
+                            .map(funcC)
+                            .collect(Collectors.toSet());
+        } catch (Exception ex) {
+            throw new ResponseErrorException("Error requesting subscribers");
+        }
         return viewR;
     }
 }

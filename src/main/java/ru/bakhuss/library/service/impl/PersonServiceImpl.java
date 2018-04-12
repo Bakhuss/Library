@@ -63,21 +63,10 @@ public class PersonServiceImpl implements PersonService {
         Person newP = null;
         try {
             newP = personDao.save(p);
-        } catch (JpaSystemException ex) {
+        } catch (Exception ex) {
             throw new ResponseErrorException("Error saving new person");
         }
         log.info(newP.toString());
-
-        Subscriber tempS = new Subscriber();
-        tempS.setPerson(newP);
-        tempS.setSubscribeDate(new Date());
-        Subscriber newS = null;
-        try {
-            newS = subscriberDao.save(tempS);
-        } catch (JpaSystemException e) {
-            throw new ResponseErrorException("Error saving new subscriber");
-        }
-        log.info(newS.toString());
 
         return new ResponseView();
     }
@@ -108,7 +97,7 @@ public class PersonServiceImpl implements PersonService {
         p.setBirthday(view.birthday);
         try {
             personDao.save(p);
-        } catch (JpaSystemException ex) {
+        } catch (Exception ex) {
             throw new ResponseErrorException("Error updating person by id:" + view.id);
         }
 
@@ -136,15 +125,17 @@ public class PersonServiceImpl implements PersonService {
      */
     @Override
     @Transactional(readOnly = true)
-    public ResponseView getPersonById(Long id) {
+    public ResponseView getPersonById(String id) {
         Person p = null;
         try {
-            p = personDao.findOne(id);
+            p = personDao.findOne(Long.parseLong(id));
 
             /*
              *Проверка на NPE
              */
             p.getId();
+        } catch (NumberFormatException ex) {
+            throw new ResponseErrorException("Person id must be a number(" + id + ")");
         } catch (NullPointerException ex) {
             throw new ResponseErrorException("Not found person by id: " + id);
         }
@@ -155,6 +146,7 @@ public class PersonServiceImpl implements PersonService {
         pV.secondName = p.getSecondName();
         pV.surname = p.getSurname();
         pV.birthday = p.getBirthday();
+        log.info(pV.toString());
 
         return new ResponseView(pV);
     }
@@ -164,7 +156,7 @@ public class PersonServiceImpl implements PersonService {
      */
     @Override
     @Transactional(readOnly = true)
-    public ResponseView getAllPersons() {
+    public ResponseView getAllPersons(PersonView view) {
         Function<Person, PersonView> func = p -> {
             PersonView pV = new PersonView();
             pV.id = p.getId().toString();
@@ -174,13 +166,12 @@ public class PersonServiceImpl implements PersonService {
             pV.birthday = p.getBirthday();
             return pV;
         };
-        ResponseView view = new ResponseView();
-        view.result = null;
-
-        view.data =
+        ResponseView respP = new ResponseView();
+        respP.result = null;
+        respP.data =
                 StreamSupport.stream(personDao.findAll().spliterator(), false)
                         .map(func)
                         .collect(Collectors.toSet());
-        return view;
+        return respP;
     }
 }

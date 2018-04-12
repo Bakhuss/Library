@@ -8,6 +8,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 import ru.bakhuss.library.controller.impl.CatalogControllerImpl;
+import ru.bakhuss.library.controller.impl.PersonControllerImpl;
+import ru.bakhuss.library.controller.impl.SubscriberControllerImpl;
 import ru.bakhuss.library.dao.BookDao;
 import ru.bakhuss.library.dao.CatalogDao;
 import ru.bakhuss.library.dao.PersonDao;
@@ -30,8 +32,8 @@ import java.util.Date;
 @ComponentScan(basePackageClasses = {
         BookServiceImpl.class, BookDao.class,
         CatalogServiceImpl.class, CatalogDao.class, CatalogControllerImpl.class,
-        PersonServiceImpl.class, PersonDao.class,
-        SubscriberServiceImpl.class, SubscriberDao.class,
+        PersonServiceImpl.class, PersonDao.class, PersonControllerImpl.class,
+        SubscriberServiceImpl.class, SubscriberDao.class, SubscriberControllerImpl.class,
         SubscriberListServiceImpl.class, SubscriberDao.class,
         ResponseErrorException.class
 })
@@ -48,16 +50,6 @@ public class Application {
         SpringApplication app = new SpringApplication(Application.class);
         app.setBannerMode(Banner.Mode.OFF);
         app.run(args);
-
-        PersonView p = new PersonView();
-        p.firstName = "Piter";
-        p.surname = "Pen";
-        p.birthday = new Date();
-
-        PersonView p1 = new PersonView();
-        p1.firstName = "Ivan";
-        p1.surname = "Ivanov";
-        p1.birthday = new Date();
 
         CatalogServiceImpl csi = context.getBean(CatalogServiceImpl.class);
 

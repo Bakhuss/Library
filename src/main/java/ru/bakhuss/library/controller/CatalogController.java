@@ -16,7 +16,7 @@ public interface CatalogController {
     ResponseView addCatalog(CatalogView view);
 
     /**
-     * Удалить Catalog
+     * Обновить Catalog
      * @param view
      * @return success value
      */

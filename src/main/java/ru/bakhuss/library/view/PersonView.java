@@ -26,13 +26,13 @@ public class PersonView {
 
 
     public static Function<Person, PersonView> getFuncPersonToView() {
-        Function<Person, PersonView> func = person1 -> {
+        Function<Person, PersonView> func = p -> {
             PersonView pV = new PersonView();
-            pV.id = person1.getId().toString();
-            pV.firstName = person1.getFirstName();
-            pV.secondName = person1.getSecondName();
-            pV.surname = person1.getSurname();
-            pV.birthday = person1.getBirthday();
+            pV.id = p.getId().toString();
+            pV.firstName = p.getFirstName();
+            pV.secondName = p.getSecondName();
+            pV.surname = p.getSurname();
+            pV.birthday = p.getBirthday();
             return pV;
         };
         return func;

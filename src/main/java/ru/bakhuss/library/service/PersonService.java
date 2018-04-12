@@ -34,11 +34,11 @@ public interface PersonService {
      * @param id
      * @return JSON person value
      */
-    ResponseView getPersonById(Long id);
+    ResponseView getPersonById(String id);
 
     /**
      * Получить всех Person
      * @return JSON persons values
      */
-    ResponseView getAllPersons();
+    ResponseView getAllPersons(PersonView view);
 }

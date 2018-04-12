@@ -7,21 +7,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.bakhuss.library.controller.PersonController;
-import ru.bakhuss.library.service.PersonService;
-import ru.bakhuss.library.view.PersonView;
+import ru.bakhuss.library.controller.SubscriberController;
+import ru.bakhuss.library.service.SubscriberService;
 import ru.bakhuss.library.view.ResponseView;
+import ru.bakhuss.library.view.SubscriberView;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping(value = "/person", produces = APPLICATION_JSON_VALUE)
-public class PersonControllerImpl implements PersonController {
-    private final PersonService personService;
+@RequestMapping(value = "/subscriber", produces = APPLICATION_JSON_VALUE)
+public class SubscriberControllerImpl implements SubscriberController {
+    private final SubscriberService subscriberService;
 
     @Autowired
-    private PersonControllerImpl(PersonService personService) {
-        this.personService = personService;
+    private SubscriberControllerImpl(SubscriberService subscriberService) {
+        this.subscriberService = subscriberService;
     }
 
 
@@ -30,8 +30,8 @@ public class PersonControllerImpl implements PersonController {
      */
     @Override
     @PostMapping(value = "/save")
-    public ResponseView addPerson(@RequestBody PersonView view) {
-        return personService.addPerson(view);
+    public ResponseView addSubscriber(@RequestBody SubscriberView view) {
+        return null;
     }
 
     /**
@@ -39,8 +39,8 @@ public class PersonControllerImpl implements PersonController {
      */
     @Override
     @PostMapping(value = "/update")
-    public ResponseView updatePerson(@RequestBody PersonView view) {
-        return personService.updatePerson(view);
+    public ResponseView updateSubscriber(@RequestBody SubscriberView view) {
+        return null;
     }
 
     /**
@@ -48,8 +48,8 @@ public class PersonControllerImpl implements PersonController {
      */
     @Override
     @PostMapping(value = "/delete")
-    public ResponseView deletePerson(@RequestBody PersonView view) {
-        return personService.deletePerson(view);
+    public ResponseView deleteSubscriber(@RequestBody SubscriberView view) {
+        return null;
     }
 
     /**
@@ -57,8 +57,8 @@ public class PersonControllerImpl implements PersonController {
      */
     @Override
     @GetMapping(value = "/{id}")
-    public ResponseView getPersonById(@PathVariable String id) {
-        return personService.getPersonById(id);
+    public ResponseView getSubscriberById(@PathVariable("id") String id) {
+        return null;
     }
 
     /**
@@ -66,7 +66,7 @@ public class PersonControllerImpl implements PersonController {
      */
     @Override
     @PostMapping(value = "/list")
-    public ResponseView getPersonsByFilter(@RequestBody PersonView view) {
-        return personService.getAllPersons(view);
+    public ResponseView getSubscribers(@RequestBody SubscriberView view) {
+        return null;
     }
 }

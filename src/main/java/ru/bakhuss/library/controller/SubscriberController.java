@@ -1,12 +1,12 @@
-package ru.bakhuss.library.service;
+package ru.bakhuss.library.controller;
 
 import ru.bakhuss.library.view.ResponseView;
 import ru.bakhuss.library.view.SubscriberView;
 
 /**
- * Сервис для работы с Subscriber
+ * Контроллер для работы с Subscriber
  */
-public interface SubscriberService {
+public interface SubscriberController {
 
     /**
      * Добавить Subscriber
@@ -40,6 +40,6 @@ public interface SubscriberService {
      * Получить Subscribers по фильтру
      * @return JSON subscribers values
      */
-    ResponseView getAllSubscribers(SubscriberView view);
+    ResponseView getSubscribers(SubscriberView view);
 
 }

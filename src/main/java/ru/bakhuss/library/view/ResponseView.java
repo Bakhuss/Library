@@ -9,7 +9,11 @@ public class ResponseView {
     public Object data;
 
     public ResponseView() {
-        result = "success";
+//        result = "success";
+    }
+
+    public ResponseView(boolean result) {
+        if (result) this.result = "success";
     }
 
     public ResponseView(Object data) {

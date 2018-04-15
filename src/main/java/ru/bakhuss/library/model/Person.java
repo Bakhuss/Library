@@ -54,19 +54,12 @@ public class Person {
     /**
      * Книги, написанные человеком
      */
-    @ManyToMany(mappedBy = "writers")
-    private Set<Book> writtenBooks;
-
-//    /**
-//     * Писатель
-//     */
-//    @OneToOne(mappedBy = "person",
-//            fetch = FetchType.LAZY,
-//            cascade = CascadeType.ALL)
-//    private Writer writer;
+    @ManyToMany(mappedBy = "writers",
+            fetch = FetchType.LAZY)
+    private Set<Book> books;
 
     /**
-     * Читатель
+     * Читательский билет
      */
     @OneToOne(mappedBy = "person",
             fetch = FetchType.LAZY,
@@ -110,31 +103,23 @@ public class Person {
         this.birthday = birthday;
     }
 
-    public Set<Book> getWrittenBooks() {
-        return writtenBooks;
+    public Set<Book> getBooks() {
+        return books;
     }
 
-    public void setWrittenBooks(Set<Book> writtenBooks) {
-        this.writtenBooks = writtenBooks;
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 
     public void addWrittenBook(Book book) {
-        getWrittenBooks().add(book);
+        getBooks().add(book);
         book.getWriters().add(this);
     }
 
     public void removeWrittenBook(Book book) {
-        getWrittenBooks().remove(book);
+        getBooks().remove(book);
         book.getWriters().remove(this);
     }
-
-//    public Writer getWriter() {
-//        return writer;
-//    }
-//
-//    public void setWriter(Writer writer) {
-//        this.writer = writer;
-//    }
 
     public Subscriber getSubscriber() {
         return subscriber;

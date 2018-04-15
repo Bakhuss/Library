@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bakhuss.library.dao.PersonDao;
 import ru.bakhuss.library.dao.SubscriberDao;
-import ru.bakhuss.library.dao.SubscriberListDao;
+import ru.bakhuss.library.dao.SubscriberCatalogDao;
 import ru.bakhuss.library.error.ResponseErrorException;
 import ru.bakhuss.library.model.Person;
 import ru.bakhuss.library.model.Subscriber;
@@ -28,15 +28,15 @@ public class SubscriberServiceImpl implements SubscriberService {
 
     private final SubscriberDao subscriberDao;
     private final PersonDao personDao;
-    private final SubscriberListDao subscriberListDao;
+    private final SubscriberCatalogDao subscriberCatalogDao;
 
     @Autowired
     public SubscriberServiceImpl(SubscriberDao subscriberDao,
                                  PersonDao personDao,
-                                 SubscriberListDao subscriberListDao) {
+                                 SubscriberCatalogDao subscriberCatalogDao) {
         this.subscriberDao = subscriberDao;
         this.personDao = personDao;
-        this.subscriberListDao = subscriberListDao;
+        this.subscriberCatalogDao = subscriberCatalogDao;
     }
 
 
@@ -104,7 +104,10 @@ public class SubscriberServiceImpl implements SubscriberService {
         } catch (Exception ex) {
             throw new ResponseErrorException("Error requesting subscriber");
         }
+
         log.info(sub.toString());
+
+
         return new ResponseView();
     }
 
@@ -125,6 +128,8 @@ public class SubscriberServiceImpl implements SubscriberService {
             throw new ResponseErrorException("Subscriber id must be a number(" + view.personId + ")");
         } catch (NullPointerException ex) {
             throw new ResponseErrorException("Not found subscriber by id: " + view.personId);
+        } catch (Exception ex) {
+            throw new ResponseErrorException("Error requesting data");
         }
         sub.setUnsubscribeDate(view.unsubscribeDate);
 
@@ -154,6 +159,8 @@ public class SubscriberServiceImpl implements SubscriberService {
             throw new ResponseErrorException("id must be a number");
         } catch (NullPointerException ex) {
             throw new ResponseErrorException("Not found subscriber by id: " + id);
+        } catch (Exception ex) {
+            throw new ResponseErrorException("Error requesting data");
         }
         SubscriberView subV = new SubscriberView();
         subV.personId = sub.getId().toString();

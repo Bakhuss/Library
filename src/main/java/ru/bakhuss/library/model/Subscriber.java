@@ -5,12 +5,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Читатель
@@ -47,32 +50,24 @@ public class Subscriber {
     private Person person;
 
 
-//    /**
-//     * Список книг читателя
-//     */
-//    @ManyToMany(
-//            cascade = {
-//                    CascadeType.PERSIST,
-//                    CascadeType.MERGE
-//            }
-//    )
-//    @JoinTable(
-//            name = "Book_Subscriber",
-//            joinColumns = @JoinColumn(name = "subscriber_id"),
-//            inverseJoinColumns = @JoinColumn(name = "catalog_id")
-//    )
-//    private Set<Catalog> catalogs;
-
     /**
      * Список книг читателя
      */
-    @OneToOne(
-            mappedBy = "subscriber",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            optional = false
-    )
-    private SubscriberList subscriberList;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "subscriber_id")
+    private Set<SubscriberCatalog> catalogs;
+
+//    /**
+//     * Список книг читателя
+//     */
+//
+//    @ManyToMany(
+//            mappedBy = "subscriber",
+//            fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL,
+//            optional = false
+//    )
+//    private Set<SubscriberCatalog> catalogs;
 
 
     public Long getId() {
@@ -103,12 +98,22 @@ public class Subscriber {
         this.person = person;
     }
 
-    public SubscriberList getSubscriberList() {
-        return subscriberList;
+    public Set<SubscriberCatalog> getCatalogs() {
+        return catalogs;
     }
 
-    public void setSubscriberList(SubscriberList subscriberList) {
-        this.subscriberList = subscriberList;
+    public void setCatalogs(Set<SubscriberCatalog> catalogs) {
+        this.catalogs = catalogs;
+    }
+
+    public void addCatalog(SubscriberCatalog catalog) {
+        getCatalogs().add(catalog);
+        catalog.setSubscriber(this);
+    }
+
+    public void removeCatalog(SubscriberCatalog catalog) {
+        getCatalogs().remove(catalog);
+        catalog.setSubscriber(null);
     }
 
     /**
@@ -117,10 +122,9 @@ public class Subscriber {
     @Override
     public String toString() {
         return "{id:" + getId() +
-                ";person:" + getPerson() +
+                ";person:" + getPerson().toString() +
                 ";subscriberDate:" + getSubscribeDate() +
                 ";unsubscriberDate:" + getUnsubscribeDate() +
-                ";subscriberList:" + getSubscriberList() +
                 "}";
     }
 }

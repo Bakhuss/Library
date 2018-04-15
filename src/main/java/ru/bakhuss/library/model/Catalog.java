@@ -8,8 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
+import java.util.Set;
 
 /**
  * Список книг
@@ -46,13 +47,12 @@ public class Catalog {
     /**
      * Список читателей книги
      */
-    @OneToOne(
-            mappedBy = "catalog",
-            fetch = FetchType.LAZY,
+    @OneToMany(
             cascade = CascadeType.ALL,
-            optional = false
+            orphanRemoval = true
     )
-    private SubscriberList subscriberList;
+    @JoinColumn(name = "catalog_id")
+    private Set<SubscriberCatalog> subscribers;
 
 
     public Long getId() {
@@ -83,12 +83,22 @@ public class Catalog {
         this.totalCount = totalCount;
     }
 
-    public SubscriberList getSubscriberList() {
-        return subscriberList;
+    public Set<SubscriberCatalog> getSubscribers() {
+        return subscribers;
     }
 
-    public void setSubscriberList(SubscriberList subscriberList) {
-        this.subscriberList = subscriberList;
+    public void setSubscribers(Set<SubscriberCatalog> subscribers) {
+        this.subscribers = subscribers;
+    }
+
+    public void addSubscriber(SubscriberCatalog subscriber) {
+        getSubscribers().add(subscriber);
+        subscriber.setCatalog(this);
+    }
+
+    public void removeSubscriber(SubscriberCatalog subscriber) {
+        getSubscribers().remove(subscriber);
+        subscriber.setCatalog(null);
     }
 
     /**
@@ -100,7 +110,6 @@ public class Catalog {
                 ";book:" + getBook().getName() +
                 ";description:" + getDescription() +
                 ";totalCount:" + getTotalCount() +
-                ";subscriberList:" + getSubscriberList() +
                 "}";
     }
 }

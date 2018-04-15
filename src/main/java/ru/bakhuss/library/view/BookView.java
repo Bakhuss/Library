@@ -1,8 +1,10 @@
 package ru.bakhuss.library.view;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import ru.bakhuss.library.model.Book;
 
 import java.util.Set;
+import java.util.function.Function;
 
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class BookView {
@@ -21,6 +23,15 @@ public class BookView {
 
     public Set<CatalogView> catalogs;
 
+
+    public static Function<Book, BookView> getFuncBookToView() {
+        return b -> {
+            BookView bV = new BookView();
+            bV.id = b.getId().toString();
+            bV.name = b.getName();
+            return bV;
+        };
+    }
 
     /**
      * {@inheritDoc}

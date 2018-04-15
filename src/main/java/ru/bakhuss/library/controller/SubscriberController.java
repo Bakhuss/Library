@@ -37,7 +37,7 @@ public interface SubscriberController {
     ResponseView getSubscriberById(String id);
 
     /**
-     * Получить Subscribers по фильтру
+     * Получить всех Subscribers по фильтру
      * @return JSON subscribers values
      */
     ResponseView getSubscribers(SubscriberView view);

@@ -1,5 +1,6 @@
 package ru.bakhuss.library.view;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import ru.bakhuss.library.model.Person;
 
@@ -18,6 +19,7 @@ public class PersonView {
 
     public String surname;
 
+    @JsonFormat(pattern = "dd-MM-yyyy")
     public Date birthday;
 
     public Set<BookView> writtenBooks;
@@ -26,7 +28,7 @@ public class PersonView {
 
 
     public static Function<Person, PersonView> getFuncPersonToView() {
-        Function<Person, PersonView> func = p -> {
+        return p -> {
             PersonView pV = new PersonView();
             pV.id = p.getId().toString();
             pV.firstName = p.getFirstName();
@@ -35,7 +37,6 @@ public class PersonView {
             pV.birthday = p.getBirthday();
             return pV;
         };
-        return func;
     }
 
     /**

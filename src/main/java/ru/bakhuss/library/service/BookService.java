@@ -1,7 +1,8 @@
 package ru.bakhuss.library.service;
 
 import ru.bakhuss.library.view.BookView;
-import ru.bakhuss.library.view.ResponseView;
+
+import java.util.Set;
 
 /**
  * Сервис для работы с Book
@@ -11,34 +12,32 @@ public interface BookService {
     /**
      * Добавить Book
      * @param view
-     * @return success value
      */
-    ResponseView addBook(BookView view);
+    void addBook(BookView view);
 
     /**
      * Изменить Book
      * @param view
-     * @return success value
      */
-    ResponseView updateBook(BookView view);
+    void updateBook(BookView view);
 
     /**
      * Удалить Book
      * @param view
-     * @return success value
      */
-    ResponseView deleteBook(BookView view);
+    void deleteBook(BookView view);
 
     /**
      * Получить Book по id
      * @param id
-     * @return JSON book value
+     * @return BookView value
      */
-    ResponseView getBookById(Long id);
+    BookView getBookById(String id);
 
     /**
-     * Получить все Book
-     * @return JSON books values
+     * Получить все Book по фильтру
+     * @param view
+     * @return BookViews values
      */
-    ResponseView getAllBooks();
+    Set<BookView> getAllBooks(BookView view);
 }

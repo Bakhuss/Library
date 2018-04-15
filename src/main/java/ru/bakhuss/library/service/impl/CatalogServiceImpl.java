@@ -83,7 +83,29 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     @Transactional
     public ResponseView updateCatalog(CatalogView view) {
-        return null;
+        Catalog cat = null;
+        try {
+            cat = catalogDao.findOne(Long.parseLong(view.id));
+
+            /*
+             * Проверка на NPE
+             */
+            cat.getId();
+        } catch (NumberFormatException ex) {
+            throw new ResponseErrorException("Catalog id must be a number (" + view.id + ")");
+        } catch (NullPointerException ex) {
+            throw new ResponseErrorException("Not found catalog by id: " + view.id);
+        } catch (Exception ex) {
+            throw new ResponseErrorException("Error requesting catalog");
+        }
+        cat.setTotalCount(Integer.valueOf(view.totalCount));
+        cat.setDescription(view.description);
+        try {
+            catalogDao.save(cat);
+        } catch (Exception ex) {
+            throw new ResponseErrorException("Error updating catalog by id: " + view.id);
+        }
+        return new ResponseView();
     }
 
     /**

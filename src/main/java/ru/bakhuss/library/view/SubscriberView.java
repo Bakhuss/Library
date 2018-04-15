@@ -1,8 +1,11 @@
 package ru.bakhuss.library.view;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.Date;
 import java.util.Set;
 
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class SubscriberView {
 
     public String personId;
@@ -32,7 +35,6 @@ public class SubscriberView {
                 ";surname:" + surname +
                 ";subscriberDate:" + subscribeDate +
                 ";unsubscriberDate:" + unsubscribeDate +
-                ";catalogs:" + catalogViews +
                 "}";
     }
 }

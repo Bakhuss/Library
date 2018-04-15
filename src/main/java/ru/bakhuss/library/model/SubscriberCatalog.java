@@ -6,17 +6,17 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import java.util.Date;
 
 /**
- * Связь читателя с книгой
+ * Связь читателя с книгой из Catalog
  */
-@Entity(name = "Subscriber_List")
-public class SubscriberList {
+@Entity(name = "Subscriber_Catalog")
+public class SubscriberCatalog {
 
     @Id
     @GeneratedValue
@@ -25,11 +25,11 @@ public class SubscriberList {
     @Version
     private Integer version;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subscriber_id")
     private Subscriber subscriber;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "catalog_id")
     private Catalog catalog;
 

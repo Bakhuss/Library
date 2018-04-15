@@ -36,7 +36,7 @@ public class Book {
      */
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
-            CascadeType.MERGE
+            CascadeType.MERGE,
     })
     @JoinTable(
             name = "Book_Writer",
@@ -87,12 +87,12 @@ public class Book {
 
     public void addWriter(Person person) {
         getWriters().add(person);
-        person.getWrittenBooks().add(this);
+        person.getBooks().add(this);
     }
 
     public void removeWriter(Person person) {
         getWriters().remove(person);
-        person.getWrittenBooks().remove(this);
+        person.getBooks().remove(this);
     }
 
     public Set<Catalog> getCatalogs() {

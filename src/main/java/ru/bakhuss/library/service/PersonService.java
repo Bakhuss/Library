@@ -37,7 +37,8 @@ public interface PersonService {
     ResponseView getPersonById(String id);
 
     /**
-     * Получить всех Person
+     * Получить всех Person по фильтру
+     * @param view
      * @return JSON persons values
      */
     ResponseView getAllPersons(PersonView view);

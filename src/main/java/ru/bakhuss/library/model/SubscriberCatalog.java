@@ -13,7 +13,7 @@ import javax.persistence.Version;
 import java.util.Date;
 
 /**
- * Связь читателя с книгой из Catalog
+ * Связь читателя с книгой из Catalog (library card)
  */
 @Entity(name = "Subscriber_Catalog")
 public class SubscriberCatalog {

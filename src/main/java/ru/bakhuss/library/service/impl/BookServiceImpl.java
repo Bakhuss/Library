@@ -18,8 +18,8 @@ import ru.bakhuss.library.view.PersonView;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -85,26 +85,22 @@ public class BookServiceImpl implements BookService {
         } catch (Exception ex) {
             throw new ResponseErrorException("Error requesting book by id: " + view.id + " from db");
         }
-
         book.setName(view.name);
-        List<Long> ids = view.writers.stream()
+
+        /*
+         * Синхронизация писателей книги
+         */
+        List<Long> idsFrmCtr = view.writers.stream()
                 .map(v -> Long.parseLong(v.id))
                 .collect(Collectors.toList());
-        Collection<Person> persons = null;
-        try {
-            persons = personDao.findByIdIn(ids);
-        } catch (Exception ex) {
-            throw new ResponseErrorException("Error requesting writers");
-        }
-
-        log.info("After del: book.getWriters.size: " + String.valueOf(book.getWriters().size()));
-        for (Iterator<Person> itr = book.getWriters().iterator(); itr.hasNext(); ) {
-            if (!persons.contains(itr.next())) {
-                itr.remove();
-            }
-        }
-        book.getWriters().addAll(persons);
-        log.info("After add: book.getWriters.size: " + String.valueOf(book.getWriters().size()));
+        List<Long> idsFrmDb = book.getWriters().stream()
+                .map(Person::getId)
+                .collect(Collectors.toList());
+        idsFrmDb.removeAll(idsFrmCtr);
+        Set<Person> removePrs = personDao.findByIdIn(idsFrmDb);
+        Set<Person> addPrs = personDao.findByIdIn(idsFrmCtr);
+        book.removeWriters(removePrs);
+        book.addWriters(addPrs);
 
         Book updateBook = null;
         try {

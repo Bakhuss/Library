@@ -1,7 +1,8 @@
 package ru.bakhuss.library.service;
 
 import ru.bakhuss.library.view.CatalogView;
-import ru.bakhuss.library.view.ResponseView;
+
+import java.util.Set;
 
 /**
  * Сервис для работы с Catalog
@@ -11,34 +12,36 @@ public interface CatalogService {
     /**
      * Добавить в каталог запись о книге
      * @param view
-     * @return success value
      */
-    ResponseView addCatalog(CatalogView view);
+    void addCatalog(CatalogView view);
 
     /**
      * Обновить в каталоге запись о книге
      * @param view
-     * @return success value
      */
-    ResponseView updateCatalog(CatalogView view);
+    void updateCatalog(CatalogView view);
 
     /**
-     * Удалить из каталога запись о книге
-     * @param catalogView
-     * @return success value
+     * Удалить из Catalog запись о книге
+     * @param view
      */
-    ResponseView deleteCatalog(CatalogView catalogView);
+    void deleteCatalog(CatalogView view);
 
     /**
-     * Получить из каталога одну запись по id
+     * Получить из Catalog одну запись по id
      * @param id
-     * @return JSON catalog value
+     * @return CatalogView value
      */
-    ResponseView getCatalogById(String id);
+    CatalogView getCatalogById(String id);
 
     /**
-     * Получить все записи из каталога
-     * @return JSON catalogs values
+     * Получить все записи из Catalog
+     * @return CatalogViews values
      */
-    ResponseView getAllCatalogs(CatalogView view);
+    /**
+     * Получить все записи из Catalog по фильтру
+     * @param view
+     * @return CatalogViews values
+     */
+    Set<CatalogView> getAllCatalogs(CatalogView view);
 }

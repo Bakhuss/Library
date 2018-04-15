@@ -31,7 +31,8 @@ public class CatalogControllerImpl implements CatalogController {
     @Override
     @PostMapping(value = "/save")
     public ResponseView addCatalog(@RequestBody CatalogView view) {
-        return catalogService.addCatalog(view);
+        catalogService.addCatalog(view);
+        return new ResponseView(true);
     }
 
     /**
@@ -40,7 +41,8 @@ public class CatalogControllerImpl implements CatalogController {
     @Override
     @PostMapping(value = "/update")
     public ResponseView updateCatalog(@RequestBody CatalogView view) {
-        return null;
+        catalogService.updateCatalog(view);
+        return new ResponseView(true);
     }
 
     /**
@@ -49,7 +51,8 @@ public class CatalogControllerImpl implements CatalogController {
     @Override
     @PostMapping(value = "/delete")
     public ResponseView deleteCatalog(@RequestBody CatalogView view) {
-        return catalogService.deleteCatalog(view);
+        catalogService.deleteCatalog(view);
+        return new ResponseView(true);
     }
 
     /**
@@ -58,7 +61,7 @@ public class CatalogControllerImpl implements CatalogController {
     @Override
     @GetMapping(value = "/{id}")
     public ResponseView getCatalogById(@PathVariable("id") String id) {
-        return catalogService.getCatalogById(id);
+        return new ResponseView(catalogService.getCatalogById(id));
     }
 
     /**
@@ -67,6 +70,6 @@ public class CatalogControllerImpl implements CatalogController {
     @Override
     @PostMapping(value = "/list")
     public ResponseView getCatalogs(@RequestBody CatalogView view) {
-        return catalogService.getAllCatalogs(view);
+        return new ResponseView(catalogService.getAllCatalogs(view));
     }
 }

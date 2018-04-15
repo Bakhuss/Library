@@ -40,7 +40,7 @@ public class Catalog {
     /**
      * Книга
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
 

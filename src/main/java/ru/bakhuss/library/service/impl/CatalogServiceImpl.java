@@ -20,6 +20,7 @@ import ru.bakhuss.library.view.PersonView;
 import ru.bakhuss.library.view.ResponseView;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -44,7 +45,7 @@ public class CatalogServiceImpl implements CatalogService {
      */
     @Override
     @Transactional
-    public ResponseView addCatalog(CatalogView view) {
+    public void addCatalog(CatalogView view) {
         Catalog tempC = new Catalog();
         Book b = null;
         try {
@@ -73,8 +74,6 @@ public class CatalogServiceImpl implements CatalogService {
             throw new ResponseErrorException("Error saving new catalog");
         }
         log.info(newC.toString());
-
-        return new ResponseView();
     }
 
     /**
@@ -82,7 +81,7 @@ public class CatalogServiceImpl implements CatalogService {
      */
     @Override
     @Transactional
-    public ResponseView updateCatalog(CatalogView view) {
+    public void updateCatalog(CatalogView view) {
         Catalog cat = null;
         try {
             cat = catalogDao.findOne(Long.parseLong(view.id));
@@ -105,7 +104,6 @@ public class CatalogServiceImpl implements CatalogService {
         } catch (Exception ex) {
             throw new ResponseErrorException("Error updating catalog by id: " + view.id);
         }
-        return new ResponseView();
     }
 
     /**
@@ -113,7 +111,7 @@ public class CatalogServiceImpl implements CatalogService {
      */
     @Override
     @Transactional
-    public ResponseView deleteCatalog(CatalogView view) {
+    public void deleteCatalog(CatalogView view) {
         try {
             catalogDao.delete(Long.parseLong(view.id));
         } catch (NumberFormatException ex) {
@@ -121,7 +119,6 @@ public class CatalogServiceImpl implements CatalogService {
         } catch (Exception ex) {
             throw new ResponseErrorException("Error deleting catalog by id: " + view.id);
         }
-        return new ResponseView();
     }
 
     /**
@@ -129,7 +126,7 @@ public class CatalogServiceImpl implements CatalogService {
      */
     @Override
     @Transactional(readOnly = true)
-    public ResponseView getCatalogById(String id) {
+    public CatalogView getCatalogById(String id) {
         Catalog cat = null;
         try {
             cat = catalogDao.findOne(Long.parseLong(id));
@@ -165,7 +162,7 @@ public class CatalogServiceImpl implements CatalogService {
         view.totalCount = cat.getTotalCount().toString();
         view.subscribers = new HashSet<>();
 
-        return new ResponseView(view);
+        return view;
     }
 
     /**
@@ -173,7 +170,7 @@ public class CatalogServiceImpl implements CatalogService {
      */
     @Override
     @Transactional(readOnly = true)
-    public ResponseView getAllCatalogs(CatalogView view) {
+    public Set<CatalogView> getAllCatalogs(CatalogView view) {
         Function<Catalog, CatalogView> funcC = c -> {
             CatalogView cV = new CatalogView();
             cV.id = c.getId().toString();
@@ -186,16 +183,15 @@ public class CatalogServiceImpl implements CatalogService {
             cV.totalCount = c.getTotalCount().toString();
             return cV;
         };
-        ResponseView viewR = new ResponseView();
-        viewR.result = null;
+        Set<CatalogView> catalogV = null;
         try {
-            viewR.data =
+            catalogV =
                     StreamSupport.stream(catalogDao.findAll().spliterator(), false)
                             .map(funcC)
                             .collect(Collectors.toSet());
         } catch (Exception ex) {
             throw new ResponseErrorException("Error requesting subscribers");
         }
-        return viewR;
+        return catalogV;
     }
 }

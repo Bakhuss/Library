@@ -111,14 +111,14 @@ public class Person {
         this.writtenBooks = writtenBooks;
     }
 
-    public void addWrittenBook(Book book) {
-        getWrittenBooks().add(book);
-        book.getWriters().add(this);
+    public void addWrittenBooks(Set<Book> books) {
+        getWrittenBooks().addAll(books);
+        books.forEach(b -> b.getWriters().add(this));
     }
 
-    public void removeWrittenBook(Book book) {
-        getWrittenBooks().remove(book);
-        book.getWriters().remove(this);
+    public void removeWrittenBooks(Set<Book> books) {
+        getWrittenBooks().removeAll(books);
+        books.forEach(b -> b.getWriters().remove(this));
     }
 
     public Subscriber getSubscriber() {

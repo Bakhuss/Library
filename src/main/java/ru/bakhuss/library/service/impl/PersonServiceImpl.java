@@ -18,8 +18,8 @@ import ru.bakhuss.library.view.PersonView;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -86,23 +86,20 @@ public class PersonServiceImpl implements PersonService {
         person.setSurname(view.surname);
         person.setBirthday(view.birthday);
 
-        List<Long> bookIds = view.writtenBooks.stream()
+        /*
+         * Синхронизация написанных книг
+         */
+        List<Long> idsFrmCtr = view.writtenBooks.stream()
                 .map(v -> Long.parseLong(v.id))
                 .collect(Collectors.toList());
-        Collection<Book> books = null;
-        try {
-            books = bookDao.findByIdIn(bookIds);
-        } catch (Exception ex) {
-            throw new ResponseErrorException("Error requesting writers");
-        }
-
-        for (Iterator<Book> itr = person.getWrittenBooks().iterator(); itr.hasNext(); ) {
-            if (!books.contains(itr.next())) {
-                itr.remove();
-            }
-        }
-        person.getWrittenBooks().addAll(books);
-
+        List<Long> idsFrmDb = person.getWrittenBooks().stream()
+                .map(Book::getId)
+                .collect(Collectors.toList());
+        idsFrmDb.removeAll(idsFrmCtr);
+        Set<Book> removeBooks = bookDao.findByIdIn(idsFrmDb);
+        Set<Book> addBooks = bookDao.findByIdIn(idsFrmCtr);
+        person.removeWrittenBooks(removeBooks);
+        person.addWrittenBooks(addBooks);
 
         Person updatePrs = null;
         try {
@@ -178,9 +175,18 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional(readOnly = true)
     public Collection<PersonView> getAllPersons(PersonView view) {
-        return StreamSupport.stream(personDao.findAll().spliterator(), false)
-                .map(PersonView.getFuncPersonToView())
-                .sorted(Comparator.comparing(PersonView::getSurname))
-                .collect(Collectors.toList());
+        List<PersonView> personV = null;
+        try {
+            personV = StreamSupport.stream(personDao.findAll().spliterator(), false)
+                    .map(PersonView.getFuncPersonToView())
+                    .sorted(Comparator.comparing(PersonView::getSurname))
+                    .collect(Collectors.toList());
+            personV.size();
+        } catch (NullPointerException ex) {
+            throw new ResponseErrorException("Not found persons in db");
+        } catch (Exception ex) {
+            throw new ResponseErrorException("Error requesting persons from db");
+        }
+        return personV;
     }
 }

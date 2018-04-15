@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import ru.bakhuss.library.model.Person;
 
+import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 import java.util.function.Function;
 
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
@@ -22,10 +22,13 @@ public class PersonView {
     @JsonFormat(pattern = "dd-MM-yyyy")
     public Date birthday;
 
-    public Set<BookView> writtenBooks;
+    public Collection<BookView> writtenBooks;
 
-    public Set<BookView> subscribeBooks;
+    public Collection<BookView> subscribeBooks;
 
+    public String getSurname() {
+        return surname;
+    }
 
     public static Function<Person, PersonView> getFuncPersonToView() {
         return p -> {

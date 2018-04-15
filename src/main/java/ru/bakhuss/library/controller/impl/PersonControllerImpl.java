@@ -31,7 +31,8 @@ public class PersonControllerImpl implements PersonController {
     @Override
     @PostMapping(value = "/save")
     public ResponseView addPerson(@RequestBody PersonView view) {
-        return personService.addPerson(view);
+        personService.addPerson(view);
+        return new ResponseView(true);
     }
 
     /**
@@ -40,7 +41,8 @@ public class PersonControllerImpl implements PersonController {
     @Override
     @PostMapping(value = "/update")
     public ResponseView updatePerson(@RequestBody PersonView view) {
-        return personService.updatePerson(view);
+        personService.updatePerson(view);
+        return new ResponseView(true);
     }
 
     /**
@@ -49,7 +51,8 @@ public class PersonControllerImpl implements PersonController {
     @Override
     @PostMapping(value = "/delete")
     public ResponseView deletePerson(@RequestBody PersonView view) {
-        return personService.deletePerson(view);
+        personService.deletePerson(view);
+        return new ResponseView(true);
     }
 
     /**
@@ -58,7 +61,7 @@ public class PersonControllerImpl implements PersonController {
     @Override
     @GetMapping(value = "/{id}")
     public ResponseView getPersonById(@PathVariable String id) {
-        return personService.getPersonById(id);
+        return new ResponseView(personService.getPersonById(id));
     }
 
     /**
@@ -67,6 +70,6 @@ public class PersonControllerImpl implements PersonController {
     @Override
     @PostMapping(value = "/list")
     public ResponseView getPersonsByFilter(@RequestBody PersonView view) {
-        return personService.getAllPersons(view);
+        return new ResponseView(personService.getAllPersons(view));
     }
 }

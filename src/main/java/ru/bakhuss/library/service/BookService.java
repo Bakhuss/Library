@@ -2,7 +2,7 @@ package ru.bakhuss.library.service;
 
 import ru.bakhuss.library.view.BookView;
 
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * Сервис для работы с Book
@@ -39,5 +39,5 @@ public interface BookService {
      * @param view
      * @return BookViews values
      */
-    Set<BookView> getAllBooks(BookView view);
+    Collection<BookView> getAllBooks(BookView view);
 }

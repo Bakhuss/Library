@@ -10,6 +10,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -45,16 +46,6 @@ public class Book {
     )
     private Set<Person> writers;
 
-//    @ManyToMany(cascade = {
-//            CascadeType.PERSIST,
-//            CascadeType.MERGE
-//    })
-//    @JoinTable(
-//            name = "Book_Writer",
-//            joinColumns = @JoinColumn(name = "book_id"),
-//            inverseJoinColumns = @JoinColumn(name = "writer_id")
-//    )
-//    private Set<Writer> writers;
 
     /**
      * Запись в каталоге книг
@@ -62,7 +53,7 @@ public class Book {
     @OneToMany(mappedBy = "book",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private Set<Catalog> catalogs;
+    private Collection<Catalog> catalogs;
 
 
     public Long getId() {
@@ -87,19 +78,19 @@ public class Book {
 
     public void addWriter(Person person) {
         getWriters().add(person);
-        person.getBooks().add(this);
+        person.getWrittenBooks().add(this);
     }
 
     public void removeWriter(Person person) {
         getWriters().remove(person);
-        person.getBooks().remove(this);
+        person.getWrittenBooks().remove(this);
     }
 
-    public Set<Catalog> getCatalogs() {
+    public Collection<Catalog> getCatalogs() {
         return catalogs;
     }
 
-    public void setCatalogs(Set<Catalog> catalogs) {
+    public void setCatalogs(Collection<Catalog> catalogs) {
         this.catalogs = catalogs;
     }
 

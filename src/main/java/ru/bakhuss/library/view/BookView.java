@@ -3,7 +3,7 @@ package ru.bakhuss.library.view;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import ru.bakhuss.library.model.Book;
 
-import java.util.Set;
+import java.util.Collection;
 import java.util.function.Function;
 
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
@@ -17,12 +17,16 @@ public class BookView {
 
     public String availableCount;
 
-    public Set<PersonView> writers;
+    public Collection<PersonView> writers;
 
-    public Set<PersonView> subscribers;
+    public Collection<PersonView> subscribers;
 
-    public Set<CatalogView> catalogs;
+    public Collection<CatalogView> catalogs;
 
+
+    public String getName() {
+        return name;
+    }
 
     public static Function<Book, BookView> getFuncBookToView() {
         return b -> {

@@ -7,17 +7,19 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.bakhuss.library.dao.BookDao;
 import ru.bakhuss.library.dao.PersonDao;
-import ru.bakhuss.library.dao.SubscriberDao;
-import ru.bakhuss.library.dao.SubscriberCatalogDao;
 import ru.bakhuss.library.error.ResponseErrorException;
+import ru.bakhuss.library.model.Book;
 import ru.bakhuss.library.model.Person;
 import ru.bakhuss.library.service.PersonService;
-import ru.bakhuss.library.service.SubscriberService;
 import ru.bakhuss.library.view.BookView;
 import ru.bakhuss.library.view.PersonView;
-import ru.bakhuss.library.view.ResponseView;
 
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -27,20 +29,12 @@ public class PersonServiceImpl implements PersonService {
     private final Logger log = LoggerFactory.getLogger(PersonServiceImpl.class);
 
     private final PersonDao personDao;
-    private final SubscriberDao subscriberDao;
-    private final SubscriberCatalogDao subscriberCatalogDao;
-    private final SubscriberService subscriberService;
+    private final BookDao bookDao;
 
     @Autowired
-    public PersonServiceImpl(PersonDao personDao,
-                             SubscriberDao subscriberDao,
-                             SubscriberCatalogDao subscriberCatalogDao,
-                             SubscriberService subscriberService) {
+    public PersonServiceImpl(PersonDao personDao, BookDao bookDao) {
         this.personDao = personDao;
-        this.subscriberDao = subscriberDao;
-        this.subscriberCatalogDao = subscriberCatalogDao;
-        this.subscriberService = subscriberService;
-
+        this.bookDao = bookDao;
     }
 
 
@@ -49,21 +43,21 @@ public class PersonServiceImpl implements PersonService {
      */
     @Override
     @Transactional
-    public ResponseView addPerson(PersonView view) {
-        Person p = new Person();
-        p.setFirstName(view.firstName);
-        p.setSecondName(view.secondName);
-        p.setSurname(view.surname);
-        p.setBirthday(view.birthday);
-        Person newP = null;
+    public void addPerson(PersonView view) {
+        if (view.surname.isEmpty()) throw new ResponseErrorException("Surname is required parameter");
+        Person tmpPrs = new Person();
+        tmpPrs.setFirstName(view.firstName);
+        tmpPrs.setSecondName(view.secondName);
+        tmpPrs.setSurname(view.surname);
+        tmpPrs.setBirthday(view.birthday);
+        Person newPrs = null;
         try {
-            newP = personDao.save(p);
+            newPrs = personDao.save(tmpPrs);
+            newPrs.getId();
         } catch (Exception ex) {
             throw new ResponseErrorException("Error saving new person");
         }
-        log.info(newP.toString());
-
-        return new ResponseView();
+        log.info(newPrs.toString());
     }
 
     /**
@@ -71,34 +65,53 @@ public class PersonServiceImpl implements PersonService {
      */
     @Override
     @Transactional
-    public ResponseView updatePerson(PersonView view) {
-        Person p = null;
+    public void updatePerson(PersonView view) {
+        Person person = null;
         try {
-            p = personDao.findOne(Long.parseLong(view.id));
-
+            person = personDao.findOne(Long.parseLong(view.id));
             /*
              * Проверка на NPE;
              */
-            p.getId();
+            person.getId();
         } catch (NumberFormatException ex) {
             throw new ResponseErrorException("Person id must be a number(" + view.id + ")");
         } catch (NullPointerException ex) {
             throw new ResponseErrorException("Not found person by id: " + view.id);
         } catch (Exception ex) {
-            throw new ResponseErrorException("Error requesting person");
+            throw new ResponseErrorException("Error requesting person by id: " + view.id + " from db");
         }
 
-        p.setFirstName(view.firstName);
-        p.setSecondName(view.secondName);
-        p.setSurname(view.surname);
-        p.setBirthday(view.birthday);
+        person.setFirstName(view.firstName);
+        person.setSecondName(view.secondName);
+        person.setSurname(view.surname);
+        person.setBirthday(view.birthday);
+
+        List<Long> bookIds = view.writtenBooks.stream()
+                .map(v -> Long.parseLong(v.id))
+                .collect(Collectors.toList());
+        Collection<Book> books = null;
         try {
-            personDao.save(p);
+            books = bookDao.findByIdIn(bookIds);
+        } catch (Exception ex) {
+            throw new ResponseErrorException("Error requesting writers");
+        }
+
+        for (Iterator<Book> itr = person.getWrittenBooks().iterator(); itr.hasNext(); ) {
+            if (!books.contains(itr.next())) {
+                itr.remove();
+            }
+        }
+        person.getWrittenBooks().addAll(books);
+
+
+        Person updatePrs = null;
+        try {
+            updatePrs = personDao.save(person);
+            updatePrs.getId();
         } catch (Exception ex) {
             throw new ResponseErrorException("Error updating person by id:" + view.id);
         }
-
-        return new ResponseView();
+        log.info(updatePrs.toString() + " size: " + updatePrs.getWrittenBooks().size());
     }
 
     /**
@@ -106,15 +119,21 @@ public class PersonServiceImpl implements PersonService {
      */
     @Override
     @Transactional
-    public ResponseView deletePerson(PersonView view) {
+    public void deletePerson(PersonView view) {
         try {
-            personDao.delete(Long.parseLong(view.id));
+            Long id = Long.parseLong(view.id);
+            /*
+             * Проверка на NPE
+             */
+            personDao.findOne(id).getId();
+            personDao.delete(id);
         } catch (NumberFormatException ex) {
             throw new ResponseErrorException("id must be a number(" + view.id + ")");
+        } catch (NullPointerException ex) {
+            throw new ResponseErrorException("Not found person by id: " + view.id);
         } catch (Exception ex) {
-            throw new ResponseErrorException("Error deleting person by id: " + view.id);
+            throw new ResponseErrorException("Error removing person by id: " + view.id);
         }
-        return new ResponseView();
     }
 
     /**
@@ -122,15 +141,15 @@ public class PersonServiceImpl implements PersonService {
      */
     @Override
     @Transactional(readOnly = true)
-    public ResponseView getPersonById(String id) {
-        Person p = null;
+    public PersonView getPersonById(String id) {
+        Person person = null;
         try {
-            p = personDao.findOne(Long.parseLong(id));
+            person = personDao.findOne(Long.parseLong(id));
 
             /*
              *Проверка на NPE
              */
-            p.getId();
+            person.getId();
         } catch (NumberFormatException ex) {
             throw new ResponseErrorException("Person id must be a number(" + id + ")");
         } catch (NullPointerException ex) {
@@ -139,20 +158,18 @@ public class PersonServiceImpl implements PersonService {
             throw new ResponseErrorException("Error requesting person");
         }
 
-        PersonView pV = new PersonView();
-        pV.id = p.getId().toString();
-        pV.firstName = p.getFirstName();
-        pV.secondName = p.getSecondName();
-        pV.surname = p.getSurname();
-        pV.birthday = p.getBirthday();
-
-        pV.writtenBooks = p.getBooks().stream()
+        PersonView personV = new PersonView();
+        personV.id = person.getId().toString();
+        personV.firstName = person.getFirstName();
+        personV.secondName = person.getSecondName();
+        personV.surname = person.getSurname();
+        personV.birthday = person.getBirthday();
+        personV.writtenBooks = person.getWrittenBooks().stream()
                 .map(BookView.getFuncBookToView())
-                .collect(Collectors.toSet());
-
-        log.info(pV.toString());
-
-        return new ResponseView(pV);
+                .sorted(Comparator.comparing(BookView::getName))
+                .collect(Collectors.toList());
+        log.info(personV.toString());
+        return personV;
     }
 
     /**
@@ -160,13 +177,10 @@ public class PersonServiceImpl implements PersonService {
      */
     @Override
     @Transactional(readOnly = true)
-    public ResponseView getAllPersons(PersonView view) {
-        ResponseView respP = new ResponseView();
-        respP.result = null;
-        respP.data =
-                StreamSupport.stream(personDao.findAll().spliterator(), false)
-                        .map(PersonView.getFuncPersonToView())
-                        .collect(Collectors.toSet());
-        return respP;
+    public Collection<PersonView> getAllPersons(PersonView view) {
+        return StreamSupport.stream(personDao.findAll().spliterator(), false)
+                .map(PersonView.getFuncPersonToView())
+                .sorted(Comparator.comparing(PersonView::getSurname))
+                .collect(Collectors.toList());
     }
 }

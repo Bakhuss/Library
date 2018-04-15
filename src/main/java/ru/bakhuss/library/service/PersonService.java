@@ -1,7 +1,8 @@
 package ru.bakhuss.library.service;
 
 import ru.bakhuss.library.view.PersonView;
-import ru.bakhuss.library.view.ResponseView;
+
+import java.util.Collection;
 
 /**
  * Сервис для работы с Person
@@ -11,35 +12,32 @@ public interface PersonService {
     /**
      * Добавить Person
      * @param view
-     * @return success value
      */
-    ResponseView addPerson(PersonView view);
+    void addPerson(PersonView view);
 
     /**
      * Обновить Person
      * @param view
-     * @return success value
      */
-    ResponseView updatePerson(PersonView view);
+    void updatePerson(PersonView view);
 
     /**
      * Удалить Person
      * @param view
-     * @return success value
      */
-    ResponseView deletePerson(PersonView view);
+    void deletePerson(PersonView view);
 
     /**
      * Получить Person по id
      * @param id
-     * @return JSON person value
+     * @return PersonView value
      */
-    ResponseView getPersonById(String id);
+    PersonView getPersonById(String id);
 
     /**
      * Получить всех Person по фильтру
      * @param view
-     * @return JSON persons values
+     * @return PersonViews values
      */
-    ResponseView getAllPersons(PersonView view);
+    Collection<PersonView> getAllPersons(PersonView view);
 }

@@ -56,7 +56,7 @@ public class Person {
      */
     @ManyToMany(mappedBy = "writers",
             fetch = FetchType.LAZY)
-    private Set<Book> books;
+    private Set<Book> writtenBooks;
 
     /**
      * Читательский билет
@@ -103,21 +103,21 @@ public class Person {
         this.birthday = birthday;
     }
 
-    public Set<Book> getBooks() {
-        return books;
+    public Set<Book> getWrittenBooks() {
+        return writtenBooks;
     }
 
-    public void setBooks(Set<Book> books) {
-        this.books = books;
+    public void setWrittenBooks(Set<Book> writtenBooks) {
+        this.writtenBooks = writtenBooks;
     }
 
     public void addWrittenBook(Book book) {
-        getBooks().add(book);
+        getWrittenBooks().add(book);
         book.getWriters().add(this);
     }
 
     public void removeWrittenBook(Book book) {
-        getBooks().remove(book);
+        getWrittenBooks().remove(book);
         book.getWriters().remove(this);
     }
 

@@ -52,7 +52,7 @@ public class Subscriber {
     /**
      * Список книг читателя
      */
-    @OneToMany(mappedBy = "catalog",
+    @OneToMany(mappedBy = "subscriber",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private Set<LibraryCard> catalogs;

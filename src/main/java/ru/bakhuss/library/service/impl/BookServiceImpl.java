@@ -47,20 +47,22 @@ public class BookServiceImpl implements BookService {
         if (view.name.isEmpty()) throw new ResponseErrorException("Name is required parameter");
         Book tmpBook = new Book();
         tmpBook.setName(view.name);
-        List<Long> ids = view.writers.stream()
-                .map(v -> Long.parseLong(v.id))
-                .collect(Collectors.toList());
-        try {
-            tmpBook.setWriters(personDao.findByIdIn(ids));
-        } catch (Exception ex) {
-            throw new ResponseErrorException("Error requesting writers");
-        }
         Book newBook = null;
         try {
             newBook = bookDao.save(tmpBook);
             newBook.getId();
         } catch (Exception ex) {
             throw new ResponseErrorException("Error saving book");
+        }
+        try {
+            List<Long> ids = null;
+            ids = view.writers.stream()
+                    .map(v -> Long.parseLong(v.id))
+                    .collect(Collectors.toList());
+            Set<Person> persons = personDao.findByIdIn(ids);
+            newBook.setWriters(persons);
+        } catch (Exception ex) {
+            log.info("Error save writers for book by id: " + newBook.getId() + "\n" + ex.getMessage());
         }
         log.info(newBook.toString());
     }
@@ -171,9 +173,18 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(readOnly = true)
     public Collection<BookView> getAllBooks(BookView view) {
-        return StreamSupport.stream(bookDao.findAll().spliterator(), false)
-                .map(BookView.getFuncBookToView())
-                .sorted(Comparator.comparing(BookView::getName))
-                .collect(Collectors.toList());
+        List<BookView> bookV = null;
+        try {
+            bookV = StreamSupport.stream(bookDao.findAll().spliterator(), false)
+                    .map(BookView.getFuncBookToView())
+                    .sorted(Comparator.comparing(BookView::getName))
+                    .collect(Collectors.toList());
+            bookV.size();
+        } catch (NullPointerException ex) {
+            throw new ResponseErrorException("Not found persons in db");
+        } catch (Exception ex) {
+            throw new ResponseErrorException("Error requesting persons from db");
+        }
+        return bookV;
     }
 }

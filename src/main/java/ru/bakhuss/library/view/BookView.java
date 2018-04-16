@@ -13,13 +13,7 @@ public class BookView {
 
     public String name;
 
-    public String totalCount;
-
-    public String availableCount;
-
     public Collection<PersonView> writers;
-
-    public Collection<PersonView> subscribers;
 
     public Collection<CatalogView> catalogs;
 
@@ -44,8 +38,6 @@ public class BookView {
     public String toString() {
         return "{id:" + id +
                 ";name:" + name +
-                ";totalCount:" + totalCount +
-                ";availableCount:" + availableCount +
                 ";writers:" + writers +
                 ";catalogs:" + catalogs +
                 "}";

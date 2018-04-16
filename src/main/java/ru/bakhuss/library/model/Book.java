@@ -10,13 +10,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Set;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * Книга
@@ -81,44 +76,14 @@ public class Book {
         this.writers = writers;
     }
 
-//    public void addWriter(Person person) {
-//        getWriters().add(person);
-//        person.getWrittenBooks().add(this);
-//    }
-//
-//    public void removeWriter(Person person) {
-//        getWriters().remove(person);
-//        person.getWrittenBooks().remove(this);
-//    }
-
     public void addWriters(Set<Person> prs) {
-        for (Person p : prs) {
-            getWriters().add(p);
-            p.getWrittenBooks().add(this);
-        }
-
         getWriters().addAll(prs);
         prs.forEach(p -> p.getWrittenBooks().add(this));
-
-//        for (Person p : persons) {
-//            getWriters().add(p);
-//            p.getWrittenBooks().add(this);
-//        }
     }
 
     public void removeWriters(Set<Person> prs) {
-        for (Person p : prs) {
-            getWriters().remove(p);
-            p.getWrittenBooks().remove(this);
-        }
-
         getWriters().removeAll(prs);
         prs.forEach(p -> p.getWrittenBooks().remove(this));
-
-//        for (Person p : persons) {
-//            getWriters().remove(p);
-//            p.getWrittenBooks().remove(this);
-//        }
     }
 
 

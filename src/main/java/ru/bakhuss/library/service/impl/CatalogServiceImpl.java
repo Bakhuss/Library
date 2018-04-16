@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bakhuss.library.dao.BookDao;
@@ -13,15 +12,14 @@ import ru.bakhuss.library.dao.CatalogDao;
 import ru.bakhuss.library.error.ResponseErrorException;
 import ru.bakhuss.library.model.Book;
 import ru.bakhuss.library.model.Catalog;
-import ru.bakhuss.library.model.Person;
 import ru.bakhuss.library.service.CatalogService;
 import ru.bakhuss.library.view.CatalogView;
 import ru.bakhuss.library.view.PersonView;
-import ru.bakhuss.library.view.ResponseView;
 
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -46,21 +44,23 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     @Transactional
     public void addCatalog(CatalogView view) {
+        if (view.bookId.isEmpty()) throw new ResponseErrorException("Book is required parameter");
         Catalog tempC = new Catalog();
-        Book b = null;
+        Book book = null;
         try {
-            b = bookDao.findOne(Long.parseLong(view.bookId));
-
+            book = bookDao.findOne(Long.parseLong(view.bookId));
             /*
              * Проверка на NPE
              */
-            b.getId();
+            book.getId();
         } catch (NumberFormatException ex) {
             throw new ResponseErrorException("Book id must be a number(" + view.bookId + ")");
         } catch (NullPointerException ex) {
             throw new ResponseErrorException("Not found book by id: " + view.bookId);
+        } catch (Exception ex) {
+            throw new ResponseErrorException("Error requesting book by id: " + view.bookId + " from db");
         }
-        tempC.setBook(b);
+        tempC.setBook(book);
         tempC.setDescription(view.description);
         try {
             tempC.setTotalCount(Integer.parseInt(view.totalCount));
@@ -70,7 +70,8 @@ public class CatalogServiceImpl implements CatalogService {
         Catalog newC = null;
         try {
             newC = catalogDao.save(tempC);
-        } catch (JpaSystemException e) {
+            newC.getId();
+        } catch (Exception ex) {
             throw new ResponseErrorException("Error saving new catalog");
         }
         log.info(newC.toString());
@@ -85,7 +86,6 @@ public class CatalogServiceImpl implements CatalogService {
         Catalog cat = null;
         try {
             cat = catalogDao.findOne(Long.parseLong(view.id));
-
             /*
              * Проверка на NPE
              */
@@ -95,15 +95,20 @@ public class CatalogServiceImpl implements CatalogService {
         } catch (NullPointerException ex) {
             throw new ResponseErrorException("Not found catalog by id: " + view.id);
         } catch (Exception ex) {
-            throw new ResponseErrorException("Error requesting catalog");
+            throw new ResponseErrorException("Error requesting catalog by id: " + view.id);
         }
-        cat.setTotalCount(Integer.valueOf(view.totalCount));
+        try {
+            cat.setTotalCount(Integer.valueOf(view.totalCount));
+        } catch (NumberFormatException ex) {
+            throw new ResponseErrorException("Total count must be a number (" + view.totalCount + ")");
+        }
         cat.setDescription(view.description);
         try {
             catalogDao.save(cat);
         } catch (Exception ex) {
             throw new ResponseErrorException("Error updating catalog by id: " + view.id);
         }
+        log.info(cat.toString());
     }
 
     /**
@@ -113,9 +118,16 @@ public class CatalogServiceImpl implements CatalogService {
     @Transactional
     public void deleteCatalog(CatalogView view) {
         try {
+            Long id = Long.parseLong(view.id);
+            /*
+             * Проверка на NPE
+             */
+            catalogDao.findOne(id).getId();
             catalogDao.delete(Long.parseLong(view.id));
         } catch (NumberFormatException ex) {
             throw new ResponseErrorException("Catalog id must be a number(" + view.id + ")");
+        } catch (NullPointerException ex) {
+            throw new ResponseErrorException("Not found catalog by id: " + view.id);
         } catch (Exception ex) {
             throw new ResponseErrorException("Error deleting catalog by id: " + view.id);
         }
@@ -130,7 +142,6 @@ public class CatalogServiceImpl implements CatalogService {
         Catalog cat = null;
         try {
             cat = catalogDao.findOne(Long.parseLong(id));
-
             /*
              * Проверка на NPE
              */
@@ -139,29 +150,31 @@ public class CatalogServiceImpl implements CatalogService {
             throw new ResponseErrorException("Catalog id must be a number(" + id + ")");
         } catch (NullPointerException ex) {
             throw new ResponseErrorException("Not found catalog by id: " + id);
-        } catch (JpaSystemException ex) {
-            throw new ResponseErrorException("Error getting catalog by id: " + id);
+        } catch (Exception ex) {
+            throw new ResponseErrorException("Error requesting catalog by id: " + id + " from db");
         }
         CatalogView view = new CatalogView();
         view.id = cat.getId().toString();
         view.bookId = cat.getBook().getId().toString();
         view.bookName = cat.getBook().getName();
         view.description = cat.getDescription();
-        Function<Person, PersonView> funcP = p -> {
-            PersonView pV = new PersonView();
-            pV.id = p.getId().toString();
-            pV.firstName = p.getFirstName();
-            pV.secondName = p.getSecondName();
-            pV.surname = p.getSurname();
-            pV.birthday = p.getBirthday();
-            return pV;
-        };
+//        Function<Person, PersonView> funcP = p -> {
+//            PersonView pV = new PersonView();
+//            pV.id = p.getId().toString();
+//            pV.firstName = p.getFirstName();
+//            pV.secondName = p.getSecondName();
+//            pV.surname = p.getSurname();
+//            pV.birthday = p.getBirthday();
+//            return pV;
+//        };
         view.writers = cat.getBook().getWriters().stream()
-                .map(funcP)
-                .collect(Collectors.toSet());
+                .map(PersonView.getFuncPersonToView())
+                .sorted(Comparator.comparing(PersonView::getSurname))
+                .collect(Collectors.toList());
         view.totalCount = cat.getTotalCount().toString();
-        view.subscribers = new HashSet<>();
 
+        view.subscribers = new HashSet<>();
+        log.info(view.toString());
         return view;
     }
 
@@ -170,28 +183,20 @@ public class CatalogServiceImpl implements CatalogService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Set<CatalogView> getAllCatalogs(CatalogView view) {
-        Function<Catalog, CatalogView> funcC = c -> {
-            CatalogView cV = new CatalogView();
-            cV.id = c.getId().toString();
-            cV.bookId = c.getBook().getId().toString();
-            cV.bookName = c.getBook().getName();
-            cV.description = c.getDescription();
-            cV.writers = c.getBook().getWriters().stream()
-                    .map(PersonView.getFuncPersonToView())
-                    .collect(Collectors.toSet());
-            cV.totalCount = c.getTotalCount().toString();
-            return cV;
-        };
+    public Collection<CatalogView> getAllCatalogs(CatalogView view) {
         Set<CatalogView> catalogV = null;
         try {
             catalogV =
                     StreamSupport.stream(catalogDao.findAll().spliterator(), false)
-                            .map(funcC)
+                            .map(CatalogView.getFuncCatalogToView())
                             .collect(Collectors.toSet());
+            catalogV.size();
+        } catch (NullPointerException ex) {
+            throw new ResponseErrorException("Not found catalogs from db");
         } catch (Exception ex) {
-            throw new ResponseErrorException("Error requesting subscribers");
+            throw new ResponseErrorException("Error requesting catalogs from db");
         }
+        log.info(catalogV.toString());
         return catalogV;
     }
 }

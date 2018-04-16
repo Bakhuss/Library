@@ -2,7 +2,7 @@ package ru.bakhuss.library.service;
 
 import ru.bakhuss.library.view.CatalogView;
 
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * Сервис для работы с Catalog
@@ -10,13 +10,13 @@ import java.util.Set;
 public interface CatalogService {
 
     /**
-     * Добавить в каталог запись о книге
+     * Добавить в Catalog запись о книге
      * @param view
      */
     void addCatalog(CatalogView view);
 
     /**
-     * Обновить в каталоге запись о книге
+     * Обновить в Catalog запись о книге
      * @param view
      */
     void updateCatalog(CatalogView view);
@@ -35,13 +35,9 @@ public interface CatalogService {
     CatalogView getCatalogById(String id);
 
     /**
-     * Получить все записи из Catalog
-     * @return CatalogViews values
-     */
-    /**
      * Получить все записи из Catalog по фильтру
      * @param view
      * @return CatalogViews values
      */
-    Set<CatalogView> getAllCatalogs(CatalogView view);
+    Collection<CatalogView> getAllCatalogs(CatalogView view);
 }

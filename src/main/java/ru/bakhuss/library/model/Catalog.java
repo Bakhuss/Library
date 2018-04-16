@@ -46,12 +46,11 @@ public class Catalog {
     /**
      * Список читателей книги
      */
-    @OneToMany(
+    @OneToMany(mappedBy = "catalog",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @JoinColumn(name = "catalog_id")
-    private Set<SubscriberCatalog> subscribers;
+    private Set<LibraryCard> subscribers;
 
 
     public Long getId() {
@@ -82,20 +81,20 @@ public class Catalog {
         this.totalCount = totalCount;
     }
 
-    public Set<SubscriberCatalog> getSubscribers() {
+    public Set<LibraryCard> getSubscribers() {
         return subscribers;
     }
 
-    public void setSubscribers(Set<SubscriberCatalog> subscribers) {
+    public void setSubscribers(Set<LibraryCard> subscribers) {
         this.subscribers = subscribers;
     }
 
-    public void addSubscriber(SubscriberCatalog subscriber) {
+    public void addSubscriber(LibraryCard subscriber) {
         getSubscribers().add(subscriber);
         subscriber.setCatalog(this);
     }
 
-    public void removeSubscriber(SubscriberCatalog subscriber) {
+    public void removeSubscriber(LibraryCard subscriber) {
         getSubscribers().remove(subscriber);
         subscriber.setCatalog(null);
     }

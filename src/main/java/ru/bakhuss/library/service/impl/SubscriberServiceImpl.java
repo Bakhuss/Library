@@ -9,15 +9,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bakhuss.library.dao.PersonDao;
 import ru.bakhuss.library.dao.SubscriberDao;
-import ru.bakhuss.library.dao.SubscriberCatalogDao;
+import ru.bakhuss.library.dao.LibraryCardDao;
 import ru.bakhuss.library.error.ResponseErrorException;
 import ru.bakhuss.library.model.Person;
 import ru.bakhuss.library.model.Subscriber;
 import ru.bakhuss.library.service.SubscriberService;
-import ru.bakhuss.library.view.ResponseView;
 import ru.bakhuss.library.view.SubscriberView;
 
-import java.util.function.Function;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -28,15 +29,15 @@ public class SubscriberServiceImpl implements SubscriberService {
 
     private final SubscriberDao subscriberDao;
     private final PersonDao personDao;
-    private final SubscriberCatalogDao subscriberCatalogDao;
+    private final LibraryCardDao libraryCardDao;
 
     @Autowired
     public SubscriberServiceImpl(SubscriberDao subscriberDao,
                                  PersonDao personDao,
-                                 SubscriberCatalogDao subscriberCatalogDao) {
+                                 LibraryCardDao libraryCardDao) {
         this.subscriberDao = subscriberDao;
         this.personDao = personDao;
-        this.subscriberCatalogDao = subscriberCatalogDao;
+        this.libraryCardDao = libraryCardDao;
     }
 
 
@@ -45,7 +46,7 @@ public class SubscriberServiceImpl implements SubscriberService {
      */
     @Override
     @Transactional
-    public ResponseView addSubscriber(SubscriberView view) {
+    public void addSubscriber(SubscriberView view) {
         Subscriber sub = null;
         Person person = null;
         try {
@@ -59,6 +60,8 @@ public class SubscriberServiceImpl implements SubscriberService {
             throw new ResponseErrorException("Person id must be a number(" + view.personId + ")");
         } catch (NullPointerException ex) {
             throw new ResponseErrorException("Not found person by id: " + view.personId);
+        } catch (Exception ex) {
+            throw new ResponseErrorException("Error requesting person from db");
         }
 
         try {
@@ -74,14 +77,14 @@ public class SubscriberServiceImpl implements SubscriberService {
             sub.setSubscribeDate(view.subscribeDate);
             sub.setUnsubscribeDate(null);
         }
-
+        Subscriber newSub = null;
         try {
-            subscriberDao.save(sub);
+            newSub = subscriberDao.save(sub);
+            newSub.getId();
         } catch (Exception ex) {
             throw new ResponseErrorException("Error saving subscriber");
         }
-        log.info(sub.toString());
-        return new ResponseView();
+        log.info(newSub.toString());
     }
 
     /**
@@ -89,7 +92,7 @@ public class SubscriberServiceImpl implements SubscriberService {
      */
     @Override
     @Transactional
-    public ResponseView updateSubscriber(SubscriberView view) {
+    public void updateSubscriber(SubscriberView view) {
         Subscriber sub = null;
         try {
             sub = subscriberDao.findOne(Long.parseLong(view.personId));
@@ -106,9 +109,6 @@ public class SubscriberServiceImpl implements SubscriberService {
         }
 
         log.info(sub.toString());
-
-
-        return new ResponseView();
     }
 
     /**
@@ -116,7 +116,7 @@ public class SubscriberServiceImpl implements SubscriberService {
      */
     @Override
     @Transactional
-    public ResponseView deleteSubscriber(SubscriberView view) {
+    public void deleteSubscriber(SubscriberView view) {
         Subscriber sub = null;
         try {
             subscriberDao.findOne(Long.parseLong(view.personId));
@@ -129,16 +129,16 @@ public class SubscriberServiceImpl implements SubscriberService {
         } catch (NullPointerException ex) {
             throw new ResponseErrorException("Not found subscriber by id: " + view.personId);
         } catch (Exception ex) {
-            throw new ResponseErrorException("Error requesting data");
+            throw new ResponseErrorException("Error requesting subscriber from db");
         }
         sub.setUnsubscribeDate(view.unsubscribeDate);
-
+        Subscriber newSub = null;
         try {
-            subscriberDao.save(sub);
+            newSub = subscriberDao.save(sub);
         } catch (Exception ex) {
-            throw new ResponseErrorException("Error deleting subscriber by id: " + view.personId);
+            throw new ResponseErrorException("Error removing subscriber by id: " + view.personId);
         }
-        return new ResponseView();
+        log.info(newSub.toString());
     }
 
     /**
@@ -146,31 +146,29 @@ public class SubscriberServiceImpl implements SubscriberService {
      */
     @Override
     @Transactional(readOnly = true)
-    public ResponseView getSubscriberById(String id) {
+    public SubscriberView getSubscriberById(String id) {
         Subscriber sub = null;
         try {
             sub = subscriberDao.findOne(Long.parseLong(id));
-
             /*
              * Проверка на NPE
              */
             sub.getId();
         } catch (NumberFormatException ex) {
-            throw new ResponseErrorException("id must be a number");
+            throw new ResponseErrorException("Subscriber id must be a number(" + id + ")");
         } catch (NullPointerException ex) {
             throw new ResponseErrorException("Not found subscriber by id: " + id);
         } catch (Exception ex) {
-            throw new ResponseErrorException("Error requesting data");
+            throw new ResponseErrorException("Error requesting subscriber from db");
         }
-        SubscriberView subV = new SubscriberView();
-        subV.personId = sub.getId().toString();
-        subV.firstName = sub.getPerson().getFirstName();
-        subV.secondName = sub.getPerson().getSecondName();
-        subV.surname = sub.getPerson().getSurname();
-        subV.subscribeDate = sub.getSubscribeDate();
-        subV.unsubscribeDate = sub.getUnsubscribeDate();
-
-        return new ResponseView(subV);
+        SubscriberView subView = new SubscriberView();
+        subView.personId = sub.getId().toString();
+        subView.firstName = sub.getPerson().getFirstName();
+        subView.secondName = sub.getPerson().getSecondName();
+        subView.surname = sub.getPerson().getSurname();
+        subView.subscribeDate = sub.getSubscribeDate();
+        subView.unsubscribeDate = sub.getUnsubscribeDate();
+        return subView;
     }
 
     /**
@@ -178,27 +176,17 @@ public class SubscriberServiceImpl implements SubscriberService {
      */
     @Override
     @Transactional(readOnly = true)
-    public ResponseView getAllSubscribers(SubscriberView view) {
-        Function<Subscriber, SubscriberView> func = s -> {
-            SubscriberView subV = new SubscriberView();
-            subV.personId = s.getId().toString();
-            subV.firstName = s.getPerson().getFirstName();
-            subV.secondName = s.getPerson().getSecondName();
-            subV.surname = s.getPerson().getSurname();
-            subV.subscribeDate = s.getSubscribeDate();
-            subV.unsubscribeDate = s.getUnsubscribeDate();
-            return subV;
-        };
-        ResponseView viewR = new ResponseView();
-        viewR.result = null;
+    public Collection<SubscriberView> getAllSubscribers(SubscriberView view) {
+        List<SubscriberView> subView = null;
         try {
-            viewR.data =
+            subView =
                     StreamSupport.stream(subscriberDao.findAll().spliterator(), false)
-                            .map(func).collect(Collectors.toSet());
+                            .map(SubscriberView.getFuncSubToView())
+                            .sorted(Comparator.comparing(SubscriberView::getSurname))
+                            .collect(Collectors.toList());
         } catch (Exception ex) {
             throw new ResponseErrorException("Error requesting subscribers");
         }
-
-        return viewR;
+        return subView;
     }
 }

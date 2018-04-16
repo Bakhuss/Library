@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS Subscriber (
     unsubscribe_date DATE
 );
 
-CREATE TABLE IF NOT EXISTS Subscriber_Catalog (
+CREATE TABLE IF NOT EXISTS Library_Card (
     id            INTEGER PRIMARY KEY AUTO_INCREMENT
                           NOT NULL,
     version       INTEGER,

@@ -1,7 +1,8 @@
 package ru.bakhuss.library.service;
 
-import ru.bakhuss.library.view.ResponseView;
 import ru.bakhuss.library.view.SubscriberView;
+
+import java.util.Collection;
 
 /**
  * Сервис для работы с Subscriber
@@ -11,35 +12,32 @@ public interface SubscriberService {
     /**
      * Добавить Subscriber
      * @param view
-     * @return success value
      */
-    ResponseView addSubscriber(SubscriberView view);
+    void addSubscriber(SubscriberView view);
 
     /**
      * Обновить Subscriber
      * @param view
-     * @return success value
      */
-    ResponseView updateSubscriber(SubscriberView view);
+    void updateSubscriber(SubscriberView view);
 
     /**
      * Удалить Subscriber
      * @param view
-     * @return success value
      */
-    ResponseView deleteSubscriber(SubscriberView view);
+    void deleteSubscriber(SubscriberView view);
 
     /**
      * Получить Subscriber по id
      * @param id
-     * @return JSON subscriber value
+     * @return SubscriberView value
      */
-    ResponseView getSubscriberById(String id);
+    SubscriberView getSubscriberById(String id);
 
     /**
      * Получить Subscribers по фильтру
-     * @return JSON subscribers values
+     * @return SubscriberViews values
      */
-    ResponseView getAllSubscribers(SubscriberView view);
+    Collection<SubscriberView> getAllSubscribers(SubscriberView view);
 
 }

@@ -30,17 +30,17 @@ public class CatalogView {
 
     public static Function<Catalog, CatalogView> getFuncCatalogToView() {
         return c -> {
-            CatalogView cV = new CatalogView();
-            cV.id = c.getId().toString();
-            cV.bookId = c.getBook().getId().toString();
-            cV.bookName = c.getBook().getName();
-            cV.description = c.getDescription();
-            cV.writers = c.getBook().getWriters().stream()
+            CatalogView view = new CatalogView();
+            view.id = c.getId().toString();
+            view.bookId = c.getBook().getId().toString();
+            view.bookName = c.getBook().getName();
+            view.description = c.getDescription();
+            view.writers = c.getBook().getWriters().stream()
                     .map(PersonView.getFuncPersonToView())
                     .sorted(Comparator.comparing(PersonView::getSurname))
                     .collect(Collectors.toList());
-            cV.totalCount = c.getTotalCount().toString();
-            return cV;
+            view.totalCount = c.getTotalCount().toString();
+            return view;
         };
     }
 

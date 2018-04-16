@@ -179,9 +179,6 @@ public class BookServiceImpl implements BookService {
                     .map(BookView.getFuncBookToView())
                     .sorted(Comparator.comparing(BookView::getName))
                     .collect(Collectors.toList());
-            bookV.size();
-        } catch (NullPointerException ex) {
-            throw new ResponseErrorException("Not found persons in db");
         } catch (Exception ex) {
             throw new ResponseErrorException("Error requesting persons from db");
         }

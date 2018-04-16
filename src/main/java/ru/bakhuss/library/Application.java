@@ -9,20 +9,22 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 import ru.bakhuss.library.controller.impl.BookControllerImpl;
 import ru.bakhuss.library.controller.impl.CatalogControllerImpl;
+import ru.bakhuss.library.controller.impl.LibraryCardControllerImpl;
 import ru.bakhuss.library.controller.impl.PersonControllerImpl;
 import ru.bakhuss.library.controller.impl.SubscriberControllerImpl;
 import ru.bakhuss.library.dao.BookDao;
 import ru.bakhuss.library.dao.CatalogDao;
 import ru.bakhuss.library.dao.PersonDao;
 import ru.bakhuss.library.dao.SubscriberDao;
-import ru.bakhuss.library.dao.SubscriberCatalogDao;
+import ru.bakhuss.library.dao.LibraryCardDao;
 import ru.bakhuss.library.error.ResponseErrorException;
 import ru.bakhuss.library.service.impl.BookServiceImpl;
 import ru.bakhuss.library.service.impl.CatalogServiceImpl;
 import ru.bakhuss.library.service.impl.PersonServiceImpl;
-import ru.bakhuss.library.service.impl.SubscriberCatalogServiceImpl;
+import ru.bakhuss.library.service.impl.LibraryCardServiceImpl;
 import ru.bakhuss.library.service.impl.SubscriberServiceImpl;
 
+import java.time.Clock;
 import java.util.Date;
 
 /**
@@ -35,7 +37,7 @@ import java.util.Date;
         CatalogServiceImpl.class, CatalogDao.class, CatalogControllerImpl.class,
         PersonServiceImpl.class, PersonDao.class, PersonControllerImpl.class,
         SubscriberServiceImpl.class, SubscriberDao.class, SubscriberControllerImpl.class,
-        SubscriberCatalogServiceImpl.class, SubscriberCatalogDao.class, SubscriberCatalogServiceImpl.class,
+        LibraryCardServiceImpl.class, LibraryCardDao.class, LibraryCardControllerImpl.class,
         ResponseErrorException.class
 })
 public class Application {

@@ -49,25 +49,13 @@ public class Subscriber {
     @OneToOne(fetch = FetchType.LAZY)
     private Person person;
 
-
     /**
      * Список книг читателя
      */
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "subscriber_id")
-    private Set<SubscriberCatalog> catalogs;
-
-//    /**
-//     * Список книг читателя
-//     */
-//
-//    @ManyToMany(
-//            mappedBy = "subscriber",
-//            fetch = FetchType.LAZY,
-//            cascade = CascadeType.ALL,
-//            optional = false
-//    )
-//    private Set<SubscriberCatalog> catalogs;
+    @OneToMany(mappedBy = "catalog",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<LibraryCard> catalogs;
 
 
     public Long getId() {
@@ -98,20 +86,20 @@ public class Subscriber {
         this.person = person;
     }
 
-    public Set<SubscriberCatalog> getCatalogs() {
+    public Set<LibraryCard> getCatalogs() {
         return catalogs;
     }
 
-    public void setCatalogs(Set<SubscriberCatalog> catalogs) {
+    public void setCatalogs(Set<LibraryCard> catalogs) {
         this.catalogs = catalogs;
     }
 
-    public void addCatalog(SubscriberCatalog catalog) {
+    public void addCatalog(LibraryCard catalog) {
         getCatalogs().add(catalog);
         catalog.setSubscriber(this);
     }
 
-    public void removeCatalog(SubscriberCatalog catalog) {
+    public void removeCatalog(LibraryCard catalog) {
         getCatalogs().remove(catalog);
         catalog.setSubscriber(null);
     }

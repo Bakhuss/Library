@@ -31,7 +31,8 @@ public class SubscriberControllerImpl implements SubscriberController {
     @Override
     @PostMapping(value = "/save")
     public ResponseView addSubscriber(@RequestBody SubscriberView view) {
-        return subscriberService.addSubscriber(view);
+        subscriberService.addSubscriber(view);
+        return new ResponseView(true);
     }
 
     /**
@@ -40,7 +41,8 @@ public class SubscriberControllerImpl implements SubscriberController {
     @Override
     @PostMapping
     public ResponseView updateSubscriber(@RequestBody SubscriberView view) {
-        return subscriberService.updateSubscriber(view);
+        subscriberService.updateSubscriber(view);
+        return new ResponseView(true);
     }
 
     /**
@@ -49,7 +51,8 @@ public class SubscriberControllerImpl implements SubscriberController {
     @Override
     @PostMapping(value = "/delete")
     public ResponseView deleteSubscriber(@RequestBody SubscriberView view) {
-        return subscriberService.deleteSubscriber(view);
+        subscriberService.deleteSubscriber(view);
+        return new ResponseView(true);
     }
 
     /**
@@ -58,7 +61,7 @@ public class SubscriberControllerImpl implements SubscriberController {
     @Override
     @GetMapping(value = "/{id}")
     public ResponseView getSubscriberById(@PathVariable("id") String id) {
-        return subscriberService.getSubscriberById(id);
+        return new ResponseView(subscriberService.getSubscriberById(id));
     }
 
     /**
@@ -67,6 +70,6 @@ public class SubscriberControllerImpl implements SubscriberController {
     @Override
     @PostMapping(value = "/list")
     public ResponseView getSubscribers(@RequestBody SubscriberView view) {
-        return subscriberService.getAllSubscribers(view);
+        return new ResponseView(subscriberService.getAllSubscribers(view));
     }
 }

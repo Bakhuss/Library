@@ -15,8 +15,8 @@ import java.util.Date;
 /**
  * Связь читателя с книгой из Catalog (library card)
  */
-@Entity(name = "Subscriber_Catalog")
-public class SubscriberCatalog {
+@Entity(name = "Library_Card")
+public class LibraryCard {
 
     @Id
     @GeneratedValue

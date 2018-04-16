@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.Date;
 
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public class SubscriberCatalogView {
+public class LibraryCardView {
 
     public String id;
 

@@ -52,6 +52,18 @@ public class Person {
     private Date birthday;
 
     /**
+     * Телефон
+     */
+    @Column(length = 15)
+    private String phone;
+
+    /**
+     * E-mail
+     */
+    @Column(length = 50)
+    private String email;
+
+    /**
      * Книги, написанные человеком
      */
     @ManyToMany(mappedBy = "writers",
@@ -103,6 +115,22 @@ public class Person {
         this.birthday = birthday;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Set<Book> getWrittenBooks() {
         return writtenBooks;
     }
@@ -139,6 +167,8 @@ public class Person {
                 ";secondName:" + getSecondName() +
                 ";surname:" + getSurname() +
                 ";birthday:" + getBirthday() +
+                ";phone:" + getPhone() +
+                ";email:" + getEmail() +
                 "}";
     }
 }

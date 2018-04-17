@@ -12,7 +12,9 @@ CREATE TABLE IF NOT EXISTS Person (
     first_name  VARCHAR (50),
     second_name VARCHAR (50),
     surname     VARCHAR (50),
-    birthday    DATE
+    birthday    DATE,
+    phone       VARCHAR (15),
+    email       VARCHAR (50)
 );
 
 CREATE TABLE IF NOT EXISTS Book_Writer (

@@ -22,6 +22,10 @@ public class PersonView {
     @JsonFormat(pattern = "dd-MM-yyyy")
     public Date birthday;
 
+    public String phone;
+
+    public String email;
+
     public Collection<BookView> writtenBooks;
 
     public Collection<BookView> subscribeBooks;
@@ -38,6 +42,8 @@ public class PersonView {
             pV.secondName = p.getSecondName();
             pV.surname = p.getSurname();
             pV.birthday = p.getBirthday();
+            pV.phone = p.getPhone();
+            pV.email = p.getEmail();
             return pV;
         };
     }
@@ -52,6 +58,8 @@ public class PersonView {
                 ";secondName:" + secondName +
                 ";surname:" + surname +
                 ";birthday:" + birthday +
+                ";phone:" + phone +
+                ";email:" + email +
                 "}";
     }
 }

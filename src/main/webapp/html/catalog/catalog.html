@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Выше 3 Мета-теги ** должны прийти в первую очередь в голове; любой другой руководитель контент *после* эти теги -->
-        <title>Library</title>
+        <title>Library - catalog</title>
 
         <!-- Bootstrap -->
         <link href="../../vendor/css/bootstrap.min.css" rel="stylesheet">
@@ -17,50 +17,82 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
         <link rel="stylesheet" href="../../css/common.css">
+
+        <link rel="import" href="../book/book.html">
     </head>
     <body>
-        <div class="text-center">
-            <h1>Add Person</h1><br>
+        <div class="container-fluid text-center" id="person">
+            <h1>Catalog</h1><br>
             <form class="form-horizontal">
                 <div class="form-group">
-                    <label for="surname" class="col-sm-4 control-label">Surname</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" id="surname">
-                    </div>
+                    <script>
+                        var link = document.querySelector('link[rel=import]');
+                        var content = link.import.querySelector('#book');
+                        var node = content.cloneNode(true);
+                        console.log(node.getElementsByTagName('h1').item(0));
+                        document.body.getElementsByTagName('form').item(0)
+                            .appendChild(node);
+                        <!--document.body.getElementsByTagName('form').item(0)-->
+                            <!--.appendChild(content.cloneNode(true));-->
+                        <!--document.body.appendChild(content.cloneNode(true));-->
+                    </script>
                 </div>
                 <div class="form-group">
+                    <label for="description" class="col-sm-4 control-label">Description</label>
+                    <div class="col-sm-4">
+                        <textarea class="form-control" rows="5"></textarea>
+                        <!--<input type="text" class="form-control" id="description">-->
+                    </div>
+                </div>
+
+                <!--
+                <div class="form-group">
                     <label for="firstName" class="col-sm-4 control-label">First name</label>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <input type="text" class="form-control" id="firstName">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="secondName" class="col-sm-4 control-label">Second name</label>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <input type="text" class="form-control" id="secondName">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="birthday" class="col-sm-4 control-label">Birthday</label>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <input type="date" class="form-control" id="birthday">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="phone" class="col-sm-4 control-label">Phone</label>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <input type="tel" class="form-control" id="phone" placeholder="+7... or 8...">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="email" class="col-sm-4 control-label">Email</label>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <input type="email" class="form-control" id="email" placeholder="example@example.com">
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-offset-4 col-sm-6">
-                        <button type="submit" class="btn btn-default">Sign in</button>
+                    <label for="writtenBooks" class="col-sm-4 control-label">Written books</label>
+                    <div class="col-sm-4">
+                        <a href="#" class="form-control" id="writtenBooks">View</a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="libraryCard" class="col-sm-4 control-label">Library card</label>
+                    <div class="col-sm-4">
+                        <a href="#" class="form-control" id="libraryCard">View</a>
+                    </div>
+                </div>
+                -->
+
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-4">
+                        <button type="submit" class="btn btn-default">Save</button>
                         <button type="reset" class="btn btn-default">Clear form</button>
                     </div>
                 </div>

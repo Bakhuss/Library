@@ -8,8 +8,9 @@ public class ResponseView {
     public String result;
     public Object data;
 
+
     public ResponseView() {
-//        result = "success";
+
     }
 
     public ResponseView(boolean result) {

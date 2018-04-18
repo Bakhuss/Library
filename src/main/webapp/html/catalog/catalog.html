@@ -25,71 +25,25 @@
             <h1>Catalog</h1><br>
             <form class="form-horizontal">
                 <div class="form-group">
-                    <script>
-                        var link = document.querySelector('link[rel=import]');
-                        var content = link.import.querySelector('#book');
-                        var node = content.cloneNode(true);
-                        console.log(node.getElementsByTagName('h1').item(0));
-                        document.body.getElementsByTagName('form').item(0)
-                            .appendChild(node);
-                        <!--document.body.getElementsByTagName('form').item(0)-->
-                            <!--.appendChild(content.cloneNode(true));-->
-                        <!--document.body.appendChild(content.cloneNode(true));-->
-                    </script>
+                    <script src="../../js/InjectBookToCatalog.js"></script>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 hidden-xs control-label">Amount</label>
+                    <label for="total" class="col-sm-1 control-label">total</label>
+                    <div class="col-sm-1">
+                        <input type="text" class="form-control" id="total">
+                    </div>
+                    <label for="current" class="col-sm-1 control-label">current</label>
+                    <div class="col-sm-1">
+                        <input type="text" class="form-control" id="current">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="description" class="col-sm-4 control-label">Description</label>
                     <div class="col-sm-4">
-                        <textarea class="form-control" rows="5"></textarea>
-                        <!--<input type="text" class="form-control" id="description">-->
+                        <textarea class="form-control" rows="5" id="description"></textarea>
                     </div>
                 </div>
-
-                <!--
-                <div class="form-group">
-                    <label for="firstName" class="col-sm-4 control-label">First name</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="firstName">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="secondName" class="col-sm-4 control-label">Second name</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" id="secondName">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="birthday" class="col-sm-4 control-label">Birthday</label>
-                    <div class="col-sm-4">
-                        <input type="date" class="form-control" id="birthday">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="phone" class="col-sm-4 control-label">Phone</label>
-                    <div class="col-sm-4">
-                        <input type="tel" class="form-control" id="phone" placeholder="+7... or 8...">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="email" class="col-sm-4 control-label">Email</label>
-                    <div class="col-sm-4">
-                        <input type="email" class="form-control" id="email" placeholder="example@example.com">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="writtenBooks" class="col-sm-4 control-label">Written books</label>
-                    <div class="col-sm-4">
-                        <a href="#" class="form-control" id="writtenBooks">View</a>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="libraryCard" class="col-sm-4 control-label">Library card</label>
-                    <div class="col-sm-4">
-                        <a href="#" class="form-control" id="libraryCard">View</a>
-                    </div>
-                </div>
-                -->
-
                 <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-4">
                         <button type="submit" class="btn btn-default">Save</button>

@@ -17,11 +17,13 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
         <link rel="stylesheet" href="../../css/common.css">
+
     </head>
     <body>
         <div class="container-fluid text-center" id="person">
             <h1>Person</h1><br>
             <form class="form-horizontal">
+                <input type="hidden" name="id" value="" id="id">
                 <div class="form-group">
                     <label for="surname" class="col-sm-4 control-label">Surname</label>
                     <div class="col-sm-4">
@@ -72,7 +74,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-4">
-                        <button type="submit" class="btn btn-default">Save</button>
+                        <button type="submit" id="addPerson" class="btn btn-default">Save</button>
                         <button type="reset" class="btn btn-default">Clear form</button>
                     </div>
                 </div>
@@ -80,8 +82,10 @@
         </div>
 
         <!-- на jQuery (необходим для Bootstrap - х JavaScript плагины) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+        <script src="../../js/jquery.min.js"></script>
         <!-- Включают все скомпилированные плагины (ниже), или включать отдельные файлы по мере необходимости -->
         <script src="../../vendor/js/bootstrap.min.js"></script>
+        <script src="../../js/forms/form.js"></script>
     </body>
 </html>

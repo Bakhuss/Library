@@ -19,7 +19,7 @@ public class PersonView {
 
     public String surname;
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     public Date birthday;
 
     public String phone;

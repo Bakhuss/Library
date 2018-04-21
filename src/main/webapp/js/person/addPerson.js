@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(function () {
     $("#addPerson").click(function () {
             console.log('PERSON');
             var person = {

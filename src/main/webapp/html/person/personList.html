@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Library Card</title>
+        <title>Person List</title>
 
         <link href="../../vendor/css/bootstrap.min.css" rel="stylesheet">
 
@@ -19,8 +19,24 @@
         <![endif]-->
     </head>
     <body>
-        <div class="container-fluid text-center" id="libraryCard">
-            <h1>Library Card</h1>
+        <div class="container-fluid text-center" id="personList">
+            <h1>Person list</h1>
+            <table id="personListTable" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th style="text-align:center">#</th>
+                        <th style="text-align:center">Surname</th>
+                        <th style="text-align:center">First Name</th>
+                        <th style="text-align:center">Second Name</th>
+                        <th style="text-align:center">Birthday</th>
+                        <th style="text-align:center">Phone</th>
+                        <th style="text-align:center">Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
+        <script src="../../js/person/fillPersonList.js"></script>
     </body>
 </html>

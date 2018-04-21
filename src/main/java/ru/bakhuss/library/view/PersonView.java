@@ -30,6 +30,7 @@ public class PersonView {
 
     public Collection<BookView> subscribeBooks;
 
+
     public String getSurname() {
         return surname;
     }

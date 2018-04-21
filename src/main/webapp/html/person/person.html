@@ -4,11 +4,15 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- Выше 3 Мета-теги ** должны прийти в первую очередь в голове; любой другой руководитель контент *после* эти теги -->
         <title>Library - person</title>
 
-        <!-- Bootstrap -->
         <link href="../../vendor/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/common.css">
+
+        <script src="../../vendor/js/jquery.min.js"></script>
+        <script src="../../vendor/js/bootstrap.min.js"></script>
+
+        <script src="../../js/person/addPerson.js"></script>
 
         <!-- HTML5 Shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- Предупреждение: Respond.js не работает при просмотре страницы через файл:// -->
@@ -16,8 +20,6 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script >
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <link rel="stylesheet" href="../../css/common.css">
-
     </head>
     <body>
         <div class="container-fluid text-center" id="person">
@@ -63,13 +65,13 @@
                 <div class="form-group">
                     <label for="writtenBooks" class="col-sm-4 control-label">Written books</label>
                     <div class="col-sm-4">
-                        <a href="#" class="form-control" id="writtenBooks">View</a>
+                        <a href="../book/bookList.html" class="form-control" id="writtenBooks">View</a>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="libraryCard" class="col-sm-4 control-label">Library card</label>
                     <div class="col-sm-4">
-                        <a href="#" class="form-control" id="libraryCard">View</a>
+                        <a href="../catalog/libraryCard.html" class="form-control" id="libraryCard">View</a>
                     </div>
                 </div>
                 <div class="form-group">
@@ -80,12 +82,5 @@
                 </div>
             </form>
         </div>
-
-        <!-- на jQuery (необходим для Bootstrap - х JavaScript плагины) -->
-        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
-        <script src="../../js/jquery.min.js"></script>
-        <!-- Включают все скомпилированные плагины (ниже), или включать отдельные файлы по мере необходимости -->
-        <script src="../../vendor/js/bootstrap.min.js"></script>
-        <script src="../../js/forms/form.js"></script>
     </body>
 </html>

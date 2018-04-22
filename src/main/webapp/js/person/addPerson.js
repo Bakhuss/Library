@@ -22,7 +22,7 @@ $(function () {
                     alert(JSON.stringify(result));
                 }
             });
-        });
+    });
 });
 
 var clearFields = function () {

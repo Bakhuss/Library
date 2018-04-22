@@ -1,5 +1,10 @@
 $(function() {
-    console.log('PERSON LIST')
+    console.log('PERSON LIST');
+    var param = window.location.search.substring(1).split('&');
+    for (var i=0; i<param.length; i++) {
+
+    }
+    console.log('param: ' + param);
     var person = {
         id: ""
     };

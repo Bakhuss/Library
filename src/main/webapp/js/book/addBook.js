@@ -14,10 +14,11 @@ $(document).ready(function () {
                 contentType:"application/json; charset=utf-8",
                 dataType:"json",
                 success: function(result){
+                    console.log(result);
                     alert(JSON.stringify(result));
                 }
             });
-        });
+    });
 });
 
 var clearFields = function () {

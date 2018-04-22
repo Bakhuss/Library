@@ -1,30 +1,36 @@
 package ru.bakhuss.library.parser;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BookLitres {
 
-    String art_id;
+    public String art_id;
 
-    String author_id;
+    public String author_id;
 
-    String alt;
+    public String alt;
 
-    String author;
+    public String author;
 
-    String type;
+    public String type;
 
-    String mem;
+    public String mem;
 
-    String drm;
+    public String drm;
 
-    String price;
+    public String price;
 
-    String available;
+    public String available;
 
-    String author_pop_art;
+    public String author_pop_art;
 
-    String can_preorder;
+    public String can_preorder;
 
-    String promo_price;
+    public String purchased;
+
+    public String promo_price;
 
 
     /**
@@ -43,6 +49,7 @@ public class BookLitres {
                 ";available:" + available +
                 ";author_pop_art:" + author_pop_art +
                 ";can_preorder:" + can_preorder +
+                ";purchased:" + purchased +
                 ";promo_price:" + promo_price +
                 "}";
     }

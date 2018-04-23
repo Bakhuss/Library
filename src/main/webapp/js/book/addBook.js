@@ -1,16 +1,19 @@
-$(document).ready(function () {
+$(function () {
     $("#addBook").click(function () {
             console.log('BOOK');
             var book = {
                 id: $("#id").val(),
                 name: $("#name").val()
             };
-            console.log('Book', book);
 
-            var res = "";
-
+            var newUrl = "";
+//            alert(book.id);
+            if(book.id === "") newUrl = "/book/save";
+            else newUrl = "/book/update";
+            console.log('Book ' + book.id + "; url: " + newUrl);
+//            alert('Book ' + book.id + "; url: " + newUrl);
             $.ajax({
-                url:"/book/save",
+                url:newUrl,
                 type:"POST",
                 data: JSON.stringify(book),
                 contentType:"application/json; charset=utf-8",
@@ -19,9 +22,7 @@ $(document).ready(function () {
                     console.log(JSON.stringify(result));
                     document.location.href = "../../html/book/bookList.html";
                 }
-//                async: false
             });
-//            location.href = "../../html/book/bookList.html";
     });
 });
 

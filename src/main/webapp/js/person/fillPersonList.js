@@ -24,7 +24,9 @@ $(function() {
                     alert(result.error);
                     return;
                 }
-                document.getElementsByTagName('h1')[0].firstChild.nodeValue = 'Writers';
+//                document.insertBefore('<h1>Book</h1>');
+                document.getElementsByTagName('h1')[0]
+                        .firstChild.nodeValue = 'Book: ' + result.data.name + '. Writers.';
                 $('#personListTable thead tr th:last').remove();
                 $('#personListTable thead tr th:last').remove();
                 console.log('writers: ' + result.data.writers);
@@ -57,7 +59,6 @@ $(function() {
             success: function(result) {
                 console.log(result);
                 console.log(JSON.stringify(result));
-    //            document.getElementsByTagName('h1')[0].firstChild.nodeValue = 'Writers';
                 $('#personListTable thead tr th:last').remove();
                 $('#personListTable thead tr th:last').remove();
                 result.data.forEach(function(item, i) {

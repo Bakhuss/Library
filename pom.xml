@@ -42,7 +42,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jetty</artifactId>
             <exclusions>
-                <!-- не используем эти аннотации -->
+                <!--  не используем эти аннотации  -->
                 <exclusion>
                     <groupId>org.eclipse.jetty</groupId>
                     <artifactId>jetty-annotations</artifactId>

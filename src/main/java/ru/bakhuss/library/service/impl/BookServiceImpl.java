@@ -55,15 +55,17 @@ public class BookServiceImpl implements BookService {
         } catch (Exception ex) {
             throw new ResponseErrorException("Error saving book");
         }
-        try {
-            List<Long> ids = null;
-            ids = view.writers.stream()
-                    .map(v -> Long.parseLong(v.id))
-                    .collect(Collectors.toList());
-            Set<Person> persons = personDao.findByIdIn(ids);
-            newBook.setWriters(persons);
-        } catch (Exception ex) {
-            log.info("Error save writers for book by id: " + newBook.getId() + "\n" + ex.getMessage());
+        if (view.writers != null) {
+            try {
+                List<Long> ids = null;
+                ids = view.writers.stream()
+                        .map(v -> Long.parseLong(v.id))
+                        .collect(Collectors.toList());
+                Set<Person> persons = personDao.findByIdIn(ids);
+                newBook.setWriters(persons);
+            } catch (Exception ex) {
+                log.info("Error save writers for book by id: " + newBook.getId() + "\n" + ex.getMessage());
+            }
         }
         log.info(newBook.toString());
     }
@@ -89,25 +91,30 @@ public class BookServiceImpl implements BookService {
             throw new ResponseErrorException("Error requesting book by id: " + view.id + " from db");
         }
         book.setName(view.name);
+        log.info("updateBook: new name - " + book.getName());
 
         /*
          * Синхронизация писателей книги
          */
-        List<Long> idsFrmCtr = view.writers.stream()
-                .map(v -> Long.parseLong(v.id))
-                .collect(Collectors.toList());
-        List<Long> idsFrmDb = book.getWriters().stream()
-                .map(Person::getId)
-                .collect(Collectors.toList());
-        idsFrmDb.removeAll(idsFrmCtr);
-        Set<Person> removePrs = personDao.findByIdIn(idsFrmDb);
-        Set<Person> addPrs = personDao.findByIdIn(idsFrmCtr);
-        book.removeWriters(removePrs);
-        book.addWriters(addPrs);
+        if (view.writers != null) {
+            List<Long> idsFrmCtr = view.writers.stream()
+                    .map(v -> Long.parseLong(v.id))
+                    .collect(Collectors.toList());
+            List<Long> idsFrmDb = book.getWriters().stream()
+                    .map(Person::getId)
+                    .collect(Collectors.toList());
+            idsFrmDb.removeAll(idsFrmCtr);
+            Set<Person> removePrs = personDao.findByIdIn(idsFrmDb);
+            Set<Person> addPrs = personDao.findByIdIn(idsFrmCtr);
+            book.removeWriters(removePrs);
+            book.addWriters(addPrs);
+        }
 
         Book updateBook = null;
         try {
+            log.info("updateBook: new book before save - " + book.toString());
             updateBook = bookDao.save(book);
+            log.info("updateBook: new book after save - " + updateBook.toString());
             updateBook.getId();
         } catch (Exception ex) {
             throw new ResponseErrorException("Error updating book by id: " + view.id);

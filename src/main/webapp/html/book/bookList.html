@@ -7,9 +7,22 @@
         <title>Book List</title>
 
         <link href="../../vendor/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../js/book/tar.css">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="../../vendor/js/bootstrap.min.js"></script>
+
+        <script src="../../js/book/removeBook.js"></script>
+        <script src="../../js/book/openEditBook.js"></script>
+        <script>
+            function targ() {
+                $('tr').click(function(){
+                    $('tr').removeClass();
+                    $(this).addClass('selected');
+                    <!--console.log($(this)[0].getElementsByTagName('td')[0]);-->
+                });
+            }
+        </script>
 
         <!-- HTML5 Shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- Предупреждение: Respond.js не работает при просмотре страницы через файл:// -->
@@ -29,17 +42,17 @@
                         <th class="text-center">Name</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody onclick="targ()">
                 </tbody>
             </table>
         </div>
         <div>
             <div class="btn-group container" role="group" aria-label="...">
                 <a href="book.html" class="btn btn-default">Add</a>
-                <a href="book.html" class="btn btn-default">Edit</a>
-                <a href="#" class="btn btn-default">Remove</a>
-                <!--<button type="button" class="btn btn-default">Edit</button>-->
-                <!--<button type="button" class="btn btn-default">Remove</button>-->
+                <input type="button" class="btn btn-default" value="Edit" id="edit">
+                <!--<a href="book.html" class="btn btn-default">Edit</a>-->
+                <!--<a href="#" class="btn btn-default">Remove</a>-->
+                <input type="button" class="btn btn-default" value="Remove" id="remove">
             </div>
         </div>
         <div class="container">

@@ -32,7 +32,9 @@ public interface BookService {
      * @param id
      * @return BookView value
      */
-    BookView getBookById(String id);
+    BookView getBookById(String id,
+                         String writers,
+                         String catalogs);
 
     /**
      * Получить все Book по фильтру

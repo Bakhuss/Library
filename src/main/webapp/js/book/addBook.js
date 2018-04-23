@@ -7,6 +7,8 @@ $(document).ready(function () {
             };
             console.log('Book', book);
 
+            var res = "";
+
             $.ajax({
                 url:"/book/save",
                 type:"POST",
@@ -14,10 +16,12 @@ $(document).ready(function () {
                 contentType:"application/json; charset=utf-8",
                 dataType:"json",
                 success: function(result){
-                    console.log(result);
-                    alert(JSON.stringify(result));
+                    console.log(JSON.stringify(result));
+                    document.location.href = "../../html/book/bookList.html";
                 }
+//                async: false
             });
+//            location.href = "../../html/book/bookList.html";
     });
 });
 

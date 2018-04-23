@@ -14,6 +14,7 @@ import ru.bakhuss.library.model.Book;
 import ru.bakhuss.library.model.Person;
 import ru.bakhuss.library.service.BookService;
 import ru.bakhuss.library.view.BookView;
+import ru.bakhuss.library.view.CatalogView;
 import ru.bakhuss.library.view.PersonView;
 
 import java.util.Collection;
@@ -141,8 +142,10 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     @Transactional(readOnly = true)
-    public BookView getBookById(String id) {
+    public BookView getBookById(String id, String writers, String catalogs) {
         Book book = null;
+        if (writers != null) log.info(writers);
+        if (catalogs != null) log.info(catalogs);
         try {
             book = bookDao.findOne(Long.parseLong(id));
             /*
@@ -159,10 +162,17 @@ public class BookServiceImpl implements BookService {
         BookView bookV = new BookView();
         bookV.id = book.getId().toString();
         bookV.name = book.getName();
-        bookV.writers = book.getWriters().stream()
-                .map(PersonView.getFuncPersonToView())
-                .sorted(Comparator.comparing(PersonView::getSurname))
-                .collect(Collectors.toList());
+        if (writers != null) {
+            bookV.writers = book.getWriters().stream()
+                    .map(PersonView.getFuncPersonToView())
+                    .sorted(Comparator.comparing(PersonView::getSurname))
+                    .collect(Collectors.toList());
+        }
+        if (catalogs != null) {
+            bookV.catalogs = book.getCatalogs().stream()
+                    .map(CatalogView.getFuncCatalogToView())
+                    .collect(Collectors.toList());
+        }
         log.info(bookV.toString());
         return bookV;
     }

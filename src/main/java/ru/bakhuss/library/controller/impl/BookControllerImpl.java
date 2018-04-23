@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bakhuss.library.controller.BookController;
 import ru.bakhuss.library.service.BookService;
@@ -60,8 +61,10 @@ public class BookControllerImpl implements BookController {
      */
     @Override
     @GetMapping(value = "/{id}")
-    public ResponseView getBookById(@PathVariable String id) {
-        return new ResponseView(bookService.getBookById(id));
+    public ResponseView getBookById(@PathVariable String id,
+                                    @RequestParam(name = "w", required = false) String writers,
+                                    @RequestParam(name = "c", required = false) String catalogs) {
+        return new ResponseView(bookService.getBookById(id, writers, catalogs));
     }
 
     /**

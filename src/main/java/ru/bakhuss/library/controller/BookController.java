@@ -34,7 +34,7 @@ public interface BookController {
      * @param id
      * @return JSON book value
      */
-    ResponseView getBookById(String id);
+    ResponseView getBookById(String id, String writers, String catalogs);
 
     /**
      * Получить все Book по фильтру

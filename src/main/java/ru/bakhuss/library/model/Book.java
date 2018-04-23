@@ -3,6 +3,7 @@ package ru.bakhuss.library.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -38,7 +39,8 @@ public class Book {
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE,
-    })
+    },
+            fetch = FetchType.LAZY)
     @JoinTable(
             name = "Book_Writer",
             joinColumns = @JoinColumn(name = "book_id"),
@@ -52,7 +54,8 @@ public class Book {
      */
     @OneToMany(mappedBy = "book",
             cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
     private Collection<Catalog> catalogs;
 
 

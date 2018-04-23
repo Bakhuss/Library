@@ -6,7 +6,7 @@ $(function() {
         console.log(id);
         console.log(location.search);
         var url = "../../html/person/personList.html"
-        + "?bookId=" + bookId + "&title=" + title;
+        + "?bookId=" + bookId + "&w";
         console.log(url);
         document.location.href = url;
     });

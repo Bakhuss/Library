@@ -51,4 +51,15 @@ public class ParserClass {
         }).collect(Collectors.toSet());
         return titles;
     }
+
+    public String getAuthor(String writer) throws IOException {
+        String url = null;
+        url = "https://www.litres.ru/pages/rmd_search_authors/?q=Книж";
+        url = "https://www.litres.ru/" + writer;
+        Document doc = Jsoup.connect(url).get();
+        String name = doc.getElementsByAttribute("property").last().text();
+        System.out.println(name);
+        return name;
+    }
+
 }

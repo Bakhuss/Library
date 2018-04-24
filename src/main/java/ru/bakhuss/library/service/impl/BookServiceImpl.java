@@ -5,6 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bakhuss.library.dao.BookDao;
@@ -17,8 +22,10 @@ import ru.bakhuss.library.view.BookView;
 import ru.bakhuss.library.view.CatalogView;
 import ru.bakhuss.library.view.PersonView;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -190,15 +197,71 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(readOnly = true)
     public Collection<BookView> getAllBooks(BookView view) {
-        List<BookView> bookV = null;
-        try {
-            bookV = StreamSupport.stream(bookDao.findAll().spliterator(), false)
-                    .map(BookView.getFuncBookToView())
-                    .sorted(Comparator.comparing(BookView::getName))
-                    .collect(Collectors.toList());
-        } catch (Exception ex) {
-            throw new ResponseErrorException("Error requesting persons from db");
+        List<BookView> booksV = new ArrayList<>();
+        int startPage = Integer.parseInt(view.startPage);
+        int fetchSize = Integer.parseInt(view.fetchSize);
+        Sort.Direction direct = null;
+        switch (view.orderSort) {
+            case ("asc"):
+                direct = Sort.Direction.ASC;
+                break;
+            case ("desc"):
+                direct = Sort.Direction.DESC;
+                break;
+            default:
+                direct = Sort.Direction.ASC;
         }
+        String props = "name";
+        Sort sort = new Sort(direct, props);
+        Pageable page = new PageRequest(startPage, fetchSize, sort);
+        try {
+            Page<Book> bookPage = bookDao.findAll(page);
+            List<Book> listBook = bookPage.getContent();
+            int size = listBook.size();
+            log.info("------------size: " + size);
+            for (Book b : listBook) {
+                BookView bookV = new BookView();
+                bookV.id = String.valueOf(b.getId());
+                bookV.name = b.getName();
+                booksV.add(bookV);
+            }
+
+//            booksV = StreamSupport.stream(bookDao.findAll(page).spliterator(), false)
+//                    .map(BookView.getFuncBookToView())
+//                    .collect(Collectors.toList());
+            log.info("------------size: " + booksV.size());
+        } catch (Exception ex) {
+            throw new ResponseErrorException("Error requesting books from db. | " + ex.getMessage());
+        }
+        log.info(booksV.toString());
+        return booksV;
+
+//        try {
+//            bookV = StreamSupport.stream(bookDao.findAll().spliterator(), false)
+//                    .map(BookView.getFuncBookToView())
+//                    .sorted(Comparator.comparing(BookView::getName))
+//                    .collect(Collectors.toList());
+//        } catch (Exception ex) {
+//            throw new ResponseErrorException("Error requesting persons from db");
+//        }
+//        return bookV;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public BookView getBooksCount() {
+        Long count;
+        try {
+            count = bookDao.count();
+        } catch (Exception ex) {
+            throw new ResponseErrorException("Error requesting books count");
+        }
+        BookView bookV = new BookView();
+        bookV.count = String.valueOf(count);
+        log.info("count: " + bookV.count);
         return bookV;
     }
 }

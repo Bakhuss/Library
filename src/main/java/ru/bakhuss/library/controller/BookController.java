@@ -34,6 +34,13 @@ public interface BookController {
      * @param id
      * @return JSON book value
      */
+    /**
+     * Получить Book по id
+     * @param id
+     * @param writers  (w)
+     * @param catalogs (c)
+     * @return JSON book value
+     */
     ResponseView getBookById(String id, String writers, String catalogs);
 
     /**
@@ -42,5 +49,11 @@ public interface BookController {
      * @return JSON books values
      */
     ResponseView getAllBooks(BookView view);
+
+    /**
+     * Узнать общее количество книг
+     * @return JSON book value
+     */
+    ResponseView getBooksCount();
 
 }

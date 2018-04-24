@@ -75,4 +75,13 @@ public class BookControllerImpl implements BookController {
     public ResponseView getAllBooks(@RequestBody BookView view) {
         return new ResponseView(bookService.getAllBooks(view));
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @GetMapping(value = "/count")
+    public ResponseView getBooksCount() {
+        return new ResponseView(bookService.getBooksCount());
+    }
 }

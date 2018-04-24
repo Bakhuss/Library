@@ -19,8 +19,38 @@
         <![endif]-->
     </head>
     <body>
+    <div>
+        <h1 class="text-center">Person list</h1>
+    </div>
+    <div class="container">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li class="disabled">
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div>
+        <div class="btn-group container" role="group" aria-label="...">
+            <a href="person.html" class="btn btn-default">Add</a>
+            <a href="person.html" class="btn btn-default">Edit</a>
+            <a href="#" class="btn btn-default">Remove</a>
+        </div>
+    </div>
         <div class="container-fluid text-center" id="personList">
-            <h1>Person list</h1>
             <table id="personListTable" class="table table-bordered table-hover">
                 <thead>
                     <tr>
@@ -37,34 +67,6 @@
                 <tbody onclick="t=event.target||event.srcElement; alert(t.className)">
                 </tbody>
             </table>
-        </div>
-        <div>
-            <div class="btn-group container" role="group" aria-label="...">
-                <a href="person.html" class="btn btn-default">Add</a>
-                <a href="person.html" class="btn btn-default">Edit</a>
-                <a href="#" class="btn btn-default">Remove</a>
-            </div>
-        </div>
-        <div class="container">
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li class="disabled">
-                        <a href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li>
-                        <a href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
         </div>
         <script src="../../js/person/fillPersonList.js"></script>
     </body>

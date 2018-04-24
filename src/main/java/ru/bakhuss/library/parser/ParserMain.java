@@ -9,13 +9,15 @@ public class ParserMain {
         String writer = "chingiz-abdullaev";
 //        writer = boris-akunin;
 //        writer = "lev-tolstoy";
-        writer = "dzhordzh-oruell";
-        writer = "vladimir-solovev";
-        writer = "aleksandr-pushkin";
-        writer = "aleksandr-duma";
+//        writer = "dzhordzh-oruell";
+//        writer = "vladimir-solovev";
+//        writer = "aleksandr-pushkin";
+//        writer = "aleksandr-duma";
 
         ParserClass parse = new ParserClass();
-        parse.getParse(writer).stream().sorted().forEach(System.out::println);
+//        parse.getParse(writer).stream().sorted().forEach(System.out::println);
+
+        parse.getAuthor(writer);
     }
 
 }

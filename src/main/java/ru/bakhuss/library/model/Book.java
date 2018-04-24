@@ -30,7 +30,7 @@ public class Book {
     /**
      * Название
      */
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     private String name;
 
     /**

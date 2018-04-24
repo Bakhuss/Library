@@ -1,5 +1,6 @@
 package ru.bakhuss.library.service;
 
+import ru.bakhuss.library.model.Book;
 import ru.bakhuss.library.view.BookView;
 
 import java.util.Collection;
@@ -42,4 +43,10 @@ public interface BookService {
      * @return BookViews values
      */
     Collection<BookView> getAllBooks(BookView view);
+
+    /**
+     * Узнать общее количество книг
+     * @return BookView#count value
+     */
+    BookView getBooksCount();
 }

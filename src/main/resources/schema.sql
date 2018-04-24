@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS Book (
     id      INTEGER       PRIMARY KEY AUTO_INCREMENT
                           NOT NULL,
     version INTEGER,
-    name    VARCHAR (100)
+    name    VARCHAR (256)
 );
 
 CREATE TABLE IF NOT EXISTS Person (

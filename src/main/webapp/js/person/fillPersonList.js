@@ -30,19 +30,17 @@ $(function() {
                 $('#personListTable thead tr th:last').remove();
                 $('#personListTable thead tr th:last').remove();
                 console.log('writers: ' + result.data.writers);
-
-
-//                result.data.forEach(function(item, i) {
-//                    var tr = '<tr>';
-//                    tr += '<td hidden>' + item.id + '</td>';
-//                    tr += '<td>' + (i+1) + '</td>';
-//                    tr += '<td>' + item.surname + '</td>';
-//                    tr += '<td>' + item.firstName + '</td>';
-//                    tr += '<td>' + item.secondName + '</td>';
-//                    tr += '<td>' + item.birthday + '</td>';
-//                    tr += '</tr';
-//                    $('#personListTable').append(tr);
-//                });
+                result.data.writers.forEach(function(item, i) {
+                    var tr = '<tr>';
+                    tr += '<td hidden>' + item.id + '</td>';
+                    tr += '<td>' + (i+1) + '</td>';
+                    tr += '<td>' + item.surname + '</td>';
+                    tr += '<td>' + item.firstName + '</td>';
+                    tr += '<td>' + item.secondName + '</td>';
+                    tr += '<td>' + item.birthday + '</td>';
+                    tr += '</tr';
+                    $('#personListTable').append(tr);
+                });
             }
         })
     }

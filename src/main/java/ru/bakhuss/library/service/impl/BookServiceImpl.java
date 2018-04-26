@@ -197,7 +197,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(readOnly = true)
     public Collection<BookView> getAllBooks(BookView view) {
-        List<BookView> booksV = new ArrayList<>();
+        List<BookView> booksV = null;
         int startPage = Integer.parseInt(view.startPage);
         int fetchSize = Integer.parseInt(view.fetchSize);
         Sort.Direction direct = null;
@@ -217,34 +217,15 @@ public class BookServiceImpl implements BookService {
         try {
             Page<Book> bookPage = bookDao.findAll(page);
             List<Book> listBook = bookPage.getContent();
-            int size = listBook.size();
-            log.info("------------size: " + size);
-            for (Book b : listBook) {
-                BookView bookV = new BookView();
-                bookV.id = String.valueOf(b.getId());
-                bookV.name = b.getName();
-                booksV.add(bookV);
-            }
-
-//            booksV = StreamSupport.stream(bookDao.findAll(page).spliterator(), false)
-//                    .map(BookView.getFuncBookToView())
-//                    .collect(Collectors.toList());
+            booksV = listBook.stream()
+                    .map(BookView.getFuncBookToView())
+                    .collect(Collectors.toList());
             log.info("------------size: " + booksV.size());
         } catch (Exception ex) {
             throw new ResponseErrorException("Error requesting books from db. | " + ex.getMessage());
         }
         log.info(booksV.toString());
         return booksV;
-
-//        try {
-//            bookV = StreamSupport.stream(bookDao.findAll().spliterator(), false)
-//                    .map(BookView.getFuncBookToView())
-//                    .sorted(Comparator.comparing(BookView::getName))
-//                    .collect(Collectors.toList());
-//        } catch (Exception ex) {
-//            throw new ResponseErrorException("Error requesting persons from db");
-//        }
-//        return bookV;
     }
 
     /**

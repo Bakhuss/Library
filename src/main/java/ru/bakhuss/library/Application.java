@@ -66,47 +66,47 @@ public class Application {
         BookServiceImpl bsi = context.getBean(BookServiceImpl.class);
         PersonServiceImpl psi = context.getBean(PersonServiceImpl.class);
 
-        ParserClass parse = new ParserClass();
-        String author = null;
-        List<String> authors = new ArrayList<>();
-        authors.add("chingiz-abdullaev");
+//        ParserClass parse = new ParserClass();
+//        String author = null;
+//        List<String> authors = new ArrayList<>();
+//        authors.add("chingiz-abdullaev");
 //        authors.add("boris-akunin");
 //        authors.add("lev-tolstoy");
 //        authors.add("dzhordzh-oruell");
-        Long id = 1L;
-        for (String s : authors) {
-            try {
-                author = parse.getAuthor(s);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            PersonView pV = new PersonView();
-            pV.firstName = author.split(" ")[0];
-            pV.surname = author.split(" ")[1];
-            System.out.println("-------------Person View: " + pV.toString());
-            psi.addPerson(pV);
-            PersonView person = psi.getPersonById(String.valueOf(id));
-
-            Set<String> books = null;
-            try {
-                books = parse.getParse(s);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (books != null) {
-                books.stream().map(b -> {
-                    BookView bV = new BookView();
-                    bV.name = b;
-                    return bV;
-                }).forEach(b -> {
-                    b.writers = new HashSet<>();
-                    b.writers.add(person);
-                    bsi.addBook(b);
-                });
-            }
-            id++;
-        }
+//        Long id = 1L;
+//        for (String s : authors) {
+//            try {
+//                author = parse.getAuthor(s);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            PersonView pV = new PersonView();
+//            pV.firstName = author.split(" ")[0];
+//            pV.surname = author.split(" ")[1];
+//            System.out.println("-------------Person View: " + pV.toString());
+//            psi.addPerson(pV);
+//            PersonView person = psi.getPersonById(String.valueOf(id));
+//
+//            Set<String> books = null;
+//            try {
+//                books = parse.getParse(s);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            if (books != null) {
+//                books.stream().map(b -> {
+//                    BookView bV = new BookView();
+//                    bV.name = b;
+//                    return bV;
+//                }).forEach(b -> {
+//                    b.writers = new HashSet<>();
+//                    b.writers.add(person);
+//                    bsi.addBook(b);
+//                });
+//            }
+//            id++;
+//        }
 
         System.out.println("----Application----");
         System.out.println(new Date());

@@ -1,12 +1,11 @@
 package ru.bakhuss.library.parser;
 
 import java.io.IOException;
-import java.util.Comparator;
 
 public class ParserMain {
 
     public static void main(String[] args) throws IOException {
-        String writer = "chingiz-abdullaev";
+//        String writer = "chingiz-abdullaev";
 //        writer = boris-akunin;
 //        writer = "lev-tolstoy";
 //        writer = "dzhordzh-oruell";
@@ -14,10 +13,11 @@ public class ParserMain {
 //        writer = "aleksandr-pushkin";
 //        writer = "aleksandr-duma";
 
-        ParserClass parse = new ParserClass();
+//        ParserClass parse = new ParserClass();
 //        parse.getParse(writer).stream().sorted().forEach(System.out::println);
 
-        parse.getAuthor(writer);
+//        parse.getAuthor(writer);
+
     }
 
 }

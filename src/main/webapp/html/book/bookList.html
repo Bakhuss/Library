@@ -6,32 +6,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Book List</title>
 
-        <link href="../../vendor/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="../../js/book/tar.css">
+        <link rel="stylesheet" href="../../vendor/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../css/book/target.css">
+        <link rel="stylesheet" href="../../css/book/nextStep.css">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="../../vendor/js/bootstrap.min.js"></script>
 
         <script src="../../js/book/removeBook.js"></script>
         <script src="../../js/book/openEditBook.js"></script>
-        <script>
-            function targ() {
-                $('tr').click(function(){
-                    $('tr').removeClass();
-                    $(this).addClass('selected');
-                    <!--console.log($(this)[0].getElementsByTagName('td')[0]);-->
-                });
-            }
-        </script>
-        <script>
-            function nextStep() {
-                $('li').click(function(){
-                    $('li').removeClass('active');
-                    $(this).addClass('active');
-                    console.log('nextStep');
-                });
-            }
-        </script>
+        <script src="../../js/book/target.js"></script>
+        <script src="../../js/book/nextStep.js"></script>
 
         <!-- HTML5 Shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- Предупреждение: Respond.js не работает при просмотре страницы через файл:// -->
@@ -85,7 +70,7 @@
                         <th class="text-center">Name</th>
                     </tr>
                 </thead>
-                <tbody onclick="targ()">
+                <tbody onclick="target()">
                 </tbody>
             </table>
         </div>

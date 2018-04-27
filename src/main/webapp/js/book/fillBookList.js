@@ -29,8 +29,9 @@ $(function() {
                     var li = '<li id="" class=""><a href="#">...</a></li>';
                     elem.outerHTML += li;
                 }
-                var startPage = document.getElementById('startPage').value + 1;
-                for(var i=10; i>=1; i--) {
+                var startPage = Number.parseInt(document.getElementById('startPage').value) + 1;
+                console.log("st: " + startPage);
+                for(var i=startPage+9; i>=startPage; i--) {
 //                    li = '<li id="' + i + '" class=""><a href="#">' + i + '</a></li>';
                     li = '<li id="' + i + '"';
                     if(i === Number.parseInt(startPage)) {

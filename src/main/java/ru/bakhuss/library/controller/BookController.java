@@ -1,6 +1,7 @@
 package ru.bakhuss.library.controller;
 
 import ru.bakhuss.library.view.BookView;
+import ru.bakhuss.library.view.FilterView;
 import ru.bakhuss.library.view.ResponseView;
 
 /**
@@ -48,7 +49,7 @@ public interface BookController {
      * @param view
      * @return JSON books values
      */
-    ResponseView getAllBooks(BookView view);
+    ResponseView getAllBooks(FilterView view);
 
     /**
      * Узнать общее количество книг

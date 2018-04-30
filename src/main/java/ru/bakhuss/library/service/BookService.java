@@ -2,6 +2,7 @@ package ru.bakhuss.library.service;
 
 import ru.bakhuss.library.model.Book;
 import ru.bakhuss.library.view.BookView;
+import ru.bakhuss.library.view.FilterView;
 
 import java.util.Collection;
 
@@ -42,11 +43,11 @@ public interface BookService {
      * @param view
      * @return BookViews values
      */
-    Collection<BookView> getAllBooks(BookView view);
+    Collection<BookView> getAllBooks(FilterView view);
 
     /**
      * Узнать общее количество книг
-     * @return BookView#count value
+     * @return FilterView#count value
      */
-    BookView getBooksCount();
+    FilterView getBooksCount();
 }

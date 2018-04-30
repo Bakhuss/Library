@@ -17,17 +17,6 @@ public class BookView {
 
     public Collection<CatalogView> catalogs;
 
-    /*
-     * Filter
-     */
-    public String count;
-
-    public String startPage;
-
-    public String fetchSize;
-
-    public String orderSort;
-
 
     public String getName() {
         return name;
@@ -51,10 +40,6 @@ public class BookView {
                 ";name:" + name +
                 ";writers:" + writers +
                 ";catalogs:" + catalogs +
-                ";count:" + count +
-                ";startPage:" + startPage +
-                ";fetchSize:" + fetchSize +
-                ";orderSort:" + orderSort +
                 "}";
     }
 }

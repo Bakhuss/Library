@@ -7,16 +7,22 @@
         <title>Book List</title>
 
         <link rel="stylesheet" href="../../vendor/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../../css/book/target.css">
+        <link rel="stylesheet" href="../../css/mark.css">
         <link rel="stylesheet" href="../../css/book/nextStep.css">
+        <!--<link rel="stylesheet" href="../../css/common.css">-->
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+        <script src="../../vendor/js/jquery.min.js"></script>
         <script src="../../vendor/js/bootstrap.min.js"></script>
 
         <script src="../../js/book/removeBook.js"></script>
         <script src="../../js/book/openEditBook.js"></script>
-        <script src="../../js/book/target.js"></script>
+        <script src="../../js/mark.js"></script>
         <script src="../../js/book/nextStep.js"></script>
+        <script src="../../js/book/bookList/fillBookList.js"></script>
+        <script src="../../js/book/test.js"></script>
+
+        <link rel="import" href="../navigation/navigPanel.html">
 
         <!-- HTML5 Shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- Предупреждение: Respond.js не работает при просмотре страницы через файл:// -->
@@ -26,41 +32,33 @@
         <![endif]-->
     </head>
     <body>
-    <div>
-        <h1 class="text-center">Book list</h1>
-    </div>
-    <div class="container" id="navigation">
-        <nav aria-label="Page navigation">
-            <ul class="pagination" onclick="nextStep()">
-                <li class="disabled" id="navPrevious">
-                    <a href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <!--<li id="1" class="active"><a href="#">1</a></li>-->
-                <!--<li id="2"><a href="#">2</a></li>-->
-                <!--<li><a href="#">3</a></li>-->
-                <!--<li><a href="#">4</a></li>-->
-                <!--<li><a href="#">5</a></li>-->
-                <li id="navNext">
-                    <a href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <div>
-        <div class="btn-group container" role="group" aria-label="...">
-            <a href="book.html" class="btn btn-default">Add</a>
-            <input type="button" class="btn btn-default" value="Edit" id="edit">
-            <input type="button" class="btn btn-default" value="Remove" id="remove">
-            <input type="hidden" value="" id="count">
-            <input type="hidden" value="0" id="startPage">
-            <input type="hidden" value="15" id="fetchSize">
-            <input type="hidden" value=" " id="orderSort">
+        <div>
+            <h1 class="text-center">Book list</h1>
         </div>
-    </div>
+
+        <script src="../../js/book/bookList/insertNavigPanelToBookList.js"></script>
+
+        <!--<div>-->
+        <div class="btn-toolbar container" role="toolbar" aria-label="...">
+            <div class="btn-group" role="group" aria-label="...">
+                <a href="book.html" class="btn btn-default" title="Add new book">Add</a>
+            </div>
+            <div class="btn-group" role="group" aria-label="...">
+                <a href="book.html" class="btn btn-default">View</a>
+                <input type="button" class="btn btn-default" value="Edit" id="edit">
+                <input type="button" class="btn btn-default" value="Remove" id="remove">
+            </div>
+            <div class="btn-group" role="group" aria-label="...">
+                <input type="search" class="form-control" placeholder="search by name" id="search">
+            </div>
+        </div>
+        <div id="filter">
+            <input type="hidden" value="" id="count">
+            <input type="hidden" value="0" id="page">
+            <input type="hidden" value="15" id="fetchSize">
+            <input type="hidden" value="name" id="orderSort">
+        </div>
+        <!--</div>-->
         <div class="container-fluid text-center" id="libraryCard">
             <table id="bookListTable" class="table table-bordered table-hover">
                 <thead>
@@ -70,10 +68,9 @@
                         <th class="text-center">Name</th>
                     </tr>
                 </thead>
-                <tbody onclick="target()">
+                <tbody onclick="mark()">
                 </tbody>
             </table>
         </div>
-        <script src="../../js/book/fillBookList.js"></script>
     </body>
 </html>

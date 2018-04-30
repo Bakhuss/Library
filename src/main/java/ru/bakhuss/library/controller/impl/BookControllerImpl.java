@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.bakhuss.library.controller.BookController;
 import ru.bakhuss.library.service.BookService;
 import ru.bakhuss.library.view.BookView;
+import ru.bakhuss.library.view.FilterView;
 import ru.bakhuss.library.view.ResponseView;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -72,7 +73,7 @@ public class BookControllerImpl implements BookController {
      */
     @Override
     @PostMapping(value = "/list")
-    public ResponseView getAllBooks(@RequestBody BookView view) {
+    public ResponseView getAllBooks(@RequestBody FilterView view) {
         return new ResponseView(bookService.getAllBooks(view));
     }
 

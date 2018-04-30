@@ -1,35 +1,36 @@
 package ru.bakhuss.library.service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.bakhuss.library.dao.BookDao;
-import ru.bakhuss.library.dao.PersonDao;
-import ru.bakhuss.library.error.ResponseErrorException;
-import ru.bakhuss.library.model.Book;
-import ru.bakhuss.library.model.Person;
-import ru.bakhuss.library.service.BookService;
-import ru.bakhuss.library.view.BookView;
-import ru.bakhuss.library.view.CatalogView;
-import ru.bakhuss.library.view.PersonView;
+        import org.slf4j.Logger;
+        import org.slf4j.LoggerFactory;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.context.annotation.Scope;
+        import org.springframework.context.annotation.ScopedProxyMode;
+        import org.springframework.data.domain.Page;
+        import org.springframework.data.domain.PageImpl;
+        import org.springframework.data.domain.PageRequest;
+        import org.springframework.data.domain.Pageable;
+        import org.springframework.data.domain.Sort;
+        import org.springframework.stereotype.Service;
+        import org.springframework.transaction.annotation.Transactional;
+        import ru.bakhuss.library.dao.BookDao;
+        import ru.bakhuss.library.dao.PersonDao;
+        import ru.bakhuss.library.error.ResponseErrorException;
+        import ru.bakhuss.library.model.Book;
+        import ru.bakhuss.library.model.Person;
+        import ru.bakhuss.library.service.BookService;
+        import ru.bakhuss.library.view.BookView;
+        import ru.bakhuss.library.view.CatalogView;
+        import ru.bakhuss.library.view.FilterView;
+        import ru.bakhuss.library.view.PersonView;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+        import java.util.ArrayList;
+        import java.util.Collection;
+        import java.util.Comparator;
+        import java.util.Iterator;
+        import java.util.List;
+        import java.util.Set;
+        import java.util.stream.Collectors;
+        import java.util.stream.StreamSupport;
 
 @Service
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
@@ -196,10 +197,11 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Collection<BookView> getAllBooks(BookView view) {
+    public Collection<BookView> getAllBooks(FilterView view) {
         List<BookView> booksV = null;
-        int startPage = Integer.parseInt(view.startPage);
+        int page = Integer.parseInt(view.page);
         int fetchSize = Integer.parseInt(view.fetchSize);
+        String props = view.orderSort;
         Sort.Direction direct = null;
         switch (view.orderSort) {
             case ("asc"):
@@ -211,18 +213,19 @@ public class BookServiceImpl implements BookService {
             default:
                 direct = Sort.Direction.ASC;
         }
-        String props = "name";
+//        String props = "name";
         Sort sort = new Sort(direct, props);
-        Pageable page = new PageRequest(startPage, fetchSize, sort);
+        Pageable pageable = new PageRequest(page, fetchSize, sort);
         try {
-            Page<Book> bookPage = bookDao.findAll(page);
+            Page<Book> bookPage = bookDao.findAll(pageable);
             List<Book> listBook = bookPage.getContent();
             booksV = listBook.stream()
                     .map(BookView.getFuncBookToView())
                     .collect(Collectors.toList());
             log.info("------------size: " + booksV.size());
         } catch (Exception ex) {
-            throw new ResponseErrorException("Error requesting books from db. | " + ex.getMessage());
+            log.info(ex.getMessage());
+            throw new ResponseErrorException("Error requesting books from db");
         }
         log.info(booksV.toString());
         return booksV;
@@ -233,16 +236,16 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     @Transactional(readOnly = true)
-    public BookView getBooksCount() {
+    public FilterView getBooksCount() {
         Long count;
         try {
             count = bookDao.count();
         } catch (Exception ex) {
             throw new ResponseErrorException("Error requesting books count");
         }
-        BookView bookV = new BookView();
-        bookV.count = String.valueOf(count);
-        log.info("count: " + bookV.count);
-        return bookV;
+        FilterView filterV = new FilterView();
+        filterV.count = String.valueOf(count);
+        log.info("count: " + filterV.count);
+        return filterV;
     }
 }

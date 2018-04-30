@@ -4,7 +4,7 @@ $(function() {
     console.log('param: ' + param);
 
     var filter = {
-        page: $("#page").val(),
+        page: parseInt($("#page").val()),
         fetchSize: $("#fetchSize").val(),
         orderSort: $("#orderSort").val()
     };
@@ -27,14 +27,17 @@ $(function() {
                 $('#navigation').addClass('disabled');
             } else {
                 $('#navigation').removeClass('disabled');
-                $.getScript('../../js/book/test.js');
-                buildNavPanel(filter);
-                $('li:not(#prevBlock, #prevPage, #nextPage, #nextBlock)').remove();
-                for(var i=1; i<=10; i++) {
-                    $('#nextPage').before('<li id="'+ i +'"><a href="#">' + i + '</a></li>');
-                }
+                $.getScript('../../js/book/navigPanel.js');
+                checkNavPanel(filter);
+                buildNavPanel(filter.page, 10);
+//                $('li:not(#prevBlock, #prevPage, #nextPage, #nextBlock)').remove();
+//                for(var i=1; i<=10; i++) {
+//                    $('#nextPage').before('<li id="'+ i +'"><a href="#">' + i + '</a></li>');
+//                }
                 $('li.active').removeClass('active');
-                var id = parseInt(filter.page) + 1;
+                var id = filter.page + 1;
+                $('#activeId').val(id);
+                console.log('activeId: ' + $('#activeId').val());
                 $('#' + id).addClass('active');
             }
         }

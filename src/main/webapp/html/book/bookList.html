@@ -21,6 +21,7 @@
         <script src="../../js/book/nextStep.js"></script>
         <script src="../../js/book/bookList/fillBookList.js"></script>
         <script src="../../js/book/navigPanel.js"></script>
+        <!--<script src="../../js/mark.js"></script>-->
 
         <link rel="import" href="../navigation/navigPanel.html">
 
@@ -31,7 +32,7 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body>
+    <body onload="getCount(); getBooks(); buildNavPanel(0, 10);">
         <div>
             <h1 class="text-center">Book list</h1>
         </div>
@@ -57,7 +58,7 @@
             <input type="hidden" value="0" id="page">
             <input type="hidden" value="15" id="fetchSize">
             <input type="hidden" value="name" id="orderSort">
-            <input type="hidden" value="" id="activeId">
+            <input type="hidden" value="1" id="activeId">
         </div>
         <!--</div>-->
         <div class="container-fluid text-center" id="libraryCard">
@@ -73,5 +74,7 @@
                 </tbody>
             </table>
         </div>
+        <!--<script src="../../js/book/bookList/fillBookList.js"></script>-->
+        <!--<script src="../../js/book/navigPanel.js"></script>-->
     </body>
 </html>

@@ -2,6 +2,7 @@ $(function(){
     console.log('----------nextStep');
     var activeId;
     var clickId;
+    var amountPages = 10;
     $('li').click(function(){
         activeId = parseInt($('#activeId').val());
         clickId = $(this).attr('id');
@@ -33,6 +34,16 @@ $(function(){
             console.log('prevBlock disabled');
             return false;
         }
+        var startId = parseInt($('#prevPage').next().attr('id'));
+        var page = startId - amountPages - 1;
+        if(page <= 0){
+            page = 0;
+            $('#prevBlock').addClass('disabled');
+        }
+        buildNav(page, amountPages);
+        $('#nextBlock').removeClass('disabled');
+        $('li').removeClass('active');
+        if(activeId <= (page + amountPages)) $('#' + activeId).addClass('active');
     }
 
     function prevPage() {
@@ -66,17 +77,22 @@ $(function(){
             console.log('nextBlock disabled');
             return false;
         }
-//            var amountPages = 10;
-//            var endId = $('#nextPage').prev().attr('id');
-//            var count = $('#count').val();
-//            var fetchSize = $('#fetchSize').val();
-//            var pageCount = (count/fetchSize + 1).toFixed();
-//            console.log('endId: ' + endId + '; pageCount: ' + pageCount);
-//            if(endId >= pageCount) return false;
-//            var page = parseInt($('#prevPage').next().attr('id')) - 1 + amountPages;
-//            console.log('page: ' + page + '; amountPages: ' + amountPages);
-//            $.getScript('../../js/book/navigPanel.js');
-//            buildNavPanel(page, amountPages);
+        var endId = parseInt($('#nextPage').prev().attr('id'));
+        var count = $('#count').val();
+        var fetchSize = $('#fetchSize').val();
+        var pageCount = (count/fetchSize + 1).toFixed();
+        console.log('endId: ' + endId + '; pageCount: ' + pageCount);
+        if(endId >= pageCount) return;
+        var page = endId;
+        if( (endId + amountPages) >= pageCount ){
+            page = pageCount - amountPages;
+            $('#nextBlock').addClass('disabled');
+        }
+        console.log('page: ' + page + '; amountPages: ' + amountPages);
+        buildNav(page, amountPages);
+        $('#prevBlock').removeClass('disabled');
+        $('li').removeClass('active');
+        if(activeId >= (page + 1)) $('#' + activeId).addClass('active');
     }
 
     function nextNumberPage() {

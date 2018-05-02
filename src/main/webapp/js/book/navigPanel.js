@@ -14,14 +14,14 @@
         } else {
             $('#navigation').removeClass('disabled');
 
-            var startPage = parseInt($('#prevPage').next().attr('id'));
-            var endPage = parseInt($('#nextPage').prev().attr('id'));
+            var startId = parseInt($('#prevPage').next().attr('id'));
+            var endId = parseInt($('#nextPage').prev().attr('id'));
             var activeId = parseInt($('#activeId').val());
-            console.log('checkNavPanel: activeId: ' + activeId + ', startPage: ' + startPage + ', endPage: ' + endPage);
-            if(activeId > endPage) buildNav(activeId-10, 10);
-            if(activeId < startPage) buildNav(activeId-1, 10);
-            startPage = parseInt($('#prevPage').next().attr('id'));
-            endPage = parseInt($('#nextPage').prev().attr('id'));
+            console.log('checkNavPanel: activeId: ' + activeId + ', startId: ' + startId + ', endId: ' + endId);
+            if(activeId > endId) buildNav(activeId-10, 10);
+            if(activeId < startId) buildNav(activeId-1, 10);
+            startId = parseInt($('#prevPage').next().attr('id'));
+            endId = parseInt($('#nextPage').prev().attr('id'));
 
             if(activeId >= pageCount) $('#nextPage').addClass('disabled');
             else $('#nextPage').removeClass('disabled');
@@ -29,10 +29,10 @@
             if(activeId <= 1) $('#prevPage').addClass('disabled');
             else $('#prevPage').removeClass('disabled');
 
-            if(startPage <= 1) $('#prevBlock').addClass('disabled');
+            if(startId <= 1) $('#prevBlock').addClass('disabled');
             else $('#prevBlock').removeClass('disabled');
 
-            if(endPage >= pageCount) $('#nextBlock').addClass('disabled');
+            if(endId >= pageCount) $('#nextBlock').addClass('disabled');
             else $('#nextBlock').removeClass('disabled');
 
             $('li.active').removeClass('active');

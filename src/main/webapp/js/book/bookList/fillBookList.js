@@ -28,31 +28,19 @@
                 var pageCount = (count/fetchSize + 1).toFixed();
                 console.log(count + ', ' + fetchSize + ', ' + pageCount);
                 if(count <= fetchSize) {
-                    $('#navigation').addClass('disabled');
+                    $('#navigation').hide();
                 } else {
-                    $('#navigation').removeClass('disabled');
-//                    $.getScript('../../js/book/navigPanel.js');
+                    $('#navigation').show();
                     checkNavPanel(getFilter());
-//                    buildNavPanel(filter.page, 10);
-//    //                $('li:not(#prevBlock, #prevPage, #nextPage, #nextBlock)').remove();
-//    //                for(var i=1; i<=10; i++) {
-//    //                    $('#nextPage').before('<li id="'+ i +'"><a href="#">' + i + '</a></li>');
-//    //                }
-//                    $('li.active').removeClass('active');
-//                    var id = filter.page + 1;
-//                    $('#activeId').val(id);
-//                    console.log('activeId: ' + $('#activeId').val());
-//                    $('#' + id).addClass('active');
                 }
             }
-//            async: false
         });
         return false;
     }
 
     function getBooks() {
         var filter = getFilter();
-        var data;
+        var books;
         $.ajax({
             url:"/book/list",
             type:"POST",
@@ -61,6 +49,7 @@
             dataType:"json",
             success: function(result) {
                 $('#bookListTable tbody tr').remove();
+                books = result.data;
                 var offset = filter.page*filter.fetchSize;
                 result.data.forEach(function(item, i) {
                     var tr = '<tr>';
@@ -69,10 +58,12 @@
                     tr += '<td>' + item.name + '</td>';
                     tr += '</tr';
                     $('#bookListTable tbody').append(tr);
+                    $('head script[src="../../js/mark.js"]').remove();
+                    $('head script').after('<script src="../../js/mark.js"></script>');
                 });
             }
 //            return data;
         });
-        return false;
+        return books;
     }
 //});

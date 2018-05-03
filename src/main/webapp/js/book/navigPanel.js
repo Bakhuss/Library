@@ -10,9 +10,9 @@
         console.log(count + ', ' + fetchSize + ', ' + pageCount);
 
         if(count <= fetchSize) {
-            $('#navigation').addClass('disabled');
+            $('#navigation').hide();
         } else {
-            $('#navigation').removeClass('disabled');
+            $('#navigation').show();
 
             var startId = parseInt($('#prevPage').next().attr('id'));
             var endId = parseInt($('#nextPage').prev().attr('id'));

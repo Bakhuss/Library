@@ -1,15 +1,17 @@
     console.log('navigPanel.js');
 
     function checkNavPanel(filter) {
+        if($('#navigation').attr('style') != "") return;
         console.log('checkNavPanel: ' + JSON.stringify(filter));
         $('#activeId').val(parseInt($('#page').val())+1);
         console.log('checkNavPanel: activeId: ' + $('#activeId').val())
         var fetchSize = $('#fetchSize').val();
         var count = $('#count').val();
         var pageCount = (count/fetchSize + 1).toFixed();
-        console.log(count + ', ' + fetchSize + ', ' + pageCount);
+        console.log('checkNavPanel: ' + count + ', ' + fetchSize + ', ' + pageCount);
 
         if(count <= fetchSize) {
+            console.log('hide');
             $('#navigation').hide();
         } else {
             $('#navigation').show();
@@ -43,6 +45,7 @@
     }
 
     function buildNavPanel(startPage, amountPages) {
+        if($('#navigation').attr('style') != "") return;
         console.log('buildNavPanel: ' + startPage + ', ' + amountPages);
         $('li:not(#prevBlock, #prevPage, #nextPage, #nextBlock)').remove();
         for(var i=startPage + 1; i<=startPage + amountPages; i++) {
@@ -51,6 +54,7 @@
     }
 
     function buildNav(startPage, amountPages) {
+        if($('#navigation').attr('style') != "") return;
         var elems = $('li:not(#prevBlock, #prevPage, #nextPage, #nextBlock)');
         for(var i=startPage + 1, j = 0; i<=startPage + amountPages, j < 10; i++, j++) {
             $(elems[j]).attr('id', i);

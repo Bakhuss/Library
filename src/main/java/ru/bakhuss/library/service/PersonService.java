@@ -1,5 +1,6 @@
 package ru.bakhuss.library.service;
 
+import ru.bakhuss.library.view.FilterView;
 import ru.bakhuss.library.view.PersonView;
 
 import java.util.Collection;
@@ -35,9 +36,15 @@ public interface PersonService {
     PersonView getPersonById(String id);
 
     /**
-     * Получить всех Person по фильтру
+     * Получить все Person по фильтру
      * @param view
      * @return PersonViews values
      */
-    Collection<PersonView> getAllPersons(PersonView view);
+    Collection<PersonView> getAllPersons(FilterView view);
+
+    /**
+     * Узнать общее количество человек
+     * @return FilterView#count value
+     */
+    FilterView getPersonsCount();
 }

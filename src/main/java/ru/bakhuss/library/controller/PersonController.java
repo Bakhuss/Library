@@ -1,5 +1,6 @@
 package ru.bakhuss.library.controller;
 
+import ru.bakhuss.library.view.FilterView;
 import ru.bakhuss.library.view.PersonView;
 import ru.bakhuss.library.view.ResponseView;
 
@@ -41,5 +42,11 @@ public interface PersonController {
      * @param view
      * @return JSON persons values
      */
-    ResponseView getPersonsByFilter(PersonView view);
+    ResponseView getPersonsByFilter(FilterView view);
+
+    /**
+     * Узнать общее количество человек
+     * @return JSON person value
+     */
+    ResponseView getPersonsCount();
 }

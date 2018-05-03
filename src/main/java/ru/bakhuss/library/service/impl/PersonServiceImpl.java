@@ -5,6 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bakhuss.library.dao.BookDao;
@@ -14,6 +18,7 @@ import ru.bakhuss.library.model.Book;
 import ru.bakhuss.library.model.Person;
 import ru.bakhuss.library.service.PersonService;
 import ru.bakhuss.library.view.BookView;
+import ru.bakhuss.library.view.FilterView;
 import ru.bakhuss.library.view.PersonView;
 
 import java.util.Collection;
@@ -21,7 +26,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)
@@ -50,6 +54,8 @@ public class PersonServiceImpl implements PersonService {
         tmpPrs.setSecondName(view.secondName);
         tmpPrs.setSurname(view.surname);
         tmpPrs.setBirthday(view.birthday);
+        tmpPrs.setPhone(view.phone);
+        tmpPrs.setEmail(view.email);
         Person newPrs = null;
         try {
             newPrs = personDao.save(tmpPrs);
@@ -174,19 +180,55 @@ public class PersonServiceImpl implements PersonService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Collection<PersonView> getAllPersons(PersonView view) {
-        List<PersonView> personV = null;
+    public Collection<PersonView> getAllPersons(FilterView view) {
+        List<PersonView> personsV = null;
+        int page = Integer.parseInt(view.page);
+        int fetchSize = Integer.parseInt(view.fetchSize);
+        String props = view.orderSort;
+        System.out.println("orderSort: " + props);
+        Sort.Direction direct = null;
+        switch (view.orderSort) {
+            case ("asc"):
+                direct = Sort.Direction.ASC;
+                break;
+            case ("desc"):
+                direct = Sort.Direction.DESC;
+                break;
+            default:
+                direct = Sort.Direction.ASC;
+        }
+        Sort sort = new Sort(direct, props);
+        Pageable pageable = new PageRequest(page, fetchSize, sort);
         try {
-            personV = StreamSupport.stream(personDao.findAll().spliterator(), false)
+            Page<Person> personPage = personDao.findAll(pageable);
+            List<Person> listPerson = personPage.getContent();
+            personsV = listPerson.stream()
                     .map(PersonView.getFuncPersonToView())
-                    .sorted(Comparator.comparing(PersonView::getSurname))
                     .collect(Collectors.toList());
-            personV.size();
-        } catch (NullPointerException ex) {
-            throw new ResponseErrorException("Not found persons in db");
+            log.info("------------size: " + personsV.size());
         } catch (Exception ex) {
+            log.info(ex.getMessage());
             throw new ResponseErrorException("Error requesting persons from db");
         }
-        return personV;
+        log.info(personsV.toString());
+        return personsV;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public FilterView getPersonsCount() {
+        Long count;
+        try {
+            count = personDao.count();
+        } catch (Exception ex) {
+            throw new ResponseErrorException("Error requesting persons count");
+        }
+        FilterView filterV = new FilterView();
+        filterV.count = String.valueOf(count);
+        log.info("count: " + filterV.count);
+        return filterV;
     }
 }

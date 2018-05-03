@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bakhuss.library.controller.PersonController;
 import ru.bakhuss.library.service.PersonService;
+import ru.bakhuss.library.view.FilterView;
 import ru.bakhuss.library.view.PersonView;
 import ru.bakhuss.library.view.ResponseView;
 
@@ -69,7 +70,16 @@ public class PersonControllerImpl implements PersonController {
      */
     @Override
     @PostMapping(value = "/list")
-    public ResponseView getPersonsByFilter(@RequestBody PersonView view) {
+    public ResponseView getPersonsByFilter(@RequestBody FilterView view) {
         return new ResponseView(personService.getAllPersons(view));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @GetMapping(value = "/count")
+    public ResponseView getPersonsCount() {
+        return new ResponseView(personService.getPersonsCount());
     }
 }

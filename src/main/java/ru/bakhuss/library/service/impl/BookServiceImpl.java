@@ -213,7 +213,6 @@ public class BookServiceImpl implements BookService {
             default:
                 direct = Sort.Direction.ASC;
         }
-//        String props = "name";
         Sort sort = new Sort(direct, props);
         Pageable pageable = new PageRequest(page, fetchSize, sort);
         try {

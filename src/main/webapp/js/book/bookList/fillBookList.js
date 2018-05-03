@@ -13,10 +13,10 @@
         return filter;
     }
 
-    function getCount() {
+    function getCount(urlCount) {
         console.log('getCount');
         $.ajax({
-            url:"/book/count",
+            url:urlCount,
             type:"GET",
             dataType:"json",
             success: function(result) {
@@ -38,32 +38,23 @@
         return false;
     }
 
-    function getBooks() {
+    function getTable(urlList, tabId) {
         var filter = getFilter();
-        var books;
+        var tableData;
         $.ajax({
-            url:"/book/list",
+            url:urlList,
             type:"POST",
             contentType:"application/json; charset=utf-8",
             data: JSON.stringify(filter),
             dataType:"json",
             success: function(result) {
-                $('#bookListTable tbody tr').remove();
-                books = result.data;
-                var offset = filter.page*filter.fetchSize;
-                result.data.forEach(function(item, i) {
-                    var tr = '<tr>';
-                    tr += '<td hidden>' + item.id + '</td>';
-                    tr += '<td>' + (i+1+offset) + '</td>';
-                    tr += '<td>' + item.name + '</td>';
-                    tr += '</tr';
-                    $('#bookListTable tbody').append(tr);
-                    $('head script[src="../../js/mark.js"]').remove();
-                    $('head script').after('<script src="../../js/mark.js"></script>');
-                });
+                tableData = {
+                    tableId: tabId,
+                    offset: filter.page*filter.fetchSize,
+                    list: result.data
+                }
+                buildTable(tableData);
             }
-//            return data;
         });
-        return books;
     }
 //});

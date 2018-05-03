@@ -9,7 +9,6 @@
         <link rel="stylesheet" href="../../vendor/css/bootstrap.min.css">
         <link rel="stylesheet" href="../../css/mark.css">
         <link rel="stylesheet" href="../../css/book/nextStep.css">
-        <!--<link rel="stylesheet" href="../../css/common.css">-->
 
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
         <script src="../../vendor/js/jquery.min.js"></script>
@@ -17,10 +16,11 @@
 
         <script src="../../js/book/removeBook.js"></script>
         <script src="../../js/book/openEditBook.js"></script>
+        <script src="../../js/table/navigation/nextStep.js"></script>
+        <script src="../../js/table/navigation/navigPanel.js"></script>
+        <script src="../../js/table/fillTable.js"></script>
+        <script src="../../js/table/table.js"></script>
         <script src="../../js/mark.js"></script>
-        <script src="../../js/book/nextStep.js"></script>
-        <script src="../../js/book/bookList/fillBookList.js"></script>
-        <script src="../../js/book/navigPanel.js"></script>
 
         <link rel="import" href="../navigation/navigPanel.html">
 
@@ -31,14 +31,13 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body onload="getCount(); getBooks(); buildNavPanel(0, 10);">
+    <body onload="getCount('/book/count'); getTable('/book/list','bookListTable'); buildNavPanel(0, 10);">
         <div>
             <h1 class="text-center">Book list</h1>
         </div>
 
         <script src="../../js/book/bookList/insertNavigPanelToBookList.js"></script>
 
-        <!--<div>-->
         <div class="btn-toolbar container" role="toolbar" aria-label="...">
             <div class="btn-group" role="group" aria-label="...">
                 <a href="book.html" class="btn btn-default" title="Add new book">Add</a>
@@ -58,8 +57,9 @@
             <input type="hidden" value="15" id="fetchSize">
             <input type="hidden" value="name" id="orderSort">
             <input type="hidden" value="1" id="activeId">
+            <input type="hidden" value="/book/list" id="urlList">
+            <input type="hidden" value="/book/count" id="urlCount">
         </div>
-        <!--</div>-->
         <div class="container-fluid text-center" id="libraryCard">
             <table id="bookListTable" class="table table-bordered table-hover">
                 <thead>
@@ -73,7 +73,5 @@
                 </tbody>
             </table>
         </div>
-        <!--<script src="../../js/book/bookList/fillBookList.js"></script>-->
-        <!--<script src="../../js/book/navigPanel.js"></script>-->
     </body>
 </html>

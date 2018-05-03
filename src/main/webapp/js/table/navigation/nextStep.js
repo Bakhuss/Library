@@ -56,7 +56,7 @@ $(function(){
             $('#page').val(activeId-2);
             console.log("page: " + $('#page').val());
             checkNavPanel(getFilter());
-            getBooks();
+            getTable($('#urlList').val(), $('table').attr('id'));
     }
 
     function nextPage() {
@@ -68,7 +68,7 @@ $(function(){
         $('#page').val(activeId);
         console.log("page: " + $('#page').val())
         checkNavPanel(getFilter());
-        getBooks();
+        getTable($('#urlList').val(), $('table').attr('id'));
     }
 
     function nextBlock() {
@@ -104,7 +104,7 @@ $(function(){
         console.log('page: ' + getFilter().page);
         $('#activeId').val(clickId);
         checkNavPanel(getFilter());
-        getBooks();
+        getTable($('#urlList').val(), $('table').attr('id'));
         console.log('nextNumberPage: getFilter: ' + JSON.stringify(getFilter()));
     }
 

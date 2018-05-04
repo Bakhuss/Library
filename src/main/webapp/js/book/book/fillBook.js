@@ -15,6 +15,7 @@ $(function() {
                 }
                 console.log(result.data.id);
                 console.log(JSON.stringify(result));
+                $('#bodyTitle').append(': ' + result.data.name);
                 document.getElementById('id').value = result.data.id;
                 document.getElementById('name').value = result.data.name;
                 console.log(document.getElementById('id').value);

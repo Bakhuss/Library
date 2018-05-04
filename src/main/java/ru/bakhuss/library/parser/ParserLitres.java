@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class ParserClass {
+public class ParserLitres {
 
     public Set<String> getParse(String writer) throws IOException {
         String url = null;

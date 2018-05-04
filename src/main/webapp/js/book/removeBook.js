@@ -1,10 +1,12 @@
 $(function () {
     $("#remove").click(function () {
             console.log('REMOVE BOOK');
+            var elem = document.getElementsByClassName('selected');
+            if(elem.length === 0) return false;
             var book = {
-                id: document
-                    .getElementsByClassName('selected')[0]
-                    .getElementsByTagName('td')[0].innerHTML
+                id: elem[0]
+                    .getElementsByTagName('td')[0]
+                    .innerHTML
             };
             console.log('bookId: ' + book);
 

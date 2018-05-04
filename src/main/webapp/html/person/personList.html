@@ -52,7 +52,7 @@
         </div>
     </div>
     <div id="filter">
-        <input type="hidden" value="" id="count">
+        <input type="hidden" value="0" id="count">
         <input type="hidden" value="0" id="page">
         <input type="hidden" value="15" id="fetchSize">
         <input type="hidden" value="surname" id="orderSort">
@@ -62,19 +62,12 @@
         <input type="hidden" value="/person/list" id="urlList">
         <input type="hidden" value="/person/count" id="urlCount">
     </div>
-    <!--<div>-->
-        <!--<div class="btn-group container" role="group" aria-label="...">-->
-            <!--<a href="person.html" class="btn btn-default">Add</a>-->
-            <!--<a href="person.html" class="btn btn-default">Edit</a>-->
-            <!--<a href="#" class="btn btn-default">Remove</a>-->
-        <!--</div>-->
-    <!--</div>-->
     <div class="container-fluid text-center" id="personList">
         <table id="personListTable" class="table table-bordered table-hover">
             <thead>
             <tr>
                 <th hidden>id</th>
-                <th class="text-center">#</th>
+                <th class="text-center text-overflow:visible" width="1px">#</th>
                 <th class="text-center">Surname</th>
                 <th class="text-center">First Name</th>
                 <th class="text-center">Second Name</th>
@@ -87,24 +80,5 @@
             </tbody>
         </table>
     </div>
-        <!--<div class="container-fluid text-center" id="personLis">-->
-            <!--<table id="personListTabl" class="table table-bordered table-hover">-->
-                <!--<thead>-->
-                    <!--<tr>-->
-                        <!--<th hidden>id</th>-->
-                        <!--<th class="text-center">#</th>-->
-                        <!--<th class="text-center">Surname</th>-->
-                        <!--<th class="text-center">First Name</th>-->
-                        <!--<th class="text-center">Second Name</th>-->
-                        <!--<th class="text-center">Birthday</th>-->
-                        <!--<th class="text-center">Phone</th>-->
-                        <!--<th class="text-center">Email</th>-->
-                    <!--</tr>-->
-                <!--</thead>-->
-                <!--<tbody>-->
-                <!--</tbody>-->
-            <!--</table>-->
-        <!--</div>-->
-        <!--<script src="../../js/person/fillPersonList.js"></script>-->
     </body>
 </html>

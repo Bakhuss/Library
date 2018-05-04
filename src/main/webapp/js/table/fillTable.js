@@ -1,4 +1,4 @@
-console.log('BOOK LIST');
+console.log('Fill Table');
 var param = window.location.search.substring(1);
 console.log('param: ' + param);
 

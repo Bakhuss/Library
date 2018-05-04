@@ -7,7 +7,9 @@
         console.log('checkNavPanel: activeId: ' + $('#activeId').val())
         var fetchSize = $('#fetchSize').val();
         var count = $('#count').val();
-        var pageCount = (count/fetchSize + 1).toFixed();
+        var pageCount;
+        if(count % fetchSize === 0) pageCount = count/fetchSize;
+        else pageCount = Math.floor(count/fetchSize + 1);
         console.log('checkNavPanel: ' + count + ', ' + fetchSize + ', ' + pageCount);
 
         if(count <= fetchSize) {
@@ -40,6 +42,18 @@
             $('li.active').removeClass('active');
             $('#' + ($('#activeId').val())).addClass('active');
             console.log('navigPanel: activeId: ' + $('#activeId').val())
+
+            var panelLength = $('li:not(#prevBlock, #prevPage, #nextPage, #nextBlock)').length;
+            if(pageCount < panelLength) {
+                var filterNotLi = ':not(';
+                for(var k=1; k<=pageCount; k++) {
+                    filterNotLi += 'li#' + k + ',';
+                }
+                filterNotLi = filterNotLi.substring(0, filterNotLi.length-1) + ')';
+                console.log('filterNotLi: ' + filterNotLi);
+                $('li:not(#prevBlock, #prevPage, #nextPage, #nextBlock)')
+                    .filter(filterNotLi).hide();
+            }
         }
         return false;
     }
@@ -51,12 +65,15 @@
         for(var i=startPage + 1; i<=startPage + amountPages; i++) {
             $('#nextPage').before('<li id="'+ i +'"><a href="#">' + i + '</a></li>');
         }
+        console.log('buildNavPanel: count: ' + $('#count').val());
+        checkNavPanel(getFilter());
     }
 
     function buildNav(startPage, amountPages) {
         if($('#navigation').attr('style') != "") return;
+        console.log('buildNav: ' + startPage + ', ' + amountPages);
         var elems = $('li:not(#prevBlock, #prevPage, #nextPage, #nextBlock)');
-        for(var i=startPage + 1, j = 0; i<=startPage + amountPages, j < 10; i++, j++) {
+        for(var i=startPage + 1, j = 0; i<=startPage + amountPages, j < amountPages; i++, j++) {
             $(elems[j]).attr('id', i);
             $(elems[j]).find('a').text(i);
         }

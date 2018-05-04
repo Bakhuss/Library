@@ -7,11 +7,9 @@ $(function () {
             };
 
             var newUrl = "";
-//            alert(book.id);
             if(book.id === "") newUrl = "/book/save";
             else newUrl = "/book/update";
             console.log('Book ' + book.id + "; url: " + newUrl);
-//            alert('Book ' + book.id + "; url: " + newUrl);
             $.ajax({
                 url:newUrl,
                 type:"POST",

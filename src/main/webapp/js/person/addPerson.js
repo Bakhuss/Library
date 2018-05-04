@@ -10,16 +10,20 @@ $(function () {
                 phone: $("#phone").val(),
                 email: $("#email").val()
             };
-            console.log('PER', person);
 
+            var newUrl = "";
+            if(person.id === "") newUrl = "/person/save";
+            else newUrl = "/person/update";
+            console.log('Person ' + person.id + "; url: " + newUrl);
             $.ajax({
-                url:"/person/save",
+                url:newUrl,
                 type:"POST",
                 data: JSON.stringify(person),
                 contentType:"application/json; charset=utf-8",
                 dataType:"json",
                 success: function(result){
-                    alert(JSON.stringify(result));
+                    console.log(JSON.stringify(result));
+                    document.location.href = "../../html/person/personList.html";
                 }
             });
     });

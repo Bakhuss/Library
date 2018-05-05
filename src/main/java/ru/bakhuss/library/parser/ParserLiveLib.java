@@ -4,21 +4,22 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class ParserLiveLib {
-    public Set<String> getParse(String writer) throws IOException {
-        Set<String> titles = null;
+    public ArrayList<String> getParse(String writer) throws IOException {
+        ArrayList<String> titles = new ArrayList<>();
         String url = null;
         url = "https://www.livelib.ru/author/" + writer;
         Document doc = Jsoup.connect(url).get();
 
+        String name = doc.getElementsByClass("author-original-name").first().text();
+        System.out.println(name);
+        titles.add(name);
+
         List<String> list = doc.getElementsByClass("ll_book").eachText();
-        list.forEach(System.out::println);
-        titles = new HashSet<>(list);
+        titles.addAll(list);
 
         return titles;
     }

@@ -37,7 +37,9 @@ public class Book {
      * Автор(-ы)
      */
     @ManyToMany(cascade = {
-            CascadeType.ALL
+            CascadeType.PERSIST,
+            CascadeType.MERGE,
+            CascadeType.REMOVE
     },
             fetch = FetchType.LAZY)
     @JoinTable(

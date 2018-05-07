@@ -100,7 +100,6 @@ public class BookServiceImpl implements BookService {
             throw new ResponseErrorException("Error requesting book by id: " + view.id + " from db");
         }
         book.setName(view.name);
-        log.info("updateBook: new name - " + book.getName());
 
         /*
          * Синхронизация писателей книги
@@ -112,18 +111,16 @@ public class BookServiceImpl implements BookService {
             List<Long> idsFrmDb = book.getWriters().stream()
                     .map(Person::getId)
                     .collect(Collectors.toList());
-            idsFrmDb.removeAll(idsFrmCtr);
-            Set<Person> removePrs = personDao.findByIdIn(idsFrmDb);
-            Set<Person> addPrs = personDao.findByIdIn(idsFrmCtr);
-//            book.removeWriters(removePrs);
-//            book.addWriters(addPrs);
+            for (Long l : idsFrmCtr) {
+                Person person = personDao.findOne(l);
+                if (idsFrmDb.contains(l)) book.removeWriter(person);
+                else book.addWriter(person);
+            }
         }
 
         Book updateBook = null;
         try {
-            log.info("updateBook: new book before save - " + book.toString());
             updateBook = bookDao.save(book);
-            log.info("updateBook: new book after save - " + updateBook.toString());
             updateBook.getId();
         } catch (Exception ex) {
             throw new ResponseErrorException("Error updating book by id: " + view.id);

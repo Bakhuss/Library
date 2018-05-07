@@ -13,6 +13,7 @@ public class ExceptionHandlerController {
     public ResponseError handlerException(RuntimeException ex) {
         ResponseError error = new ResponseError(ex.getMessage());
         log.error(ex.getMessage());
+        log.info(ex.getMessage());
         return error;
     }
 }

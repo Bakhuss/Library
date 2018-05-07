@@ -1,6 +1,6 @@
 $(function () {
     $("#remove").click(function () {
-            alert('REMOVE PERSON');
+            console.log('REMOVE PERSON');
             var elem = document.getElementsByClassName('selected');
             if(elem.length === 0) return false;
             var person = {

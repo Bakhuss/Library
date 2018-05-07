@@ -91,7 +91,6 @@ public class Book {
         getWriters().removeIf(w -> w.getId() == person.getId());
     }
 
-
     public Collection<Catalog> getCatalogs() {
         return catalogs;
     }

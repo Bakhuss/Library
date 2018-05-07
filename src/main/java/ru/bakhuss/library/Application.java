@@ -66,11 +66,11 @@ public class Application {
         app.run(args);
 
 
-//        BookServiceImpl bsi = context.getBean(BookServiceImpl.class);
-//        PersonServiceImpl psi = context.getBean(PersonServiceImpl.class);
-//        PersonDao dao = context.getBean(PersonDao.class);
-//        BookDao bDao = context.getBean(BookDao.class);
-//
+        BookServiceImpl bsi = context.getBean(BookServiceImpl.class);
+        PersonServiceImpl psi = context.getBean(PersonServiceImpl.class);
+        PersonDao dao = context.getBean(PersonDao.class);
+        BookDao bDao = context.getBean(BookDao.class);
+
 //        PersonView person = psi.getPersonById(String.valueOf(2));
 //        person.writtenBooks.clear();
 //        List<BookView> list = new ArrayList<>();
@@ -84,63 +84,65 @@ public class Application {
 
 
 
+//        String author = null;
+//        List<String> authors = new ArrayList<>();
+//        authors.add("10293-ilya-ilf-evgenij-petrov");
+//        authors.add("264-fjodor-dostoevskij");
+//        authors.add("5497-lev-tolstoj");
+//        authors.add("212153-ivan-turgenev");
+//        authors.add("8318-anton-chehov");
+//        authors.add("13161-nikolaj-gogol");
+//        authors.add("4215-aleksandr-pushkin");
+//        authors.add("3054-aleksandr-kuprin");
+//        authors.add("447-mihail-lermontov");
+//        authors.add("104475-ivan-goncharov");
+//        authors.add("617-nikolaj-leskov");
+//        authors.add("2511-maksim-gorkij");
+//        authors.add("231446-aleksandr-ostrovskij");
+//        authors.add("816-aleksandr-griboedov");
+//        authors.add("2964-ivan-bunin");
+//        authors.add("5498-mihail-saltykovschedrin");
+//        authors.add("180735-denis-fonvizin");
+//        authors.add("408-mihail-bulgakov");
+//        authors.add("5049-nikolaj-karamzin");
+//        Long id = 1L;
 
-////        ParserLiveLib parse = new ParserLiveLib();
-////        String author = null;
-////        List<String> authors = new ArrayList<>();
-////        authors.add("264-fjodor-dostoevskij");
-////        authors.add("5497-lev-tolstoj");
-////        authors.add("212153-ivan-turgenev");
-////        authors.add("8318-anton-chehov");
-////        authors.add("13161-nikolaj-gogol");
-////        authors.add("4215-aleksandr-pushkin");
-////        authors.add("3054-aleksandr-kuprin");
-////        authors.add("447-mihail-lermontov");
-////        authors.add("104475-ivan-goncharov");
-////        authors.add("617-nikolaj-leskov");
-////        authors.add("2511-maksim-gorkij");
-////        authors.add("231446-aleksandr-ostrovskij");
-////        authors.add("816-aleksandr-griboedov");
-////        authors.add("2964-ivan-bunin");
-////        authors.add("5498-mihail-saltykovschedrin");
-////        authors.add("10293-ilya-ilf-evgenij-petrov");
-////        authors.add("180735-denis-fonvizin");
-////        authors.add("408-mihail-bulgakov");
-////        Long id = 1L;
-////        for (String s : authors) {
-////
-//////            try {
-//////                author = parse.getAuthor(s);
-//////            } catch (IOException e) {
-//////                e.printStackTrace();
-//////            }
-////
-////            ArrayList<String> books = null;
-////            try {
-////                books = parse.getParse(s);
-////            } catch (IOException e) {
-////                e.printStackTrace();
-////            }
-////            if (books != null) {
-////                PersonView pV = new PersonView();
-////                String[] strs = books.get(0).split(" ");
-////                Arrays.stream(strs).forEach(System.out::println);
-////                pV.firstName = strs[0];
-////                pV.secondName = strs[1];
-////                pV.surname = strs[2];
-////                System.out.println("-------------Person View: " + pV.toString());
-////                psi.addPerson(pV);
-////                PersonView person = psi.getPersonById(String.valueOf(id));
-////
-////                for (int i = 1; i < books.size(); i++) {
-////                    BookView bV = new BookView();
-////                    bV.name = books.get(i);
-////                    bV.writers = new HashSet<>();
-////                    bV.writers.add(person);
-////                    bsi.addBook(bV);
-////                }
-////            }
-////
+        ParserLiveLib parse = new ParserLiveLib();
+        for (int s = 41; s < 100; s++) {
+            try {
+                ArrayList<String> books = parse.getParse(String.valueOf(s));
+                System.out.println("book.size: " + books.size());
+
+                if (books.size() != 0) {
+                    PersonView pV = new PersonView();
+                    String[] strs = books.get(0).split(" ");
+                    Arrays.stream(strs).forEach(System.out::println);
+                    System.out.println(strs.length);
+                    if (strs.length < 2) continue;
+                    if (strs[1].equals("книг:")) continue;
+                    pV.firstName = strs[0];
+                    if (strs.length < 3) pV.surname = strs[1];
+                    else {
+                        pV.secondName = strs[1];
+                        pV.surname = strs[2];
+                    }
+                    System.out.println("-------------Person View: " + pV.toString());
+                    Long id = psi.addPerson(pV);
+                    PersonView person = psi.getPersonById(String.valueOf(id));
+
+                    for (int i = 1; i < books.size(); i++) {
+                        BookView bV = new BookView();
+                        bV.name = books.get(i);
+                        bV.writers = new HashSet<>();
+                        bV.writers.add(person);
+                        bsi.addBook(bV);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
 //////            if (books != null) {
 //////                books.stream().map(b -> {
 //////                    BookView bV = new BookView();
@@ -153,7 +155,7 @@ public class Application {
 //////                });
 //////            }
 ////            id++;
-////        }
+        }
 
         System.out.println("----Application----");
         System.out.println(new Date());

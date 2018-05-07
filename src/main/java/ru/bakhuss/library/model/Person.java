@@ -13,6 +13,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import java.util.Date;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Общая информация о человеке
@@ -139,14 +140,14 @@ public class Person {
         this.writtenBooks = writtenBooks;
     }
 
-    public void addWrittenBooks(Set<Book> books) {
-        getWrittenBooks().addAll(books);
-        books.forEach(b -> b.getWriters().add(this));
+    public void addWrittenBook(Book book) {
+        getWrittenBooks().add(book);
+        book.getWriters().add(this);
     }
 
-    public void removeWrittenBooks(Set<Book> books) {
-        getWrittenBooks().removeAll(books);
-        books.forEach(b -> b.getWriters().remove(this));
+    public void removeWrittenBook(Book book) {
+        book.getWriters().removeIf(w -> w.id == this.getId());
+        getWrittenBooks().removeIf(b -> b.getId() == book.getId());
     }
 
     public Subscriber getSubscriber() {

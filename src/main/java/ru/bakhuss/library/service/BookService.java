@@ -14,8 +14,9 @@ public interface BookService {
     /**
      * Добавить Book
      * @param view
+     * @return id of the new Book
      */
-    void addBook(BookView view);
+    Long addBook(BookView view);
 
     /**
      * Изменить Book

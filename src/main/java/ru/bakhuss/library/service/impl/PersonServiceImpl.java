@@ -21,8 +21,12 @@ import ru.bakhuss.library.view.BookView;
 import ru.bakhuss.library.view.FilterView;
 import ru.bakhuss.library.view.PersonView;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -47,7 +51,7 @@ public class PersonServiceImpl implements PersonService {
      */
     @Override
     @Transactional
-    public void addPerson(PersonView view) {
+    public Long addPerson(PersonView view) {
         if (view.surname.isEmpty()) throw new ResponseErrorException("Surname is required parameter");
         Person tmpPrs = new Person();
         tmpPrs.setFirstName(view.firstName);
@@ -64,6 +68,7 @@ public class PersonServiceImpl implements PersonService {
             throw new ResponseErrorException("Error saving new person");
         }
         log.info(newPrs.toString());
+        return newPrs.getId();
     }
 
     /**
@@ -95,17 +100,19 @@ public class PersonServiceImpl implements PersonService {
         /*
          * Синхронизация написанных книг
          */
-        List<Long> idsFrmCtr = view.writtenBooks.stream()
-                .map(v -> Long.parseLong(v.id))
-                .collect(Collectors.toList());
-        List<Long> idsFrmDb = person.getWrittenBooks().stream()
-                .map(Book::getId)
-                .collect(Collectors.toList());
-        idsFrmDb.removeAll(idsFrmCtr);
-        Set<Book> removeBooks = bookDao.findByIdIn(idsFrmDb);
-        Set<Book> addBooks = bookDao.findByIdIn(idsFrmCtr);
-        person.removeWrittenBooks(removeBooks);
-        person.addWrittenBooks(addBooks);
+        if (view.writtenBooks != null) {
+            List<Long> idsFrmCtr = view.writtenBooks.stream()
+                    .map(v -> Long.parseLong(v.id))
+                    .collect(Collectors.toList());
+            List<Long> idsFrmDb = person.getWrittenBooks().stream()
+                    .map(Book::getId)
+                    .collect(Collectors.toList());
+            for (Long l : idsFrmCtr) {
+                Book book = bookDao.findOne(l);
+                if (idsFrmDb.contains(l)) person.removeWrittenBook(book);
+                else person.addWrittenBook(book);
+            }
+        }
 
         Person updatePrs = null;
         try {
@@ -114,7 +121,7 @@ public class PersonServiceImpl implements PersonService {
         } catch (Exception ex) {
             throw new ResponseErrorException("Error updating person by id:" + view.id);
         }
-        log.info(updatePrs.toString() + " size: " + updatePrs.getWrittenBooks().size());
+        log.info(updatePrs.toString());
     }
 
     /**
@@ -123,13 +130,18 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional
     public void deletePerson(PersonView view) {
+        Person delPrs = null;
         try {
             Long id = Long.parseLong(view.id);
             /*
              * Проверка на NPE
              */
-            personDao.findOne(id).getId();
-            personDao.delete(id);
+            delPrs = personDao.findOne(id);
+            Set<Book> delBooks = new HashSet<>(delPrs.getWrittenBooks());
+            for (Book b : delBooks) {
+                delPrs.removeWrittenBook(b);
+            }
+            personDao.delete(delPrs.getId());
         } catch (NumberFormatException ex) {
             throw new ResponseErrorException("id must be a number(" + view.id + ")");
         } catch (NullPointerException ex) {
@@ -205,7 +217,6 @@ public class PersonServiceImpl implements PersonService {
             personsV = listPerson.stream()
                     .map(PersonView.getFuncPersonToView())
                     .collect(Collectors.toList());
-            log.info("------------size: " + personsV.size());
         } catch (Exception ex) {
             log.info(ex.getMessage());
             throw new ResponseErrorException("Error requesting persons from db");

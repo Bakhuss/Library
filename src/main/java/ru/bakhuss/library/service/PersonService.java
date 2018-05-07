@@ -13,8 +13,9 @@ public interface PersonService {
     /**
      * Добавить Person
      * @param view
+     * @return id of the new Person
      */
-    void addPerson(PersonView view);
+    Long addPerson(PersonView view);
 
     /**
      * Обновить Person

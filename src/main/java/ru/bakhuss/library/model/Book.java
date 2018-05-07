@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Книга
@@ -80,14 +81,14 @@ public class Book {
         this.writers = writers;
     }
 
-    public void addWriters(Set<Person> prs) {
-        getWriters().addAll(prs);
-        prs.forEach(p -> p.getWrittenBooks().add(this));
+    public void addWriter(Person person) {
+        person.getWrittenBooks().add(this);
+        getWriters().add(person);
     }
 
-    public void removeWriters(Set<Person> prs) {
-        getWriters().removeAll(prs);
-        prs.forEach(p -> p.getWrittenBooks().remove(this));
+    public void removeWriter(Person person) {
+        person.getWrittenBooks().removeIf(b -> b.getId() == this.getId());
+        getWriters().removeIf(w -> w.getId() == person.getId());
     }
 
 

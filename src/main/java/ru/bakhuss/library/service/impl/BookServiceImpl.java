@@ -52,7 +52,7 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     @Transactional
-    public void addBook(BookView view) {
+    public Long addBook(BookView view) {
         if (view.name.isEmpty()) throw new ResponseErrorException("Name is required parameter");
         Book tmpBook = new Book();
         tmpBook.setName(view.name);
@@ -76,6 +76,7 @@ public class BookServiceImpl implements BookService {
             }
         }
         log.info(newBook.toString());
+        return newBook.getId();
     }
 
     /**
@@ -114,8 +115,8 @@ public class BookServiceImpl implements BookService {
             idsFrmDb.removeAll(idsFrmCtr);
             Set<Person> removePrs = personDao.findByIdIn(idsFrmDb);
             Set<Person> addPrs = personDao.findByIdIn(idsFrmCtr);
-            book.removeWriters(removePrs);
-            book.addWriters(addPrs);
+//            book.removeWriters(removePrs);
+//            book.addWriters(addPrs);
         }
 
         Book updateBook = null;

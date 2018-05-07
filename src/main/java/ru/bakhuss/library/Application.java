@@ -18,6 +18,8 @@ import ru.bakhuss.library.dao.PersonDao;
 import ru.bakhuss.library.dao.SubscriberDao;
 import ru.bakhuss.library.dao.LibraryCardDao;
 import ru.bakhuss.library.error.ResponseErrorException;
+import ru.bakhuss.library.model.Book;
+import ru.bakhuss.library.model.Person;
 import ru.bakhuss.library.parser.ParserLiveLib;
 import ru.bakhuss.library.service.impl.BookServiceImpl;
 import ru.bakhuss.library.service.impl.CatalogServiceImpl;
@@ -66,76 +68,92 @@ public class Application {
 
 //        BookServiceImpl bsi = context.getBean(BookServiceImpl.class);
 //        PersonServiceImpl psi = context.getBean(PersonServiceImpl.class);
+//        PersonDao dao = context.getBean(PersonDao.class);
+//        BookDao bDao = context.getBean(BookDao.class);
 //
-//        ParserLiveLib parse = new ParserLiveLib();
-//        String author = null;
-//        List<String> authors = new ArrayList<>();
-//        authors.add("264-fjodor-dostoevskij");
-//        authors.add("5497-lev-tolstoj");
-//        authors.add("212153-ivan-turgenev");
-//        authors.add("8318-anton-chehov");
-//        authors.add("13161-nikolaj-gogol");
-//        authors.add("4215-aleksandr-pushkin");
-//        authors.add("3054-aleksandr-kuprin");
-//        authors.add("447-mihail-lermontov");
-//        authors.add("104475-ivan-goncharov");
-//        authors.add("617-nikolaj-leskov");
-//        authors.add("2511-maksim-gorkij");
-//        authors.add("231446-aleksandr-ostrovskij");
-//        authors.add("816-aleksandr-griboedov");
-//        authors.add("2964-ivan-bunin");
-//        authors.add("5498-mihail-saltykovschedrin");
-//        authors.add("10293-ilya-ilf-evgenij-petrov");
-//        authors.add("180735-denis-fonvizin");
-//        authors.add("408-mihail-bulgakov");
-//        Long id = 1L;
-//        for (String s : authors) {
-//
+//        PersonView person = psi.getPersonById(String.valueOf(2));
+//        person.writtenBooks.clear();
+//        List<BookView> list = new ArrayList<>();
+//        for (int i = 190; i < 334; i++) {
+//            BookView v = new BookView();
+//            v.id = String.valueOf(i);
+//            list.add(v);
+//        }
+//        person.writtenBooks.addAll(list);
+//        psi.updatePerson(person);
+
+
+
+
+////        ParserLiveLib parse = new ParserLiveLib();
+////        String author = null;
+////        List<String> authors = new ArrayList<>();
+////        authors.add("264-fjodor-dostoevskij");
+////        authors.add("5497-lev-tolstoj");
+////        authors.add("212153-ivan-turgenev");
+////        authors.add("8318-anton-chehov");
+////        authors.add("13161-nikolaj-gogol");
+////        authors.add("4215-aleksandr-pushkin");
+////        authors.add("3054-aleksandr-kuprin");
+////        authors.add("447-mihail-lermontov");
+////        authors.add("104475-ivan-goncharov");
+////        authors.add("617-nikolaj-leskov");
+////        authors.add("2511-maksim-gorkij");
+////        authors.add("231446-aleksandr-ostrovskij");
+////        authors.add("816-aleksandr-griboedov");
+////        authors.add("2964-ivan-bunin");
+////        authors.add("5498-mihail-saltykovschedrin");
+////        authors.add("10293-ilya-ilf-evgenij-petrov");
+////        authors.add("180735-denis-fonvizin");
+////        authors.add("408-mihail-bulgakov");
+////        Long id = 1L;
+////        for (String s : authors) {
+////
+//////            try {
+//////                author = parse.getAuthor(s);
+//////            } catch (IOException e) {
+//////                e.printStackTrace();
+//////            }
+////
+////            ArrayList<String> books = null;
 ////            try {
-////                author = parse.getAuthor(s);
+////                books = parse.getParse(s);
 ////            } catch (IOException e) {
 ////                e.printStackTrace();
 ////            }
-//
-//            ArrayList<String> books = null;
-//            try {
-//                books = parse.getParse(s);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            if (books != null) {
-//                PersonView pV = new PersonView();
-//                String[] strs = books.get(0).split(" ");
-//                Arrays.stream(strs).forEach(System.out::println);
-//                pV.firstName = strs[0];
-//                pV.secondName = strs[1];
-//                pV.surname = strs[2];
-//                System.out.println("-------------Person View: " + pV.toString());
-//                psi.addPerson(pV);
-//                PersonView person = psi.getPersonById(String.valueOf(id));
-//
-//                for (int i = 1; i < books.size(); i++) {
-//                    BookView bV = new BookView();
-//                    bV.name = books.get(i);
-//                    bV.writers = new HashSet<>();
-//                    bV.writers.add(person);
-//                    bsi.addBook(bV);
-//                }
-//            }
-//
 ////            if (books != null) {
-////                books.stream().map(b -> {
+////                PersonView pV = new PersonView();
+////                String[] strs = books.get(0).split(" ");
+////                Arrays.stream(strs).forEach(System.out::println);
+////                pV.firstName = strs[0];
+////                pV.secondName = strs[1];
+////                pV.surname = strs[2];
+////                System.out.println("-------------Person View: " + pV.toString());
+////                psi.addPerson(pV);
+////                PersonView person = psi.getPersonById(String.valueOf(id));
+////
+////                for (int i = 1; i < books.size(); i++) {
 ////                    BookView bV = new BookView();
-////                    bV.name = b;
-////                    return bV;
-////                }).forEach(b -> {
-////                    b.writers = new HashSet<>();
-////                    b.writers.add(person);
-////                    bsi.addBook(b);
-////                });
+////                    bV.name = books.get(i);
+////                    bV.writers = new HashSet<>();
+////                    bV.writers.add(person);
+////                    bsi.addBook(bV);
+////                }
 ////            }
-//            id++;
-//        }
+////
+//////            if (books != null) {
+//////                books.stream().map(b -> {
+//////                    BookView bV = new BookView();
+//////                    bV.name = b;
+//////                    return bV;
+//////                }).forEach(b -> {
+//////                    b.writers = new HashSet<>();
+//////                    b.writers.add(person);
+//////                    bsi.addBook(b);
+//////                });
+//////            }
+////            id++;
+////        }
 
         System.out.println("----Application----");
         System.out.println(new Date());

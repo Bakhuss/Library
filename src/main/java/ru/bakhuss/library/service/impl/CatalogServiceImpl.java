@@ -5,6 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bakhuss.library.dao.BookDao;
@@ -14,11 +18,13 @@ import ru.bakhuss.library.model.Book;
 import ru.bakhuss.library.model.Catalog;
 import ru.bakhuss.library.service.CatalogService;
 import ru.bakhuss.library.view.CatalogView;
+import ru.bakhuss.library.view.FilterView;
 import ru.bakhuss.library.view.PersonView;
 
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -43,7 +49,7 @@ public class CatalogServiceImpl implements CatalogService {
      */
     @Override
     @Transactional
-    public void addCatalog(CatalogView view) {
+    public Long addCatalog(CatalogView view) {
         if (view.bookId.isEmpty()) throw new ResponseErrorException("Book is required parameter");
         Catalog tempC = new Catalog();
         Book book = null;
@@ -75,6 +81,7 @@ public class CatalogServiceImpl implements CatalogService {
             throw new ResponseErrorException("Error saving new catalog");
         }
         log.info(newC.toString());
+        return newC.getId();
     }
 
     /**
@@ -158,19 +165,10 @@ public class CatalogServiceImpl implements CatalogService {
         view.bookId = cat.getBook().getId().toString();
         view.bookName = cat.getBook().getName();
         view.description = cat.getDescription();
-//        Function<Person, PersonView> funcP = p -> {
-//            PersonView pV = new PersonView();
-//            pV.id = p.getId().toString();
-//            pV.firstName = p.getFirstName();
-//            pV.secondName = p.getSecondName();
-//            pV.surname = p.getSurname();
-//            pV.birthday = p.getBirthday();
-//            return pV;
-//        };
-        view.writers = cat.getBook().getWriters().stream()
-                .map(PersonView.getFuncPersonToView())
-                .sorted(Comparator.comparing(PersonView::getSurname))
-                .collect(Collectors.toList());
+//        view.writers = cat.getBook().getWriters().stream()
+//                .map(PersonView.getFuncPersonToView())
+//                .sorted(Comparator.comparing(PersonView::getSurname))
+//                .collect(Collectors.toList());
         view.totalCount = cat.getTotalCount().toString();
 
         view.subscribers = new HashSet<>();
@@ -183,20 +181,54 @@ public class CatalogServiceImpl implements CatalogService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Collection<CatalogView> getAllCatalogs(CatalogView view) {
-        Set<CatalogView> catalogV = null;
+    public Collection<CatalogView> getAllCatalogs(FilterView view) {
+        List<CatalogView> catalogV = null;
+        int page = Integer.parseInt(view.page);
+        int fetchSize = Integer.parseInt(view.fetchSize);
+        String props = view.orderSort;
+        Sort.Direction direct = null;
+        switch (view.orderSort) {
+            case ("asc"):
+                direct = Sort.Direction.ASC;
+                break;
+            case ("desc"):
+                direct = Sort.Direction.DESC;
+                break;
+            default:
+                direct = Sort.Direction.ASC;
+        }
+        Sort sort = new Sort(direct, props);
+        Pageable pageable = new PageRequest(page, fetchSize, sort);
         try {
-            catalogV =
-                    StreamSupport.stream(catalogDao.findAll().spliterator(), false)
-                            .map(CatalogView.getFuncCatalogToView())
-                            .collect(Collectors.toSet());
-            catalogV.size();
-        } catch (NullPointerException ex) {
-            throw new ResponseErrorException("Not found catalogs from db");
+            Page<Catalog> catalogPage = catalogDao.findAll(pageable);
+            List<Catalog> listCatalg = catalogPage.getContent();
+            catalogV = listCatalg.stream()
+                    .map(CatalogView.getFuncCatalogToView())
+                    .collect(Collectors.toList());
+            log.info("------------size: " + catalogV.size());
         } catch (Exception ex) {
+            log.info(ex.getMessage());
             throw new ResponseErrorException("Error requesting catalogs from db");
         }
         log.info(catalogV.toString());
         return catalogV;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public FilterView getCatalogsCount() {
+        Long count = null;
+        try {
+            count = catalogDao.count();
+        } catch (Exception ex) {
+            throw new ResponseErrorException("Error requesting catalogs count");
+        }
+        FilterView filterV = new FilterView();
+        filterV.count = String.valueOf(count);
+        log.info("count: " + filterV.count);
+        return filterV;
     }
 }

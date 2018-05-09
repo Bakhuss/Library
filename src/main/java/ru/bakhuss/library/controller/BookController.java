@@ -53,7 +53,7 @@ public interface BookController {
 
     /**
      * Узнать общее количество книг
-     * @return JSON book value
+     * @return JSON filter value
      */
     ResponseView getBooksCount();
 

@@ -26,6 +26,7 @@ package ru.bakhuss.library.service.impl;
         import java.util.ArrayList;
         import java.util.Collection;
         import java.util.Comparator;
+        import java.util.HashSet;
         import java.util.Iterator;
         import java.util.List;
         import java.util.Set;
@@ -139,7 +140,11 @@ public class BookServiceImpl implements BookService {
             /*
              * Проверка на NPE
              */
-            bookDao.findOne(id).getId();
+            Book delBook = bookDao.findOne(id);
+            Set<Person> delPrs = new HashSet<>(delBook.getWriters());
+            for (Person p : delPrs) {
+                delBook.removeWriter(p);
+            }
             bookDao.delete(id);
         } catch (NumberFormatException ex) {
             throw new ResponseErrorException("Book id must be a number(" + view.id + ")");

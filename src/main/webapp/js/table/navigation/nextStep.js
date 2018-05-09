@@ -80,7 +80,9 @@ $(function(){
         var endId = parseInt($('#nextPage').prev().attr('id'));
         var count = $('#count').val();
         var fetchSize = $('#fetchSize').val();
-        var pageCount = (count/fetchSize + 1).toFixed();
+        var pageCount;
+        if(count % fetchSize === 0) pageCount = count/fetchSize;
+        else pageCount = Math.floor(count/fetchSize + 1);
         console.log('endId: ' + endId + '; pageCount: ' + pageCount);
         if(endId >= pageCount) return;
         var page = endId;

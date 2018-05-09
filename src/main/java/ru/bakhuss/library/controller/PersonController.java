@@ -46,7 +46,7 @@ public interface PersonController {
 
     /**
      * Узнать общее количество человек
-     * @return JSON person value
+     * @return JSON filter value
      */
     ResponseView getPersonsCount();
 }

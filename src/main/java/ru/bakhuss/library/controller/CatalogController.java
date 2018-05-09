@@ -1,6 +1,7 @@
 package ru.bakhuss.library.controller;
 
 import ru.bakhuss.library.view.CatalogView;
+import ru.bakhuss.library.view.FilterView;
 import ru.bakhuss.library.view.ResponseView;
 
 /**
@@ -41,5 +42,11 @@ public interface CatalogController {
      * @param view
      * @return JSON catalogs values
      */
-    ResponseView getCatalogs(CatalogView view);
+    ResponseView getCatalogs(FilterView view);
+
+    /**
+     * Получить общее количество Catalogs
+     * @return JSON filter value
+     */
+    ResponseView getCatalogsCount();
 }

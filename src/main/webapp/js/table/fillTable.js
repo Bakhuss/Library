@@ -29,7 +29,9 @@ function getCount(urlCount) {
                 $('#count').val(result.data.count);
                 var fetchSize = parseInt($('#fetchSize').val());
                 var count = parseInt($('#count').val());
-                var pageCount = (count/fetchSize + 1).toFixed();
+                var pageCount;
+                if(count % fetchSize === 0) pageCount = count/fetchSize;
+                else pageCount = Math.floor(count/fetchSize + 1);
                 if(count <= fetchSize) {
                     $('#navigation').hide();
                 } else {

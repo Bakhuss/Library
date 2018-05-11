@@ -71,28 +71,28 @@ public class Application {
 //        PersonDao dao = context.getBean(PersonDao.class);
 //        BookDao bDao = context.getBean(BookDao.class);
 //
-////        authors.add("10293");
-////        authors.add("264");
-////        authors.add("5497");
-////        authors.add("212153");
-////        authors.add("8318");
-////        authors.add("13161");
-////        authors.add("4215");
-////        authors.add("3054");
-////        authors.add("447");
-////        authors.add("104475");
-////        authors.add("617");
-////        authors.add("2511");
-////        authors.add("231446");
-////        authors.add("816");
-////        authors.add("2964");
-////        authors.add("5498");
-////        authors.add("180735");
-////        authors.add("408");
-////        authors.add("5049");
-//
+//////        authors.add("10293");
+//////        authors.add("264");
+//////        authors.add("5497");
+//////        authors.add("212153");
+//////        authors.add("8318");
+//////        authors.add("13161");
+//////        authors.add("4215");
+//////        authors.add("3054");
+//////        authors.add("447");
+//////        authors.add("104475");
+//////        authors.add("617");
+//////        authors.add("2511");
+//////        authors.add("231446");
+//////        authors.add("816");
+//////        authors.add("2964");
+//////        authors.add("5498");
+//////        authors.add("180735");
+//////        authors.add("408");
+//////        authors.add("5049");
+////
 //        ParserLiveLib parse = new ParserLiveLib();
-//        for (int s = 97; s < 110; s++) {
+//        for (int s = 219; s < 240; s++) {
 //            try {
 //                ArrayList<String> books = parse.getParse(String.valueOf(s));
 //                System.out.println("book.size: " + books.size());

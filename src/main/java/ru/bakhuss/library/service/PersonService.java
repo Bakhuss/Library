@@ -34,7 +34,9 @@ public interface PersonService {
      * @param id
      * @return PersonView value
      */
-    PersonView getPersonById(String id);
+    PersonView getPersonById(String id,
+                             String books,
+                             String catalogs);
 
     /**
      * Получить все Person по фильтру

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bakhuss.library.controller.PersonController;
 import ru.bakhuss.library.service.PersonService;
@@ -42,6 +43,7 @@ public class PersonControllerImpl implements PersonController {
     @Override
     @PostMapping(value = "/update")
     public ResponseView updatePerson(@RequestBody PersonView view) {
+        System.out.println("---------- view: " + view.toString());
         personService.updatePerson(view);
         return new ResponseView(true);
     }
@@ -61,8 +63,10 @@ public class PersonControllerImpl implements PersonController {
      */
     @Override
     @GetMapping(value = "/{id}")
-    public ResponseView getPersonById(@PathVariable String id) {
-        return new ResponseView(personService.getPersonById(id));
+    public ResponseView getPersonById(@PathVariable String id,
+                                      @RequestParam(name = "b", required = false) String books,
+                                      @RequestParam(name = "c", required = false) String catalogs) {
+        return new ResponseView(personService.getPersonById(id, books, catalogs));
     }
 
     /**

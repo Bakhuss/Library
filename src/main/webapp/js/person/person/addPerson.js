@@ -2,7 +2,7 @@ $(function () {
     $("#addPerson").click(function () {
             console.log('PERSON');
             var person = {
-                id: $("#id").val(),
+                id: $("#personId").val(),
                 surname: $("#surname").val(),
                 firstName: $("#firstName").val(),
                 secondName: $("#secondName").val(),

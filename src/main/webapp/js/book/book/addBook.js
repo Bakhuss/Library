@@ -2,7 +2,7 @@ $(function () {
     $("#addBook").click(function () {
             console.log('BOOK');
             var book = {
-                id: $("#id").val(),
+                id: $("#bookId").val(),
                 name: $("#name").val()
             };
 

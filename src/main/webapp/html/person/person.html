@@ -12,7 +12,8 @@
         <script src="../../vendor/js/jquery.min.js"></script>
         <script src="../../vendor/js/bootstrap.min.js"></script>
 
-        <script src="../../js/person/addPerson.js"></script>
+        <script src="../../js/person/person/addPerson.js"></script>
+        <script src="../../js/person/openBookList.js"></script>
 
         <!-- HTML5 Shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- Предупреждение: Respond.js не работает при просмотре страницы через файл:// -->
@@ -23,9 +24,9 @@
     </head>
     <body>
         <div class="container-fluid text-center" id="person">
-            <h1>Person</h1><br>
+            <h1 id="bodyTitle">Person</h1><br>
             <form class="form-horizontal" onsubmit="return false">
-                <input type="hidden" name="id" value="" id="id">
+                <input type="hidden" name="id" value="" id="personId">
                 <div class="form-group">
                     <label for="surname" class="col-sm-4 control-label">Surname</label>
                     <div class="col-sm-4">
@@ -65,7 +66,7 @@
                 <div class="form-group">
                     <label for="writtenBooks" class="col-sm-4 control-label">Written books</label>
                     <div class="col-sm-4">
-                        <a href="../book/bookList.html" class="form-control" id="writtenBooks">View</a>
+                        <a href="#" class="form-control" id="writtenBooks">View</a>
                     </div>
                 </div>
                 <div class="form-group">
@@ -82,5 +83,6 @@
                 </div>
             </form>
         </div>
+        <script src="../../js/person/person/fillPerson.js"></script>
     </body>
 </html>

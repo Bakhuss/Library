@@ -35,7 +35,7 @@ public interface PersonController {
      * @param id
      * @return JSON person value
      */
-    ResponseView getPersonById(String id);
+    ResponseView getPersonById(String id, String books, String catalogs);
 
     /**
      * Получить всех Person по фильтру

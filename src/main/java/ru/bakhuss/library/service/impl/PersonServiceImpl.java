@@ -96,6 +96,8 @@ public class PersonServiceImpl implements PersonService {
         person.setSecondName(view.secondName);
         person.setSurname(view.surname);
         person.setBirthday(view.birthday);
+        person.setPhone(view.phone);
+        person.setEmail(view.email);
 
         /*
          * Синхронизация написанных книг
@@ -156,8 +158,10 @@ public class PersonServiceImpl implements PersonService {
      */
     @Override
     @Transactional(readOnly = true)
-    public PersonView getPersonById(String id) {
+    public PersonView getPersonById(String id, String books, String catalogs) {
         Person person = null;
+        if (books != null) log.info(books);
+        if (catalogs != null) log.info(catalogs);
         try {
             person = personDao.findOne(Long.parseLong(id));
 
@@ -179,10 +183,14 @@ public class PersonServiceImpl implements PersonService {
         personV.secondName = person.getSecondName();
         personV.surname = person.getSurname();
         personV.birthday = person.getBirthday();
-        personV.writtenBooks = person.getWrittenBooks().stream()
-                .map(BookView.getFuncBookToView())
-                .sorted(Comparator.comparing(BookView::getName))
-                .collect(Collectors.toList());
+        personV.phone = person.getPhone();
+        personV.email = person.getEmail();
+        if (books != null) {
+            personV.writtenBooks = person.getWrittenBooks().stream()
+                    .map(BookView.getFuncBookToView())
+                    .sorted(Comparator.comparing(BookView::getName))
+                    .collect(Collectors.toList());
+        }
         log.info(personV.toString());
         return personV;
     }

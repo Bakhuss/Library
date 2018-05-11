@@ -19,7 +19,7 @@ function getFilter() {
 
 function getCount(urlCount) {
     console.log('getCount');
-    if(!params.bookId) {
+    if(!params.bookId && !param.personId) {
         $.ajax({
             url:urlCount,
             type:"GET",
@@ -78,6 +78,42 @@ function getTable(urlList, tabId) {
                 buildTable(tableData);
             }
         });
+    } else if(params.personId){
+            console.log('Person id');
+            var url = "/person/";
+            url += params.personId + "?";
+            delete params.personId;
+            for(f in params) {
+             url += f + "=" + params[f] + "&";
+            }
+            $.ajax({
+             url: url,
+             type:"GET",
+             success: function(result) {
+                 if(result.error != null) {
+                     alert(result.error);
+                     location.href = "../../html/book/bookList.html";
+                     return;
+                 }
+                 tableData = {
+                     tableId: tabId,
+                     offset: filter.page*filter.fetchSize,
+                     list: result.data.writtenBooks
+                 }
+                 alert(JSON.stringify(tableData))
+                 $('#count').val(tableData.list.length);
+                 alert(tableData.list.length);
+                 for(p in params) {
+                     if(p === 'b') {
+                         $('h1').html('Person: ' + result.data.surname
+                                           + ' ' + result.data.firstName
+                                           + ' ' + result.data.secondName);
+                         $('h1').append('<br>Written books:');
+                     }
+                 }
+                 buildTable(tableData);
+             }
+            });
     } else {
         $.ajax({
             url:urlList,

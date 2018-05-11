@@ -22,6 +22,7 @@ import ru.bakhuss.library.view.FilterView;
 import ru.bakhuss.library.view.PersonView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -186,10 +187,26 @@ public class PersonServiceImpl implements PersonService {
         personV.phone = person.getPhone();
         personV.email = person.getEmail();
         if (books != null) {
+            int endIndex = person.getWrittenBooks().size() - 1;
+            int startIndex = 0;
+            System.out.println("books: " + books);
+            if (books.length() > 0) {
+                String[] params = books.split(",");
+                if (params[1] != null) {
+                    System.out.println("params[1]: " + params[1]);
+                    startIndex = Integer.valueOf(params[1]);
+                }
+                if (params[0] != null) {
+                    System.out.println("params[0]: " + params[0]);
+                    endIndex = startIndex + Integer.valueOf(params[0]);
+                }
+            }
+            System.out.println("params end");
             personV.writtenBooks = person.getWrittenBooks().stream()
                     .map(BookView.getFuncBookToView())
                     .sorted(Comparator.comparing(BookView::getName))
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toList())
+                    .subList(startIndex, endIndex);
         }
         log.info(personV.toString());
         return personV;

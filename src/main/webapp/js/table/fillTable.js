@@ -100,7 +100,7 @@ function getTable(urlList, tabId) {
                      offset: filter.page*filter.fetchSize,
                      list: result.data.writtenBooks
                  }
-                 alert(JSON.stringify(tableData))
+                 console.log(JSON.stringify(tableData))
                  $('#count').val(tableData.list.length);
                  alert(tableData.list.length);
                  for(p in params) {

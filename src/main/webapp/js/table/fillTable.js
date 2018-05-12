@@ -19,7 +19,11 @@ function getFilter() {
 
 function getCount(urlCount) {
     console.log('getCount');
-    if(!params.bookId && !param.personId) {
+    if(params.bookId) alert('params.bookId: ' + params.bookId);
+    if(params.personId) alert('params.personId: ' + params.personId);
+//    if( (params.bookId = '') | (params.personId = '') ) {
+    if(params.personId = '') {
+        alert('getCount ' + params.personId);
         $.ajax({
             url:urlCount,
             type:"GET",
@@ -80,12 +84,20 @@ function getTable(urlList, tabId) {
         });
     } else if(params.personId){
             console.log('Person id');
+            alert(JSON.stringify(params));
+            var filter = getFilter();
+            alert(JSON.stringify(filter));
+            for(p in params) {
+                if(p === 'b') params[p] = filter.fetchSize + ',' + filter.page;
+                alert(p + ': ' + params[p]);
+            }
             var url = "/person/";
             url += params.personId + "?";
             delete params.personId;
             for(f in params) {
              url += f + "=" + params[f] + "&";
             }
+            alert(url);
             $.ajax({
              url: url,
              type:"GET",
@@ -102,7 +114,7 @@ function getTable(urlList, tabId) {
                  }
                  console.log(JSON.stringify(tableData))
                  $('#count').val(tableData.list.length);
-                 alert(tableData.list.length);
+//                 alert(tableData.list.length);
                  for(p in params) {
                      if(p === 'b') {
                          $('h1').html('Person: ' + result.data.surname

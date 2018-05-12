@@ -20,6 +20,7 @@ import ru.bakhuss.library.service.PersonService;
 import ru.bakhuss.library.view.BookView;
 import ru.bakhuss.library.view.FilterView;
 import ru.bakhuss.library.view.PersonView;
+import sun.plugin.javascript.navig.Array;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -187,26 +188,34 @@ public class PersonServiceImpl implements PersonService {
         personV.phone = person.getPhone();
         personV.email = person.getEmail();
         if (books != null) {
-            int endIndex = person.getWrittenBooks().size() - 1;
+            int endIndex = person.getWrittenBooks().size();
             int startIndex = 0;
             System.out.println("books: " + books);
             if (books.length() > 0) {
                 String[] params = books.split(",");
-                if (params[1] != null) {
-                    System.out.println("params[1]: " + params[1]);
-                    startIndex = Integer.valueOf(params[1]);
+                try {
+                    int startInx = Integer.parseInt(params[1]);
+                    if (startInx < endIndex) startIndex = startInx;
+                } catch (NumberFormatException | ArrayIndexOutOfBoundsException ex) {
+                    ex.printStackTrace();
+                    log.info(ex.getMessage());
                 }
-                if (params[0] != null) {
-                    System.out.println("params[0]: " + params[0]);
-                    endIndex = startIndex + Integer.valueOf(params[0]);
+                try {
+                    int fetchSize = Integer.parseInt(params[0]);
+                    if ((startIndex + fetchSize) < endIndex) endIndex = startIndex + fetchSize;
+                } catch (NumberFormatException | ArrayIndexOutOfBoundsException ex) {
+                    ex.printStackTrace();
+                    log.info(ex.getMessage());
                 }
             }
-            System.out.println("params end");
             personV.writtenBooks = person.getWrittenBooks().stream()
                     .map(BookView.getFuncBookToView())
                     .sorted(Comparator.comparing(BookView::getName))
                     .collect(Collectors.toList())
                     .subList(startIndex, endIndex);
+        }
+        if (catalogs != null) {
+            personV.subscribeBooks = new HashSet<>();
         }
         log.info(personV.toString());
         return personV;

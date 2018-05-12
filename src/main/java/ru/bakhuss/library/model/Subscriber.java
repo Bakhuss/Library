@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 
@@ -55,7 +56,7 @@ public class Subscriber {
     @OneToMany(mappedBy = "subscriber",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private Set<LibraryCard> catalogs;
+    private Collection<LibraryCard> catalogs;
 
 
     public Long getId() {
@@ -86,11 +87,11 @@ public class Subscriber {
         this.person = person;
     }
 
-    public Set<LibraryCard> getCatalogs() {
+    public Collection<LibraryCard> getCatalogs() {
         return catalogs;
     }
 
-    public void setCatalogs(Set<LibraryCard> catalogs) {
+    public void setCatalogs(Collection<LibraryCard> catalogs) {
         this.catalogs = catalogs;
     }
 

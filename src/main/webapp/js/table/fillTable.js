@@ -19,11 +19,9 @@ function getFilter() {
 
 function getCount(urlCount) {
     console.log('getCount');
-    if(params.bookId) alert('params.bookId: ' + params.bookId);
-    if(params.personId) alert('params.personId: ' + params.personId);
-//    if( (params.bookId = '') | (params.personId = '') ) {
-    if(params.personId = '') {
-        alert('getCount ' + params.personId);
+//    alert($(window).width() + ' | ' + $(window).height());
+    if(!params.personId && !params.bookId) {
+//        alert('getCount ' + params.personId);
         $.ajax({
             url:urlCount,
             type:"GET",
@@ -40,8 +38,10 @@ function getCount(urlCount) {
                     $('#navigation').hide();
                 } else {
                     $('#navigation').show();
+//                    alert('Count: ' + count);
                     checkNavPanel(getFilter());
                 }
+//                checkNavPanel(getFilter());
             }
         });
     }
@@ -72,6 +72,8 @@ function getTable(urlList, tabId) {
                     offset: filter.page*filter.fetchSize,
                     list: result.data.writers
                 }
+
+                // Разобраться. Неверный count.
                 $('#count').val(tableData.list.length);
                 for(p in params) {
                     if(p === 'w') {
@@ -84,12 +86,12 @@ function getTable(urlList, tabId) {
         });
     } else if(params.personId){
             console.log('Person id');
-            alert(JSON.stringify(params));
+//            alert(JSON.stringify(params));
             var filter = getFilter();
-            alert(JSON.stringify(filter));
+//            alert(JSON.stringify(filter));
             for(p in params) {
                 if(p === 'b') params[p] = filter.fetchSize + ',' + filter.page;
-                alert(p + ': ' + params[p]);
+//                alert(p + ': ' + params[p]);
             }
             var url = "/person/";
             url += params.personId + "?";
@@ -112,9 +114,11 @@ function getTable(urlList, tabId) {
                      offset: filter.page*filter.fetchSize,
                      list: result.data.writtenBooks
                  }
-                 console.log(JSON.stringify(tableData))
-                 $('#count').val(tableData.list.length);
-//                 alert(tableData.list.length);
+//                 alert(JSON.stringify(result));
+                 console.log(JSON.stringify(tableData));
+                 console.log(JSON.stringify(result));
+                 alert('count: ' + result.data.writtenBooksSize);
+                 $('#count').val(result.data.writtenBooksSize);
                  for(p in params) {
                      if(p === 'b') {
                          $('h1').html('Person: ' + result.data.surname
@@ -123,6 +127,16 @@ function getTable(urlList, tabId) {
                          $('h1').append('<br>Written books:');
                      }
                  }
+                 var count = $('#count').val();
+                 if(count <= page.fetchSize) {
+                     $('#navigation').hide();
+                 } else {
+                     $('#navigation').show();
+//                     alert('showAlert');
+//                     alert('Count: ' + count);
+//                     checkNavPanel(getFilter());
+                 }
+//                 checkNavPanel(getFilter());
                  buildTable(tableData);
              }
             });

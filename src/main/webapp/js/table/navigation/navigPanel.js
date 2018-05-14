@@ -13,9 +13,11 @@
         console.log('checkNavPanel: ' + count + ', ' + fetchSize + ', ' + pageCount);
 
         if(count <= fetchSize) {
-            console.log('hide');
+            console.log('checkNavPanal: hide');
+            alert('hide');
             $('#navigation').hide();
         } else {
+            alert('show');
             $('#navigation').show();
 
             var startId = parseInt($('#prevPage').next().attr('id'));

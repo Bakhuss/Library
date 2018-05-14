@@ -208,11 +208,18 @@ public class PersonServiceImpl implements PersonService {
                     log.info(ex.getMessage());
                 }
             }
+//            personV.writtenBooks = person.getWrittenBooks().stream()
+//                    .map(BookView.getFuncBookToView())
+//                    .sorted(Comparator.comparing(BookView::getName))
+//                    .collect(Collectors.toList())
+//                    .subList(startIndex, endIndex);
             personV.writtenBooks = person.getWrittenBooks().stream()
-                    .map(BookView.getFuncBookToView())
-                    .sorted(Comparator.comparing(BookView::getName))
+                    .sorted(Comparator.comparing(Book::getName))
                     .collect(Collectors.toList())
-                    .subList(startIndex, endIndex);
+                    .subList(startIndex, endIndex).stream()
+                    .map(BookView.getFuncBookToView())
+                    .collect(Collectors.toList());
+            personV.writtenBooksSize = person.getWrittenBooks().size();
         }
         if (catalogs != null) {
             personV.subscribeBooks = new HashSet<>();

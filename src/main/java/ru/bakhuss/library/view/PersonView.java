@@ -28,8 +28,11 @@ public class PersonView {
 
     public Collection<BookView> writtenBooks;
 
+    public Integer writtenBooksSize;
+
     public Collection<BookView> subscribeBooks;
 
+    public Integer subscribeBooksSize;
 
     public String getSurname() {
         return surname;

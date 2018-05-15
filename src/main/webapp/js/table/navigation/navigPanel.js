@@ -5,19 +5,20 @@
         console.log('checkNavPanel: ' + JSON.stringify(filter));
         $('#activeId').val(parseInt($('#page').val())+1);
         console.log('checkNavPanel: activeId: ' + $('#activeId').val())
-        var fetchSize = $('#fetchSize').val();
+//        var fetchSize = $('#fetchSize').val();
         var count = $('#count').val();
+//        alert('chechNavPanel: count: ' + count + '; filter: ' + JSON.stringify(filter));
         var pageCount;
-        if(count % fetchSize === 0) pageCount = count/fetchSize;
-        else pageCount = Math.floor(count/fetchSize + 1);
-        console.log('checkNavPanel: ' + count + ', ' + fetchSize + ', ' + pageCount);
+        if(count % filter.fetchSize === 0) pageCount = count/filter.fetchSize;
+        else pageCount = Math.floor(count/filter.fetchSize + 1);
+        console.log('checkNavPanel: ' + count + ', ' + filter.fetchSize + ', ' + pageCount);
 
-        if(count <= fetchSize) {
+        if(count <= filter.fetchSize) {
             console.log('checkNavPanal: hide');
-            alert('hide');
+//            alert('hide');
             $('#navigation').hide();
         } else {
-            alert('show');
+//            alert('show');
             $('#navigation').show();
 
             var startId = parseInt($('#prevPage').next().attr('id'));

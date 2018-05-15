@@ -22,6 +22,7 @@ import ru.bakhuss.library.view.FilterView;
 import ru.bakhuss.library.view.PersonView;
 import sun.plugin.javascript.navig.Array;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -207,14 +208,12 @@ public class PersonServiceImpl implements PersonService {
                     ex.printStackTrace();
                     log.info(ex.getMessage());
                 }
+                System.out.println("startEnd: " + startIndex + " | " + endIndex);
             }
-//            personV.writtenBooks = person.getWrittenBooks().stream()
-//                    .map(BookView.getFuncBookToView())
-//                    .sorted(Comparator.comparing(BookView::getName))
-//                    .collect(Collectors.toList())
-//                    .subList(startIndex, endIndex);
             personV.writtenBooks = person.getWrittenBooks().stream()
                     .sorted(Comparator.comparing(Book::getName))
+//                    .skip(startIndex)
+//                    .limit()
                     .collect(Collectors.toList())
                     .subList(startIndex, endIndex).stream()
                     .map(BookView.getFuncBookToView())

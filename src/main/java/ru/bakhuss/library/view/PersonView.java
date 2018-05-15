@@ -64,6 +64,8 @@ public class PersonView {
                 ";birthday:" + birthday +
                 ";phone:" + phone +
                 ";email:" + email +
+                ";writtenBooksSize:" + writtenBooksSize +
+                ";subscribeBooksSize:" + subscribeBooksSize +
                 "}";
     }
 }

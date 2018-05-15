@@ -21,12 +21,14 @@ import ru.bakhuss.library.error.ResponseErrorException;
 import ru.bakhuss.library.model.Book;
 import ru.bakhuss.library.model.Person;
 import ru.bakhuss.library.parser.ParserLiveLib;
+import ru.bakhuss.library.report.Report;
 import ru.bakhuss.library.service.impl.BookServiceImpl;
 import ru.bakhuss.library.service.impl.CatalogServiceImpl;
 import ru.bakhuss.library.service.impl.PersonServiceImpl;
 import ru.bakhuss.library.service.impl.LibraryCardServiceImpl;
 import ru.bakhuss.library.service.impl.SubscriberServiceImpl;
 import ru.bakhuss.library.view.BookView;
+import ru.bakhuss.library.view.FilterView;
 import ru.bakhuss.library.view.PersonView;
 
 import java.io.IOException;
@@ -66,11 +68,19 @@ public class Application {
         app.run(args);
 
 
-//        BookServiceImpl bsi = context.getBean(BookServiceImpl.class);
-//        PersonServiceImpl psi = context.getBean(PersonServiceImpl.class);
-//        PersonDao dao = context.getBean(PersonDao.class);
-//        BookDao bDao = context.getBean(BookDao.class);
-//
+        BookServiceImpl bsi = context.getBean(BookServiceImpl.class);
+        PersonServiceImpl psi = context.getBean(PersonServiceImpl.class);
+        PersonDao dao = context.getBean(PersonDao.class);
+        BookDao bDao = context.getBean(BookDao.class);
+
+        FilterView view = new FilterView();
+        view.orderSort = "name";
+        view.page = String.valueOf(0);
+        view.fetchSize = String.valueOf(50);
+//        bsi.getAllBooks(view);
+        Report report = new Report();
+        report.build(bsi.getAllBooks(view));
+
 //////        authors.add("10293");
 //////        authors.add("264");
 //////        authors.add("5497");
@@ -92,7 +102,7 @@ public class Application {
 //////        authors.add("5049");
 ////
 //        ParserLiveLib parse = new ParserLiveLib();
-//        for (int s = 219; s < 240; s++) {
+//        for (int s = 264; s < 280; s++) {
 //            try {
 //                ArrayList<String> books = parse.getParse(String.valueOf(s));
 //                System.out.println("book.size: " + books.size());
@@ -112,7 +122,7 @@ public class Application {
 //                    }
 //                    System.out.println("-------------Person View: " + pV.toString());
 //                    Long id = psi.addPerson(pV);
-//                    PersonView person = psi.getPersonById(String.valueOf(id));
+//                    PersonView person = psi.getPersonById(String.valueOf(id), null, null);
 //
 //                    for (int i = 1; i < books.size(); i++) {
 //                        BookView bV = new BookView();

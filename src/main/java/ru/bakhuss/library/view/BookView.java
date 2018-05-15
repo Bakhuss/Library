@@ -15,8 +15,16 @@ public class BookView {
 
     public Collection<PersonView> writers;
 
+    public Integer writersSize;
+
     public Collection<CatalogView> catalogs;
 
+    public Integer catalogsSize;
+
+
+    public String getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -39,7 +47,9 @@ public class BookView {
         return "{id:" + id +
                 ";name:" + name +
                 ";writers:" + writers +
+                ";writersSize:" + writersSize +
                 ";catalogs:" + catalogs +
+                ";catalogsSize:" + catalogsSize +
                 "}";
     }
 }

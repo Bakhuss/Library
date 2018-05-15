@@ -185,6 +185,7 @@ public class BookServiceImpl implements BookService {
                     .map(PersonView.getFuncPersonToView())
                     .sorted(Comparator.comparing(PersonView::getSurname))
                     .collect(Collectors.toList());
+            bookV.writersSize = book.getWriters().size();
         }
         if (catalogs != null) {
             bookV.catalogs = book.getCatalogs().stream()

@@ -28,7 +28,7 @@ function buildTable(tableData) {
     });
     $('head script[src="../../js/mark.js"]').remove();
     $('head script').after('<script src="../../js/mark.js"></script>');
-    alert(JSON.stringify(getFilter()));
+//    alert(JSON.stringify(getFilter()));
     checkNavPanel(getFilter());
 //    alert($('#bookListTable').width() + ' | ' + $('#bookListTable').height());
 //    alert($('tbody tr').width() + ' | ' + $('tbody tr').height());

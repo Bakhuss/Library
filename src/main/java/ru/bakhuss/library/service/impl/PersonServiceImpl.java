@@ -20,16 +20,10 @@ import ru.bakhuss.library.service.PersonService;
 import ru.bakhuss.library.view.BookView;
 import ru.bakhuss.library.view.FilterView;
 import ru.bakhuss.library.view.PersonView;
-import sun.plugin.javascript.navig.Array;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;

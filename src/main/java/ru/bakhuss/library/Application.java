@@ -68,18 +68,18 @@ public class Application {
         app.run(args);
 
 
-        BookServiceImpl bsi = context.getBean(BookServiceImpl.class);
-        PersonServiceImpl psi = context.getBean(PersonServiceImpl.class);
-        PersonDao dao = context.getBean(PersonDao.class);
-        BookDao bDao = context.getBean(BookDao.class);
-
-        FilterView view = new FilterView();
-        view.orderSort = "name";
-        view.page = String.valueOf(0);
-        view.fetchSize = String.valueOf(50);
-//        bsi.getAllBooks(view);
-        Report report = new Report();
-        report.build(bsi.getAllBooks(view));
+//        BookServiceImpl bsi = context.getBean(BookServiceImpl.class);
+//        PersonServiceImpl psi = context.getBean(PersonServiceImpl.class);
+//        PersonDao dao = context.getBean(PersonDao.class);
+//        BookDao bDao = context.getBean(BookDao.class);
+//
+//        FilterView view = new FilterView();
+//        view.orderSort = "name";
+//        view.page = String.valueOf(0);
+//        view.fetchSize = String.valueOf(50);
+////        bsi.getAllBooks(view);
+//        Report report = new Report();
+//        report.build(bsi.getAllBooks(view));
 
 //////        authors.add("10293");
 //////        authors.add("264");

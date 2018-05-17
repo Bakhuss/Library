@@ -138,7 +138,7 @@
                 <configuration>
                     <mainClass>ru.bakhuss.library.Application</mainClass>
                     <jvmArguments>
-                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
+                         -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
                     </jvmArguments>
                 </configuration>
                 <executions>
@@ -150,31 +150,31 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/target/classes/static</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>src/main/webapp</directory>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-resources-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<encoding>UTF-8</encoding>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>copy-resources</id>-->
+                        <!--<phase>validate</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>copy-resources</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<outputDirectory>${basedir}/target/classes/static</outputDirectory>-->
+                            <!--<resources>-->
+                                <!--<resource>-->
+                                    <!--<directory>src/main/webapp</directory>-->
+                                    <!--<filtering>true</filtering>-->
+                                <!--</resource>-->
+                            <!--</resources>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
 
             <plugin>
                 <groupId>org.hibernate.orm.tooling</groupId>

@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Version;
 import java.util.Collection;
 import java.util.Set;
@@ -33,6 +34,13 @@ public class Book {
      */
     @Column(nullable = false)
     private String name;
+
+    /**
+     * Изображение книги
+     */
+    @OneToOne
+    @JoinColumn(name = "image_id")
+    private Image image;
 
     /**
      * Автор(-ы)
@@ -118,6 +126,7 @@ public class Book {
                 ";name:" + getName() +
                 ";writers:" + getWriters() +
                 ";catalogs:" + getCatalogs() +
+                ";image:" + (image != null) +
                 "}";
     }
 }

@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -63,6 +64,13 @@ public class Person {
      */
     @Column(length = 50)
     private String email;
+
+    /**
+     * Изображение человека
+     */
+    @OneToOne
+    @JoinColumn(name = "image_id")
+    private Image image;
 
     /**
      * Книги, написанные человеком
@@ -132,6 +140,14 @@ public class Person {
         this.email = email;
     }
 
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
     public Set<Book> getWrittenBooks() {
         return writtenBooks;
     }
@@ -170,6 +186,7 @@ public class Person {
                 ";birthday:" + getBirthday() +
                 ";phone:" + getPhone() +
                 ";email:" + getEmail() +
+                ";image:" + (image != null) +
                 "}";
     }
 }

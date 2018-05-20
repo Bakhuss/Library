@@ -2,7 +2,8 @@ CREATE TABLE IF NOT EXISTS Book (
     id      INTEGER       PRIMARY KEY AUTO_INCREMENT
                           NOT NULL,
     version INTEGER,
-    name    VARCHAR (256)
+    name    VARCHAR (256),
+    image_id INTEGER REFERENCES Image(id)
 );
 
 CREATE TABLE IF NOT EXISTS Person (
@@ -14,7 +15,8 @@ CREATE TABLE IF NOT EXISTS Person (
     surname     VARCHAR (50),
     birthday    DATE,
     phone       VARCHAR (15),
-    email       VARCHAR (50)
+    email       VARCHAR (50),
+    image_id INTEGER REFERENCES Image(id)
 );
 
 CREATE TABLE IF NOT EXISTS Book_Writer (

@@ -12,6 +12,4 @@ import java.util.Set;
 @Repository
 public interface PersonDao extends CrudRepository<Person, Long>, PagingAndSortingRepository<Person, Long> {
     Set<Person> findByIdIn(List<Long> ids);
-
-//    boolean existsByBook(Book book);
 }

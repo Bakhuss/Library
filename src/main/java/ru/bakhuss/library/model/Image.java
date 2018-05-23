@@ -17,18 +17,18 @@ public class Image {
     private Integer version;
 
     @Column
-    private byte[] image;
+    private byte[] img;
 
 
     public Long getId() {
         return id;
     }
 
-    public byte[] getImage() {
-        return image;
+    public byte[] getImg() {
+        return img;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImg(byte[] img) {
+        this.img = img;
     }
 }

@@ -1,84 +1,85 @@
 <!DOCTYPE html>
 <html lang="ru">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Person List</title>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Person List</title>
 
-        <link rel="stylesheet" href="../../vendor/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../../css/mark.css">
-        <link rel="stylesheet" href="../../css/nextStep.css">
+    <link rel="stylesheet" href="../../vendor/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/mark.css">
+    <link rel="stylesheet" href="../../css/nextStep.css">
 
-        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
-        <script src="../../vendor/js/jquery.min.js"></script>
-        <script src="../../vendor/js/bootstrap.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+    <script src="../../vendor/js/jquery.min.js"></script>
+    <script src="../../vendor/js/bootstrap.min.js"></script>
 
-        <script src="../../js/person/person/removePerson.js"></script>
-        <script src="../../js/person/person/openEditPerson.js"></script>
-        <script src="../../js/table/navigation/nextStep.js"></script>
-        <script src="../../js/table/navigation/navigPanel.js"></script>
-        <script src="../../js/table/fillTable.js"></script>
-        <script src="../../js/table/table.js"></script>
-        <script src="../../js/mark.js"></script>
+    <script src="../../js/person/person/removePerson.js"></script>
+    <script src="../../js/person/person/openEditPerson.js"></script>
+    <script src="../../js/table/navigation/nextStep.js"></script>
+    <script src="../../js/table/navigation/navigPanel.js"></script>
+    <script src="../../js/table/fillTable.js"></script>
+    <script src="../../js/table/table.js"></script>
+    <script src="../../js/mark.js"></script>
 
-        <link rel="import" href="../navigation/navigPanel.html">
+    <link rel="import" href="../navigation/navigPanel.html">
 
-        <!-- HTML5 Shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- Предупреждение: Respond.js не работает при просмотре страницы через файл:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-    </head>
-    <body onload="getCount('/person/count'); getTable('/person/list','personListTable'); buildNavPanel(0, 10);">
-    <div>
-        <h1 class="text-center">Person list</h1>
+    <!-- HTML5 Shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- Предупреждение: Respond.js не работает при просмотре страницы через файл:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body onload="getCount('/person/count'); getTable('/person/list','personListTable'); buildNavPanel(0, 10);">
+<div>
+    <h1 class="text-center">Person list</h1>
+</div>
+
+<script src="../../js/table/navigation/insertNavigPanel.js"></script>
+
+<div class="btn-toolbar container" role="toolbar" aria-label="...">
+    <div class="btn-group" role="group" aria-label="...">
+        <a href="person.html" class="btn btn-default" title="Add new book">Add</a>
     </div>
-
-    <script src="../../js/table/navigation/insertNavigPanel.js"></script>
-
-    <div class="btn-toolbar container" role="toolbar" aria-label="...">
-        <div class="btn-group" role="group" aria-label="...">
-            <a href="person.html" class="btn btn-default" title="Add new book">Add</a>
-        </div>
-        <div class="btn-group" role="group" aria-label="...">
-            <a href="person.html" class="btn btn-default">View</a>
-            <input type="button" class="btn btn-default" value="Edit" id="edit">
-            <input type="button" class="btn btn-default" value="Remove" id="remove">
-        </div>
-        <div class="btn-group" role="group" aria-label="...">
-            <input type="search" class="form-control" placeholder="search by surname" id="search">
-        </div>
+    <div class="btn-group" role="group" aria-label="...">
+        <!--<a href="person.html" class="btn btn-default">View</a>-->
+        <input type="button" class="btn btn-default" value="View" id="view">
+        <input type="button" class="btn btn-default" value="Edit" id="edit">
+        <input type="button" class="btn btn-default" value="Remove" id="remove">
     </div>
-    <div id="filter">
-        <input type="hidden" value="0" id="count">
-        <input type="hidden" value="0" id="page">
-        <input type="hidden" value="10" id="fetchSize">
-        <input type="hidden" value="surname" id="orderSort">
-        <input type="hidden" value="1" id="activeId">
+    <div class="btn-group" role="group" aria-label="...">
+        <input type="search" class="form-control" placeholder="search by surname" id="search">
     </div>
-    <div id="urls">
-        <input type="hidden" value="/person/list" id="urlList">
-        <input type="hidden" value="/person/count" id="urlCount">
-    </div>
-    <div class="container-fluid text-center" id="personList">
-        <table id="personListTable" class="table table-bordered table-hover">
-            <thead>
-            <tr>
-                <th hidden>id</th>
-                <th class="text-center text-overflow:visible" width="1px">#</th>
-                <th class="text-center">Surname</th>
-                <th class="text-center">First Name</th>
-                <th class="text-center">Second Name</th>
-                <th class="text-center">Birthday</th>
-                <th class="text-center">Phone</th>
-                <th class="text-center">Email</th>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
-    </body>
+</div>
+<div id="filter">
+    <input type="hidden" value="0" id="count">
+    <input type="hidden" value="0" id="page">
+    <input type="hidden" value="10" id="fetchSize">
+    <input type="hidden" value="surname" id="orderSort">
+    <input type="hidden" value="1" id="activeId">
+</div>
+<div id="urls">
+    <input type="hidden" value="/person/list" id="urlList">
+    <input type="hidden" value="/person/count" id="urlCount">
+</div>
+<div class="container-fluid text-center" id="personList">
+    <table id="personListTable" class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th hidden>id</th>
+            <th class="text-center text-overflow:visible" width="1px">#</th>
+            <th class="text-center">Surname</th>
+            <th class="text-center">First Name</th>
+            <th class="text-center">Second Name</th>
+            <th class="text-center">Birthday</th>
+            <th class="text-center">Phone</th>
+            <th class="text-center">Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+</body>
 </html>

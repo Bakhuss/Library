@@ -27,7 +27,7 @@
             <h1 id="bodyTitle">Person</h1><br>
             <form class="form-horizontal" onsubmit="return false">
                 <input type="hidden" name="id" value="" id="personId">
-                <img id="image" src="" width="20%" height="auto">
+                <img id="image" src="" width="20%" height="auto" class="img-rounded">
                 <br><br>
                 <div class="form-group">
                     <label for="surname" class="col-sm-4 control-label">Surname</label>
@@ -80,7 +80,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-4">
                         <button type="submit" id="addPerson" class="btn btn-default">Save</button>
-                        <button type="reset" class="btn btn-default">Clear form</button>
+                        <button type="reset" id="reset" class="btn btn-default">Clear form</button>
                     </div>
                 </div>
             </form>

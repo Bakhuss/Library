@@ -13,22 +13,26 @@ $(function () {
                     location.href = "../../html/person/personList.html";
                     return;
                 }
-                console.log(JSON.stringify(result));
-                var titleName = ': ' + result.data.surname;
-                if (result.data.firstName)
-                    titleName += ' ' + result.data.firstName;
-                if (result.data.secondName)
-                    titleName += ' ' + result.data.secondName;
+                var persData = result.data;
+                // alert(JSON.stringify(persData));
+                var titleName = ':';
+                if (persData.firstName) {
+                    titleName += ' ' + persData.firstName;
+                    $('#firstName').val(persData.firstName);
+                }
+                if (persData.secondName) {
+                    titleName += ' ' + persData.secondName;
+                    $('#secondName').val(persData.secondName);
+                }
+                if (persData.surname) {
+                    titleName += ' ' + persData.surname;
+                    $('#surname').val(persData.surname);
+                }
                 $('#bodyTitle').append(titleName);
 
                 var headTitle = $('head title').text().concat(titleName);
                 $('head title').text(headTitle);
-
-                var persData = result.data;
-                document.getElementById('personId').value = result.data.id;
-                document.getElementById('surname').value = result.data.surname;
-                document.getElementById('firstName').value = result.data.firstName;
-                document.getElementById('secondName').value = result.data.secondName;
+                $('#personId').val(persData.id);
 
                 if (persData.birthday)
                     $('#birthday').val(persData.birthday);
@@ -37,11 +41,11 @@ $(function () {
                 if (persData.email)
                     $('#email').val(persData.email);
                 if (persData.image.img)
-                document.getElementById('image').src =
-                    "data:image/jpg;base64," + result.data.image.img;
+                    document.getElementById('image').src =
+                        "data:image/jpg;base64," + persData.image.img;
 
-                console.log(document.getElementById('personId').value);
-                console.log(document.getElementById('surname').value);
+                console.log($('#personId').val());
+                console.log($('#surname').val());
             }
         });
     }

@@ -38,8 +38,8 @@ public interface BookController {
     /**
      * Получить Book по id
      * @param id
-     * @param writers  (w)
-     * @param catalogs (c)
+     * @param writers  (w in URI)
+     * @param catalogs (c in URI)
      * @return JSON book value
      */
     ResponseView getBookById(String id, String writers, String catalogs);

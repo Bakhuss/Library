@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bakhuss.library.dao.BookDao;
+import ru.bakhuss.library.dao.ImageDao;
 import ru.bakhuss.library.dao.PersonDao;
 import ru.bakhuss.library.error.ResponseErrorException;
 import ru.bakhuss.library.model.Book;
@@ -35,11 +36,13 @@ public class PersonServiceImpl implements PersonService {
 
     private final PersonDao personDao;
     private final BookDao bookDao;
+    private final ImageDao imageDao;
 
     @Autowired
-    public PersonServiceImpl(PersonDao personDao, BookDao bookDao) {
+    public PersonServiceImpl(PersonDao personDao, BookDao bookDao, ImageDao imageDao) {
         this.personDao = personDao;
         this.bookDao = bookDao;
+        this.imageDao = imageDao;
     }
 
 
@@ -182,6 +185,9 @@ public class PersonServiceImpl implements PersonService {
         personV.birthday = person.getBirthday();
         personV.phone = person.getPhone();
         personV.email = person.getEmail();
+
+        personV.image = person.getImage();
+
         if (books != null) {
             int endIndex = person.getWrittenBooks().size();
             int startIndex = 0;

@@ -2,8 +2,10 @@ package ru.bakhuss.library.view;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import ru.bakhuss.library.model.Image;
 import ru.bakhuss.library.model.Person;
 
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 import java.util.function.Function;
@@ -33,6 +35,9 @@ public class PersonView {
     public Collection<BookView> subscribeBooks;
 
     public Integer subscribeBooksSize;
+
+    public Image image;
+
 
     public String getSurname() {
         return surname;

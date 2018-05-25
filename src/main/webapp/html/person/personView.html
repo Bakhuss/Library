@@ -23,128 +23,57 @@
 <div class="container-fluid text-center" id="person">
     <h1 id="bodyTitle">Person</h1><br>
 
-    <div class="col-sm-6">
+    <div class="col-sm-6 col-xs-12">
         <img id="image" src="" width="50%" height="auto" class="img-rounded">
     </div>
-    <div class="form-horizontal col-sm-6">
+    <div class="form-horizontal col-sm-6 col-xs-12">
         <input type="hidden" name="id" value="" id="personId">
 
         <div class="form-group">
-            <label for="surname" class="col-sm-3 control-label">Surname:</label>
-            <div class="col-sm-3">
-                <input type="text" readonly class="form-control-static" id="surname" style="border:none">
-            </div>
+            <label for="surname" class="col-sm-3 col-xs-12 control-label">Surname:</label>
+            <input type="text" readonly class="form-control-static col-sm-5 col-xs-12 text-center" id="surname"
+                   style="border:none">
         </div>
-        <!--<div class="col-sm-12"></div>-->
 
         <div class="form-group">
-            <label for="firstName" class="col-sm-3 control-label">First name:</label>
-            <div class="col-sm-3">
-                <input type="text" readonly class="form-control-static" id="firstName" style="border:none">
-            </div>
+            <label for="firstName" class="col-sm-3 col-xs-12 control-label">First name:</label>
+            <input type="text" readonly class="form-control-static col-sm-5 col-xs-12 text-center" id="firstName"
+                   style="border:none">
         </div>
-        <!--<div class="col-sm-12"></div>-->
 
         <div class="form-group">
-            <label for="secondName" class="col-sm-3 control-label">Second name:</label>
-            <div class="col-sm-3">
-                <input type="text" readonly class="form-control-static" id="secondName" style="border:none">
-            </div>
+            <label for="secondName" class="col-sm-3 col-xs-12 control-label">Second name:</label>
+            <input type="text" readonly class="form-control-static col-sm-5 col-xs-12 text-center" id="secondName"
+                   style="border:none">
         </div>
-        <!--<div class="col-sm-12"></div>-->
 
         <div class="form-group">
-            <label for="birthday" class="col-sm-3 control-label">Birthday:</label>
-            <div class="col-sm-3">
-                <input type="date" readonly class="form-control-static" id="birthday" style="border:none">
-            </div>
+            <label for="birthday" class="col-sm-3 col-xs-12 control-label">Birthday:</label>
+            <input type="date" readonly class="form-control-static col-sm-6 col-xs-12 text-center" id="birthday"
+                   style="border:none">
         </div>
-        <!--<div class="col-sm-12"></div>-->
 
         <div class="form-group">
-            <label for="phone" class="col-sm-3 control-label">Phone:</label>
-            <div class="col-sm-3">
-                <!--<input type="tel" class="form-control" id="phone" placeholder="+7... or 8...">-->
-                <input type="tel" readonly class="form-control-static" id="phone" style="border:none">
-            </div>
+            <label for="phone" class="col-sm-3 col-xs-12 control-label">Phone:</label>
+            <input type="tel" readonly class="form-control-static col-sm-5 col-xs-12 text-center" id="phone" style="border:none">
         </div>
-        <!--<div class="col-sm-12"></div>-->
 
         <div class="form-group">
-            <label for="email" class="col-sm-3 control-label">Email:</label>
-            <div class="col-sm-3">
-                <!--<input type="email" class="form-control" id="email" placeholder="example@example.com">-->
-                <input type="email" readonly class="form-control-static" id="email" style="border:none">
-            </div>
+            <label for="email" class="col-sm-3 col-xs-12 control-label">Email:</label>
+            <input type="email" readonly class="form-control-static col-sm-5 col-xs-12 text-center" id="email" style="border:none">
         </div>
-        <!--<div class="col-sm-12"></div>-->
 
         <div class="form-group">
-            <!--<label for="writtenBooks" class="col-sm-3 control-label">Written books</label>-->
             <div class="col-sm-offset-2 col-sm-4">
                 <a href="#" class="form-control" id="writtenBooks">Written books</a>
             </div>
         </div>
-        <!--<div class="col-sm-12"></div>-->
 
         <div class="form-group">
-            <!--<label for="subscriber" class="col-sm-4 control-label">Library card</label>-->
             <div class="col-sm-offset-2 col-sm-4">
                 <a href="#" class="form-control" id="subscriber">Library card</a>
             </div>
         </div>
-
-        <!--<div class="form-group col-sm-4">-->
-            <!--&lt;!&ndash;<label class="control-label" id="surname">surname</label>&ndash;&gt;-->
-            <!--<input id="surname" readonly style="border:none" class="text-left">-->
-            <!--&lt;!&ndash;<p class="control-label"></p>&ndash;&gt;-->
-        <!--</div>-->
-        <!--<div class="col-sm-12"></div>-->
-
-        <!--<div class="form-group col-sm-4">-->
-            <!--&lt;!&ndash;<label class="control-label" id="firstName">firstName</label>&ndash;&gt;-->
-            <!--<input id="firstName" readonly style="border:none" class="text-left">-->
-        <!--</div>-->
-        <!--<div class="col-sm-12"></div>-->
-
-        <!--<div class="form-group col-sm-4">-->
-            <!--&lt;!&ndash;<label class="control-label" id="secondName">secondName</label>&ndash;&gt;-->
-            <!--<input id="secondName" readonly style="border:none" class="text-left">-->
-        <!--</div>-->
-        <!--<div class="col-sm-12"></div>-->
-
-        <!--<div class="form-group col-sm-4">-->
-            <!--&lt;!&ndash;<label class="control-label" id="birthday">birthday</label>&ndash;&gt;-->
-            <!--<input id="birthday" readonly style="border:none" class="text-left">-->
-        <!--</div>-->
-        <!--<div class="col-sm-12"></div>-->
-
-        <!--<div class="form-group col-sm-4">-->
-            <!--&lt;!&ndash;<label class="control-label" id="phone">phone</label>&ndash;&gt;-->
-            <!--<input id="phone" readonly style="border:none" class="text-left">-->
-        <!--</div>-->
-        <!--<div class="col-sm-12"></div>-->
-
-        <!--<div class="form-group col-sm-4">-->
-            <!--&lt;!&ndash;<label class="control-label" id="email">email</label>&ndash;&gt;-->
-            <!--<input id="email" readonly style="border:none" class="text-left">-->
-        <!--</div>-->
-        <!--<div class="col-sm-12"></div>-->
-
-        <!--<div class="form-group col-sm-4">-->
-            <!--&lt;!&ndash;<label for="writtenBooks" class="col-sm-4 control-label">Written books</label>&ndash;&gt;-->
-            <!--&lt;!&ndash;<div class="col-sm-4">&ndash;&gt;-->
-            <!--<a href="#" class="form-control" id="writtenBooks">writtenBooks</a>-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--</div>-->
-        <!--<div class="col-sm-12"></div>-->
-
-        <!--<div class="form-group col-sm-4">-->
-            <!--&lt;!&ndash;<label for="subscriber" class="col-sm-4 control-label">Library card</label>&ndash;&gt;-->
-            <!--&lt;!&ndash;<div class="col-sm-4">&ndash;&gt;-->
-            <!--<a href="subscriber.html" class="form-control" id="subscriber">subscriber</a>-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--</div>-->
     </div>
 </div>
 <script src="../../js/person/person/fillPerson.js"></script>

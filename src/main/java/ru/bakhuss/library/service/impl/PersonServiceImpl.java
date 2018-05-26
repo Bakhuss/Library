@@ -60,6 +60,7 @@ public class PersonServiceImpl implements PersonService {
         tmpPrs.setBirthday(view.birthday);
         tmpPrs.setPhone(view.phone);
         tmpPrs.setEmail(view.email);
+        tmpPrs.setDescription(view.description);
         Person newPrs = null;
         try {
             newPrs = personDao.save(tmpPrs);
@@ -98,6 +99,7 @@ public class PersonServiceImpl implements PersonService {
         person.setBirthday(view.birthday);
         person.setPhone(view.phone);
         person.setEmail(view.email);
+        person.setDescription(view.description);
 
         /*
          * Синхронизация написанных книг
@@ -185,6 +187,7 @@ public class PersonServiceImpl implements PersonService {
         personV.birthday = person.getBirthday();
         personV.phone = person.getPhone();
         personV.email = person.getEmail();
+        personV.description = person.getDescription();
 
         personV.image = person.getImage();
 

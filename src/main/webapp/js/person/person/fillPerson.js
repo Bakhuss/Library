@@ -40,9 +40,11 @@ $(function () {
                     $('#phone').val(persData.phone);
                 if (persData.email)
                     $('#email').val(persData.email);
-                if (persData.image.img)
+                if (persData.image)
                     document.getElementById('image').src =
                         "data:image/jpg;base64," + persData.image.img;
+                if (persData.description)
+                    $('#description').text(persData.description);
 
                 console.log($('#personId').val());
                 console.log($('#surname').val());

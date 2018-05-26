@@ -28,6 +28,8 @@ public class PersonView {
 
     public String email;
 
+    public String description;
+
     public Collection<BookView> writtenBooks;
 
     public Integer writtenBooksSize;

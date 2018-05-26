@@ -66,6 +66,12 @@ public class Person {
     private String email;
 
     /**
+     * Description
+     */
+    @Column(length = 255)
+    private String description;
+
+    /**
      * Изображение человека
      */
     @OneToOne
@@ -138,6 +144,14 @@ public class Person {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Image getImage() {

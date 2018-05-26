@@ -6,3 +6,5 @@
 Web-app: spring-boot, hibernate, jetty embedded.
 
 Server: ubuntu, nginx.
+
+Заполнены All Persons.

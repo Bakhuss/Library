@@ -3,13 +3,17 @@ $(function () {
         console.log('PERSON');
         var person = {
             id: $("#personId").val(),
+            image: $("#imageFile").val(),
             surname: $("#surname").val(),
             firstName: $("#firstName").val(),
             secondName: $("#secondName").val(),
             birthday: $("#birthday").val(),
             phone: $("#phone").val(),
-            email: $("#email").val()
+            email: $("#email").val(),
+            description: $("#description").val()
         };
+
+        alert(JSON.stringify(person));
 
         var newUrl = "";
         if (person.id === "") newUrl = "/person/save";
@@ -28,12 +32,3 @@ $(function () {
         });
     });
 });
-
-var clearFields = function () {
-    $("#id").val('');
-};
-
-var response = {
-    result: "",
-    message: ""
-}

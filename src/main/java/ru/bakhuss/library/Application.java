@@ -25,12 +25,9 @@ import ru.bakhuss.library.service.impl.LibraryCardServiceImpl;
 import ru.bakhuss.library.service.impl.PersonServiceImpl;
 import ru.bakhuss.library.service.impl.SubscriberServiceImpl;
 
-import java.util.Date;
-
 /**
  * Точка входа.
  */
-//@ImportResource("spring_mvc_config.xml")
 @SpringBootApplication
 @ComponentScan(basePackageClasses = {
         BookServiceImpl.class, BookDao.class, BookControllerImpl.class,
@@ -60,6 +57,5 @@ public class Application extends SpringBootServletInitializer {
         app.run(args);
 
         System.out.println("----Application----");
-        System.out.println(new Date(context.getStartupDate()));
     }
 }

@@ -6,7 +6,7 @@
 Web-app: spring-boot, hibernate.
 
 Servlet container: tomcat
-(library.bakhuss.ru/tomcat)
+(http://library.bakhuss.ru/tomcat)
 
 Server: ubuntu, nginx.
 

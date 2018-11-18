@@ -3,10 +3,7 @@
 
 Адрес в интернете: http://library.bakhuss.ru.
 
-Web-app: spring-boot, hibernate.
-
-Servlet container: tomcat
-(library.bakhuss.ru/tomcat)
+Web-app: spring-boot, hibernate, jetty embedded.
 
 Server: ubuntu, nginx.
 

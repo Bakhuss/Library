@@ -1,7 +1,8 @@
 # Library
 Информационная система библиотеки. В разработке.
 
-Адрес в интернете: http://library.bakhuss.ru. \n
+Адрес в интернете: http://library.bakhuss.ru.
+
 (http://195.161.41.140:49276/)
 
 Web-app: spring-boot, hibernate, jetty embedded.

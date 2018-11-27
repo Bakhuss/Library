@@ -1,37 +1,33 @@
 package ru.bakhuss.library.service.impl;
 
-        import org.slf4j.Logger;
-        import org.slf4j.LoggerFactory;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.context.annotation.Scope;
-        import org.springframework.context.annotation.ScopedProxyMode;
-        import org.springframework.data.domain.Page;
-        import org.springframework.data.domain.PageImpl;
-        import org.springframework.data.domain.PageRequest;
-        import org.springframework.data.domain.Pageable;
-        import org.springframework.data.domain.Sort;
-        import org.springframework.stereotype.Service;
-        import org.springframework.transaction.annotation.Transactional;
-        import ru.bakhuss.library.dao.BookDao;
-        import ru.bakhuss.library.dao.PersonDao;
-        import ru.bakhuss.library.error.ResponseErrorException;
-        import ru.bakhuss.library.model.Book;
-        import ru.bakhuss.library.model.Person;
-        import ru.bakhuss.library.service.BookService;
-        import ru.bakhuss.library.view.BookView;
-        import ru.bakhuss.library.view.CatalogView;
-        import ru.bakhuss.library.view.FilterView;
-        import ru.bakhuss.library.view.PersonView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.bakhuss.library.dao.BookDao;
+import ru.bakhuss.library.dao.PersonDao;
+import ru.bakhuss.library.error.ResponseErrorException;
+import ru.bakhuss.library.model.Book;
+import ru.bakhuss.library.model.Person;
+import ru.bakhuss.library.service.BookService;
+import ru.bakhuss.library.view.BookView;
+import ru.bakhuss.library.view.CatalogView;
+import ru.bakhuss.library.view.FilterView;
+import ru.bakhuss.library.view.PersonView;
 
-        import java.util.ArrayList;
-        import java.util.Collection;
-        import java.util.Comparator;
-        import java.util.HashSet;
-        import java.util.Iterator;
-        import java.util.List;
-        import java.util.Set;
-        import java.util.stream.Collectors;
-        import java.util.stream.StreamSupport;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Scope(proxyMode = ScopedProxyMode.INTERFACES)

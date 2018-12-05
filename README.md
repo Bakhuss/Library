@@ -1,12 +1,12 @@
 # Library
 Информационная система библиотеки. В разработке.
 
-Адрес в интернете: http://library.bakhuss.ru.
+Адрес в интернете: http://library.bakhuss.ru
+(http://195.161.41.120:49280)
 
 Web-app: spring-boot, hibernate.
 
-Servlet container: tomcat
-(http://library.bakhuss.ru/tomcat)
+Servlet container: wildfly
 
 Server: ubuntu, nginx.
 

@@ -243,9 +243,6 @@ public class PersonServiceImpl implements PersonService {
         System.out.println("orderSort: " + props);
         Sort.Direction direct = null;
         switch (view.orderSort) {
-            case ("asc"):
-                direct = Sort.Direction.ASC;
-                break;
             case ("desc"):
                 direct = Sort.Direction.DESC;
                 break;

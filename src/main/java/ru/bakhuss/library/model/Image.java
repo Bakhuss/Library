@@ -6,17 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Version;
 
-@Entity
 public class Image {
 
-    @Id
-    @GeneratedValue
     private Long id;
 
-    @Version
     private Integer version;
 
-    @Column
     private byte[] img;
 
 

@@ -19,53 +19,31 @@ import java.util.stream.Collectors;
 /**
  * Книга
  */
-@Entity
 public class Book {
 
-    @Id
-    @GeneratedValue
     private Long id;
 
-    @Version
     private Integer version;
 
     /**
      * Название
      */
-    @Column(nullable = false)
     private String name;
 
     /**
      * Изображение книги
      */
-    @OneToOne
-    @JoinColumn(name = "image_id")
     private Image image;
 
     /**
      * Автор(-ы)
      */
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE,
-            CascadeType.REMOVE
-    },
-            fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "Book_Writer",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "person_id")
-    )
     private Set<Person> writers;
 
 
     /**
      * Запись в каталоге книг
      */
-    @OneToMany(mappedBy = "book",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY)
     private Collection<Catalog> catalogs;
 
 

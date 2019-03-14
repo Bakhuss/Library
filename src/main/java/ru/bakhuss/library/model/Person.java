@@ -19,78 +19,60 @@ import java.util.stream.Collectors;
 /**
  * Общая информация о человеке
  */
-@Entity
 public class Person {
 
-    @Id
-    @GeneratedValue
     private Long id;
 
-    @Version
     private Integer version;
 
     /**
      * Имя
      */
-    @Column(name = "first_name", length = 50, nullable = false)
     private String firstName;
 
     /**
      * Отчество
      */
-    @Column(name = "second_name", length = 50)
     private String secondName;
 
     /**
      * Фамилия
      */
-    @Column(length = 50, nullable = false)
     private String surname;
 
     /**
      * Дата рождения
      */
-    @Temporal(value = TemporalType.DATE)
     private Date birthday;
 
     /**
      * Телефон
      */
-    @Column(length = 15)
     private String phone;
 
     /**
      * E-mail
      */
-    @Column(length = 50)
     private String email;
 
     /**
      * Description
      */
-    @Column(length = 255)
     private String description;
 
     /**
      * Изображение человека
      */
-    @OneToOne
-    @JoinColumn(name = "image_id")
     private Image image;
 
     /**
      * Книги, написанные человеком
      */
-    @ManyToMany(mappedBy = "writers",
-            fetch = FetchType.LAZY)
     private Set<Book> writtenBooks;
 
     /**
      * Читательский билет
      */
-    @OneToOne(mappedBy = "person",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
     private Subscriber subscriber;
 
 

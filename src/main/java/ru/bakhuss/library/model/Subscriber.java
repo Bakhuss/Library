@@ -19,43 +19,30 @@ import java.util.Set;
 /**
  * Читатель
  */
-@Entity
 public class Subscriber {
 
-    @Id
-    @Column(name = "person_id")
     private Long id;
 
-    @Version
     private Integer version;
 
     /**
      * Дата регистрации
      */
-    @Column(name = "subscribe_date")
-    @Temporal(TemporalType.DATE)
     private Date subscribeDate;
 
     /**
      * Дата удаления
      */
-    @Column(name = "unsubscribe_date")
-    @Temporal(TemporalType.DATE)
     private Date unsubscribeDate;
 
     /**
      * Информация о человеке
      */
-    @MapsId
-    @OneToOne(fetch = FetchType.LAZY)
     private Person person;
 
     /**
      * Список книг читателя
      */
-    @OneToMany(mappedBy = "subscriber",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
     private Collection<LibraryCard> catalogs;
 
 

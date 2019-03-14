@@ -15,30 +15,18 @@ import java.util.Date;
 /**
  * Связь читателя с книгой из Catalog (library card)
  */
-@Entity(name = "Library_Card")
 public class LibraryCard {
 
-    @Id
-    @GeneratedValue
     private Long id;
 
-    @Version
     private Integer version;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subscriber_id")
     private Subscriber subscriber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "catalog_id")
     private Catalog catalog;
 
-    @Column(name = "receive_date", updatable = false)
-    @Temporal(value = TemporalType.DATE)
     private Date receiveDate;
 
-    @Column(name = "return_date", updatable = false)
-    @Temporal(value = TemporalType.DATE)
     private Date returnDate;
 
 

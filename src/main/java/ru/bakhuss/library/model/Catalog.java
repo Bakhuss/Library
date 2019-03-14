@@ -14,42 +14,30 @@ import java.util.Set;
 /**
  * Список книг
  */
-@Entity
 public class Catalog {
 
-    @Id
-    @GeneratedValue
     private Long id;
 
-    @Version
     private Integer version;
 
     /**
      * Описание
      */
-    @Column
     private String description;
 
     /**
      * Количество экземпляров книги в библиотеке
      */
-    @Column(name = "total_count")
     private Integer totalCount;
 
     /**
      * Книга
      */
-    @ManyToOne
-    @JoinColumn(name = "book_id")
     private Book book;
 
     /**
      * Список читателей книги
      */
-    @OneToMany(mappedBy = "catalog",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
     private Set<LibraryCard> subscribers;
 
 

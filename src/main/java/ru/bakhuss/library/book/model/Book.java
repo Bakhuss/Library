@@ -59,8 +59,7 @@ public class Book {
      */
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
-            CascadeType.MERGE,
-            CascadeType.REMOVE
+            CascadeType.MERGE
     },
             fetch = FetchType.LAZY)
     @JoinTable(

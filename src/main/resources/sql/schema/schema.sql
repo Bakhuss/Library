@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS person (
     surname     VARCHAR (50),
     birthday    DATE,
     phone       VARCHAR (15),
-    email       VARCHAR (50)
+    email       VARCHAR (50),
+    description VARCHAR (255)
 );
 
 CREATE TABLE IF NOT EXISTS book_writer (

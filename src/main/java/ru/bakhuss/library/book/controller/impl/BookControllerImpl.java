@@ -15,6 +15,9 @@ import ru.bakhuss.library.book.model.Book;
 import ru.bakhuss.library.book.service.BookService;
 import ru.bakhuss.library.book.view.BookView;
 import ru.bakhuss.library.common.view.ResponseView;
+import ru.bakhuss.library.person.model.Person;
+import ru.bakhuss.library.person.service.PersonService;
+import ru.bakhuss.library.person.view.PersonView;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static ru.bakhuss.library.common.Util.parseLongFromString;
@@ -25,10 +28,13 @@ public class BookControllerImpl implements BookController {
     private final Logger log = LoggerFactory.getLogger(BookControllerImpl.class);
 
     private final BookService bookService;
+    private final PersonService personService;
 
     @Autowired
-    public BookControllerImpl(BookService bookService) {
+    public BookControllerImpl(BookService bookService,
+                              PersonService personService) {
         this.bookService = bookService;
+        this.personService = personService;
     }
 
     @Override
@@ -69,6 +75,16 @@ public class BookControllerImpl implements BookController {
     public ResponseView deleteBook(@RequestBody BookView view) {
         Long longId = parseLongFromString(view.getId());
         bookService.deleteBook(longId);
+        return new ResponseView(true);
+    }
+
+    @Override
+    @PostMapping(value = "/{id}/add-writer")
+    public ResponseView addWriter(@PathVariable String id,
+                                  @RequestBody PersonView personView) {
+        Long bookId = parseLongFromString(id);
+        Long personId = parseLongFromString(personView.getId());
+        bookService.addWriter(bookId, personId);
         return new ResponseView(true);
     }
 }

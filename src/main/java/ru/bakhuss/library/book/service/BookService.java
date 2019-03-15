@@ -10,4 +10,6 @@ public interface BookService {
     boolean updateBook(Book book);
 
     boolean deleteBook(Long id);
+
+    boolean addWriter(Long bookId, Long personId);
 }

@@ -9,16 +9,21 @@ import ru.bakhuss.library.book.dao.BookDao;
 import ru.bakhuss.library.book.model.Book;
 import ru.bakhuss.library.book.service.BookService;
 import ru.bakhuss.library.error.ResponseErrorException;
+import ru.bakhuss.library.person.dao.PersonDao;
+import ru.bakhuss.library.person.model.Person;
 
 @Service
 public class BookServiceImpl implements BookService {
     private final Logger log = LoggerFactory.getLogger(BookServiceImpl.class);
 
     private final BookDao bookDao;
+    private final PersonDao personDao;
 
     @Autowired
-    public BookServiceImpl(BookDao bookDao) {
+    public BookServiceImpl(BookDao bookDao,
+                           PersonDao personDao) {
         this.bookDao = bookDao;
+        this.personDao = personDao;
     }
 
     @Override
@@ -55,6 +60,21 @@ public class BookServiceImpl implements BookService {
             throw new ResponseErrorException("Not found book by id " + id);
         else bookDao.deleteById(id);
         log.info("Deleted book by id " + id);
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean addWriter(Long bookId, Long personId) {
+        Book book = bookDao.findById(bookId)
+                .orElseThrow(() -> new  ResponseErrorException(
+                        "Not found book by id " + bookId
+                ));
+        Person person = personDao.findById(personId)
+                .orElseThrow(() -> new ResponseErrorException(
+                        "Not found person by id " + personId
+                ));
+        book.addWriter(person);
         return true;
     }
 }

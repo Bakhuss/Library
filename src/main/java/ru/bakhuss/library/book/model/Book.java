@@ -22,6 +22,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Книга (название, автор)
@@ -69,12 +71,27 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id")
     )
-    private Collection<Person> writers;
+    private Set<Person> writers;
 
     public void updateState(Book book) {
         setName(book.getName());
     }
 
+
+    public Set<Person> getWriters() {
+        if (writers == null) writers = new HashSet<>();
+        return writers;
+    }
+
+    public void addWriter(Person person) {
+        System.out.println("addWriter");
+        System.out.println(person.toString());
+    }
+
+    public void removeWriter(Person person) {
+        System.out.println("removeWriter");
+        System.out.println(person.toString());
+    }
 
     /**
      * {@inheritDoc}

@@ -25,6 +25,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -100,7 +101,23 @@ public class Person {
             joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    private Collection<Book> writtenBooks;
+    private Set<Book> writtenBooks;
+
+
+    public Set<Book> getWrittenBooks() {
+        if (writtenBooks == null) writtenBooks = new HashSet<>();
+        return writtenBooks;
+    }
+
+    public void addBook(Book book) {
+        System.out.println("addBook");
+        System.out.println(book.toString());
+    }
+
+    public void removeBook(Book book) {
+        System.out.println("addBook");
+        System.out.println(book.toString());
+    }
 
     public void updateState(Person person) {
         setFirstName(person.getFirstName());
@@ -111,7 +128,6 @@ public class Person {
         setEmail(person.getEmail());
         setDescription(person.getDescription());
     }
-
 
     /**
      * {@inheritDoc}

@@ -16,6 +16,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -87,9 +89,28 @@ public class Person {
     /**
      * Книги, написанные человеком
      */
-    @ManyToMany(mappedBy = "writers",
+    @ManyToMany(
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
             fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "book_writer",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
     private Collection<Book> writtenBooks;
+
+    public void updateState(Person person) {
+        setFirstName(person.getFirstName());
+        setSecondName(person.getSecondName());
+        setSurname(person.getSurname());
+        setBirthday(person.getBirthday());
+        setPhone(person.getPhone());
+        setEmail(person.getEmail());
+        setDescription(person.getDescription());
+    }
 
 
     /**

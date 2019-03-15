@@ -43,18 +43,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional
     public boolean updatePerson(Person person) {
-        Person personFromDao = personDao.findById(person.getId())
-                .orElseThrow(() -> new ResponseErrorException(
-                        ("Person by id = " + person.getId() + " not found")
-                ));
-        personFromDao.setFirstName(person.getFirstName());
-        personFromDao.setSecondName(person.getSecondName());
-        personFromDao.setSurname(person.getSurname());
-        personFromDao.setBirthday(person.getBirthday());
-        personFromDao.setDescription(person.getDescription());
-        personFromDao.setPhone(person.getPhone());
-        personFromDao.setEmail(person.getEmail());
-        Person updatedPerson = personDao.save(personFromDao);
+        Person updatedPerson = personDao.save(person);
         log.info(updatedPerson.toString());
         return true;
     }
@@ -62,7 +51,12 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional
     public boolean deletePerson(Long id) {
-        personDao.deleteById(id);
+        if (!personDao.existsById(id))
+            throw new ResponseErrorException("Not found person by id " + id);
+        else {
+            personDao.deleteById(id);
+            log.info("Deleted person by id " + id);
+        }
         return true;
     }
 }

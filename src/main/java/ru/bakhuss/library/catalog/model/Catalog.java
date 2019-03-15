@@ -33,9 +33,15 @@ public class Catalog {
     private Integer version;
 
     /**
+     * ISBN
+     */
+    @Column(length = 15)
+    private String isbn;
+
+    /**
      * Описание
      */
-    @Column
+    @Column(length = 1000)
     private String description;
 
     /**
@@ -59,6 +65,7 @@ public class Catalog {
         return "{id:" + getId() +
                 ";description:" + getDescription() +
                 ";totalCount:" + getTotalCount() +
+                ";isbn:" + getIsbn() +
                 "}";
     }
 }

@@ -1,4 +1,4 @@
-package ru.bakhuss.library.view;
+package ru.bakhuss.library.common.view;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

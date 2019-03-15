@@ -2,7 +2,7 @@ package ru.bakhuss.library.controller;
 
 import ru.bakhuss.library.view.FilterView;
 import ru.bakhuss.library.view.PersonView;
-import ru.bakhuss.library.view.ResponseView;
+import ru.bakhuss.library.common.view.ResponseView;
 
 /**
  * Контроллер для работы с Person

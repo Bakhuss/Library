@@ -1,6 +1,6 @@
 package ru.bakhuss.library.controller;
 
-import ru.bakhuss.library.view.ResponseView;
+import ru.bakhuss.library.common.view.ResponseView;
 import ru.bakhuss.library.view.SubscriberView;
 
 /**

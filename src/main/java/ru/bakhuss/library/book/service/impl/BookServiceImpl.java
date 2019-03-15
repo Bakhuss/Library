@@ -43,12 +43,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public boolean updateBook(Book book) {
-        Book bookFromDao = bookDao.findById(book.getId())
-                .orElseThrow(() -> new ResponseErrorException(
-                        ("Book by id = " + book.getId() + " not found")
-                ));
-        bookFromDao.setName(book.getName());
-        Book updatedBook = bookDao.save(bookFromDao);
+        Book updatedBook = bookDao.save(book);
         log.info(updatedBook.toString());
         return true;
     }
@@ -56,7 +51,10 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public boolean deleteBook(Long id) {
-        bookDao.deleteById(id);
+        if (!bookDao.existsById(id))
+            throw new ResponseErrorException("Not found book by id " + id);
+        else bookDao.deleteById(id);
+        log.info("Deleted book by id " + id);
         return true;
     }
 }

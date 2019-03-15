@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import java.util.Collection;
@@ -57,10 +58,11 @@ public class Book {
     /**
      * Автор(-ы)
      */
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    },
+    @ManyToMany(
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
             fetch = FetchType.LAZY)
     @JoinTable(
             name = "book_writer",
@@ -68,6 +70,11 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "person_id")
     )
     private Collection<Person> writers;
+
+    public void updateState(Book book) {
+        setName(book.getName());
+    }
+
 
     /**
      * {@inheritDoc}

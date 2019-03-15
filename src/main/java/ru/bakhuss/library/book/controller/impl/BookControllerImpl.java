@@ -14,10 +14,10 @@ import ru.bakhuss.library.book.controller.BookController;
 import ru.bakhuss.library.book.model.Book;
 import ru.bakhuss.library.book.service.BookService;
 import ru.bakhuss.library.book.view.BookView;
-import ru.bakhuss.library.error.ResponseErrorException;
-import ru.bakhuss.library.view.ResponseView;
+import ru.bakhuss.library.common.view.ResponseView;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static ru.bakhuss.library.common.Util.parseLongFromString;
 
 @RestController
 @RequestMapping(value = "/api/book", produces = APPLICATION_JSON_VALUE)
@@ -34,6 +34,7 @@ public class BookControllerImpl implements BookController {
     @Override
     @PostMapping(value = "/save")
     public ResponseView addBook(@RequestBody BookView view) {
+        log.info(view.toString());
         Book book = new Book();
         book.setName(view.getName());
         bookService.addBook(book);
@@ -57,9 +58,9 @@ public class BookControllerImpl implements BookController {
     public ResponseView updateBook(@RequestBody BookView view) {
         log.info(view.toString());
         Long id = parseLongFromString(view.getId());
-        Book bookFromService = bookService.getBook(id);
-        bookFromService.setName(view.getName());
-        bookService.updateBook(bookFromService);
+        Book book = bookService.getBook(id);
+        book.setName(view.getName());
+        bookService.updateBook(book);
         return new ResponseView(true);
     }
 
@@ -69,15 +70,5 @@ public class BookControllerImpl implements BookController {
         Long longId = parseLongFromString(view.getId());
         bookService.deleteBook(longId);
         return new ResponseView(true);
-    }
-
-    private Long parseLongFromString(String str) {
-        Long longFromString;
-        try {
-            longFromString = Long.parseLong(str);
-        } catch (NumberFormatException ex) {
-            throw new ResponseErrorException("Id must be a number(" + str + ")");
-        }
-        return longFromString;
     }
 }

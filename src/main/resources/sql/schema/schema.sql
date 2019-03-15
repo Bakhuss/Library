@@ -17,10 +17,16 @@ CREATE TABLE IF NOT EXISTS person (
     email       VARCHAR (50)
 );
 
+CREATE TABLE IF NOT EXISTS book_writer (
+  book_id   INTEGER REFERENCES book(id),
+  person_id INTEGER REFERENCES person(id)
+);
+
 CREATE TABLE IF NOT EXISTS catalog (
     id          INTEGER     PRIMARY KEY AUTO_INCREMENT
                             NOT NULL,
     version     INTEGER,
+    book_id     INTEGER     REFERENCES  book(id),
     description TEXT,
     total_count INTEGER
 );

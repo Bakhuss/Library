@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import ru.bakhuss.library.model.Book;
+import ru.bakhuss.library.book.model.Book;
 import ru.bakhuss.library.model.Image;
 import ru.bakhuss.library.model.Subscriber;
 
@@ -21,6 +21,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 
@@ -82,6 +83,14 @@ public class Person {
      */
     @Column(length = 255)
     private String description;
+
+    /**
+     * Книги, написанные человеком
+     */
+    @ManyToMany(mappedBy = "writers",
+            fetch = FetchType.LAZY)
+    private Collection<Book> writtenBooks;
+
 
     /**
      * {@inheritDoc}

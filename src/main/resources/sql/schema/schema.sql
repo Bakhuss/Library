@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS catalog (
                             NOT NULL,
     version     INTEGER,
     book_id     INTEGER     REFERENCES  book(id),
+    isbn        VARCHAR(15),
     description TEXT,
     total_count INTEGER
 );

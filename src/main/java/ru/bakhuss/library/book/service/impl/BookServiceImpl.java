@@ -12,6 +12,8 @@ import ru.bakhuss.library.error.ResponseErrorException;
 import ru.bakhuss.library.person.dao.PersonDao;
 import ru.bakhuss.library.person.model.Person;
 
+import java.util.Set;
+
 @Service
 public class BookServiceImpl implements BookService {
     private final Logger log = LoggerFactory.getLogger(BookServiceImpl.class);
@@ -56,9 +58,12 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public boolean deleteBook(Long id) {
-        if (!bookDao.existsById(id))
-            throw new ResponseErrorException("Not found book by id " + id);
-        else bookDao.deleteById(id);
+        Book book = bookDao.findById(id)
+                .orElseThrow(() -> new ResponseErrorException(
+                        "Not found book by id " + id
+                ));
+        book.setWriters(null);
+        bookDao.deleteById(id);
         log.info("Deleted book by id " + id);
         return true;
     }
@@ -67,14 +72,15 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public boolean addWriter(Long bookId, Long personId) {
         Book book = bookDao.findById(bookId)
-                .orElseThrow(() -> new  ResponseErrorException(
+                .orElseThrow(() -> new ResponseErrorException(
                         "Not found book by id " + bookId
                 ));
         Person person = personDao.findById(personId)
                 .orElseThrow(() -> new ResponseErrorException(
                         "Not found person by id " + personId
                 ));
-        book.addWriter(person);
+        Set<Person> writers = book.getWriters();
+        System.out.println("size: " + writers.size());
         return true;
     }
 }

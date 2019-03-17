@@ -71,6 +71,7 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id")
     )
+//    @ManyToMany(mappedBy = "writtenBooks")
     private Set<Person> writers;
 
     public void updateState(Book book) {

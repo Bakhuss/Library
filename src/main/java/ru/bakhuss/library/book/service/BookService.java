@@ -1,6 +1,9 @@
 package ru.bakhuss.library.book.service;
 
 import ru.bakhuss.library.book.model.Book;
+import ru.bakhuss.library.person.model.Person;
+
+import java.util.List;
 
 public interface BookService {
     Long addBook(Book book);
@@ -18,4 +21,6 @@ public interface BookService {
     boolean addCatalog(Long bookId, Long catalogId);
 
     boolean removeCatalog(Long bookId, Long catalogId);
+
+    List<Person> getAllWriters(Long bookId);
 }

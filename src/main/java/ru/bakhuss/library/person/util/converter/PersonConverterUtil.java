@@ -19,6 +19,7 @@ public class PersonConverterUtil {
 
     public static PersonView personToPersonView(Person person) {
         PersonView pV = new PersonView();
+        pV.setId(person.getId().toString());
         pV.setFirstName(person.getFirstName());
         pV.setSecondName(person.getSecondName());
         pV.setSurname(person.getSurname());

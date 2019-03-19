@@ -3,6 +3,8 @@ package ru.bakhuss.library.book.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bakhuss.library.book.dao.BookDao;
@@ -150,5 +152,20 @@ public class BookServiceImpl implements BookService {
                 ));
         book.removeCatalog(catalog);
         return true;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Person> getAllWriters(Long bookId) {
+//        List<Person> writers = bookDao.getWriters(bookId)
+//                .orElseThrow(() -> new ResponseErrorException(
+//                        "Not found book by id " + bookId
+//                ));
+        List<Person> writers = bookDao.getWriters(bookId);
+        if (writers == null)
+            throw new ResponseErrorException(
+                    "Not found writers by book id " + bookId
+            );
+        return writers;
     }
 }

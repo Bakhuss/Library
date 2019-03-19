@@ -11,15 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bakhuss.library.book.controller.BookWithCatalogController;
-import ru.bakhuss.library.book.dao.BookDao;
 import ru.bakhuss.library.book.service.BookService;
-import ru.bakhuss.library.catalog.dao.CatalogDao;
 import ru.bakhuss.library.catalog.model.Catalog;
-import ru.bakhuss.library.catalog.service.CatalogService;
 import ru.bakhuss.library.catalog.util.converter.CatalogConverterUtil;
 import ru.bakhuss.library.catalog.view.CatalogView;
 import ru.bakhuss.library.common.view.ResponseView;
-import ru.bakhuss.library.model.Person;
 
 import java.util.List;
 import java.util.stream.Collectors;

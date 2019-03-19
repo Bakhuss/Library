@@ -2,12 +2,8 @@ package ru.bakhuss.library.book.view;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import ru.bakhuss.library.model.Book;
-import ru.bakhuss.library.view.CatalogView;
-import ru.bakhuss.library.view.PersonView;
+import ru.bakhuss.library.book.model.Book;
 
-import java.util.Collection;
 import java.util.function.Function;
 
 @Data

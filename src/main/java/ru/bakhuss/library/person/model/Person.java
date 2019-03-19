@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import ru.bakhuss.library.book.model.Book;
-import ru.bakhuss.library.model.Image;
-import ru.bakhuss.library.model.Subscriber;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,19 +14,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Общая информация о человеке

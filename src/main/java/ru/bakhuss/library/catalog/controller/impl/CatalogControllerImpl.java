@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bakhuss.library.catalog.controller.CatalogController;
@@ -16,7 +17,10 @@ import ru.bakhuss.library.catalog.view.CatalogView;
 import ru.bakhuss.library.common.view.ResponseView;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static ru.bakhuss.library.catalog.util.converter.CatalogConverterUtil.catalogToCatalogView;
+import static ru.bakhuss.library.catalog.util.converter.CatalogConverterUtil.catalogViewToCatalog;
 import static ru.bakhuss.library.common.Util.parseIntegerFromString;
+import static ru.bakhuss.library.common.Util.parseLongFromString;
 
 @RestController
 @RequestMapping(value = "/api/catalog", produces = APPLICATION_JSON_VALUE)
@@ -46,19 +50,28 @@ public class CatalogControllerImpl implements CatalogController {
     @Override
     @GetMapping(value = "/{id}")
     public ResponseView getCatalog(@PathVariable String id) {
-
-        return null;
+        Long catalogId = parseLongFromString(id);
+        Catalog catalog = catalogService.getCatalog(catalogId);
+        CatalogView view = catalogToCatalogView(catalog);
+        log.info(view.toString());
+        return new ResponseView(view);
     }
 
     @Override
     @PostMapping(value = "/update")
-    public ResponseView updateCatalog(CatalogView view) {
-        return null;
+    public ResponseView updateCatalog(@RequestBody CatalogView view) {
+        Long catalogId = parseLongFromString(view.getId());
+        Catalog catalog = catalogService.getCatalog(catalogId);
+        catalog.updateState(catalogViewToCatalog(view));
+        catalogService.updateCatalog(catalog);
+        return new ResponseView(true);
     }
 
     @Override
     @DeleteMapping(value = "/delete")
-    public ResponseView deleteCatalog(CatalogView view) {
-        return null;
+    public ResponseView deleteCatalog(@RequestBody CatalogView view) {
+        Long catalogId = parseLongFromString(view.getId());
+        catalogService.deleteCatalog(catalogId);
+        return new ResponseView(true);
     }
 }

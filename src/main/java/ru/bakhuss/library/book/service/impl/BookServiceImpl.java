@@ -47,11 +47,6 @@ public class BookServiceImpl implements BookService {
                         ("Book by id = " + id + " not found")
                 ));
         log.info(book.toString());
-        System.out.println("1 ----------------");
-        for (Person p : book.getWriters()) {
-            System.out.println(p);
-        }
-        System.out.println("2 ----------------");
         return book;
     }
 
@@ -96,6 +91,21 @@ public class BookServiceImpl implements BookService {
                     ));
             book.addWriter(person);
         } else log.warn("Book by id " + bookId + " has writer by person id " + personId);
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean removeWriter(Long bookId, Long personId) {
+        Book book = bookDao.findById(bookId)
+                .orElseThrow(() -> new ResponseErrorException(
+                        "Not found book by id " + bookId
+                ));
+        Person person = personDao.findById(personId)
+                .orElseThrow(() -> new ResponseErrorException(
+                        "Not found person by id " + personId
+                ));
+        book.removeWriter(person);
         return true;
     }
 }

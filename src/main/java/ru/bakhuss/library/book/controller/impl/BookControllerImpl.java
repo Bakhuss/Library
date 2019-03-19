@@ -87,4 +87,14 @@ public class BookControllerImpl implements BookController {
         bookService.addWriter(bookId, personId);
         return new ResponseView(true);
     }
+
+    @Override
+    @DeleteMapping(value = "/{id}/remove-writer")
+    public ResponseView removeWriter(@PathVariable String id,
+                                     @RequestBody PersonView personView) {
+        Long bookId = parseLongFromString(id);
+        Long personId = parseLongFromString(personView.getId());
+        bookService.removeWriter(bookId, personId);
+        return new ResponseView(true);
+    }
 }

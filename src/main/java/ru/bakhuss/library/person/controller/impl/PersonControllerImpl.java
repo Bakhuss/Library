@@ -11,15 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bakhuss.library.book.view.BookView;
-import ru.bakhuss.library.error.ResponseErrorException;
 import ru.bakhuss.library.person.controller.PersonController;
 import ru.bakhuss.library.person.model.Person;
 import ru.bakhuss.library.person.service.PersonService;
-import ru.bakhuss.library.person.util.PersonUtil;
 import ru.bakhuss.library.person.view.PersonView;
 import ru.bakhuss.library.common.view.ResponseView;
-
-import java.util.stream.Stream;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static ru.bakhuss.library.common.Util.parseLongFromString;
@@ -75,7 +71,22 @@ public class PersonControllerImpl implements PersonController {
     }
 
     @Override
-    public ResponseView addWrittenBook(BookView bookView) {
-        return null;
+    @PostMapping(value = "/{id}/add-book")
+    public ResponseView addWrittenBook(@PathVariable String id,
+                                       @RequestBody BookView bookView) {
+        Long personId = parseLongFromString(id);
+        Long bookId = parseLongFromString(bookView.getId());
+        personService.addWrittenBook(personId, bookId);
+        return new ResponseView(true);
+    }
+
+    @Override
+    @DeleteMapping(value = "/{id}/remove-written-book")
+    public ResponseView removeWrittenBook(@PathVariable String id,
+                                          @RequestBody BookView bookView) {
+        Long personId = parseLongFromString(id);
+        Long bookId = parseLongFromString(bookView.getId());
+        personService.removeWrittenBook(personId, bookId);
+        return new ResponseView(true);
     }
 }

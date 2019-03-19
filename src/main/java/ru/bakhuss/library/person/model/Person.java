@@ -114,13 +114,10 @@ public class Person {
     }
 
     public void addBook(Book book) {
-        System.out.println(book.toString());
         getWrittenBooks().add(book);
-        book.getWriters().add(this);
     }
 
     public void removeBook(Book book) {
-        System.out.println(book.toString());
         getWrittenBooks().remove(book);
         book.getWriters().remove(this);
     }

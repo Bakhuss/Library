@@ -10,4 +10,8 @@ public interface PersonService {
     boolean updatePerson(Person person);
 
     boolean deletePerson(Long id);
+
+    boolean addWrittenBook(Long personId, Long bookId);
+
+    boolean removeWrittenBook(Long personId, Long bookId);
 }

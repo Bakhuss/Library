@@ -13,5 +13,7 @@ public interface PersonController {
 
     ResponseView deletePerson(PersonView view);
 
-    ResponseView addWrittenBook(BookView bookView);
+    ResponseView addWrittenBook(String id, BookView bookView);
+
+    ResponseView removeWrittenBook(String id, BookView bookView);
 }

@@ -21,8 +21,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -72,26 +74,30 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "person_id")
     )
 //    @ManyToMany(mappedBy = "writtenBooks")
-    private Set<Person> writers;
+    private List<Person> writers;
 
     public void updateState(Book book) {
         setName(book.getName());
     }
 
 
-    public Set<Person> getWriters() {
-        if (writers == null) writers = new HashSet<>();
+    public List<Person> getWriters() {
+        if (writers == null) {
+            writers = new ArrayList<>();
+        }
         return writers;
     }
 
     public void addWriter(Person person) {
-        System.out.println("addWriter");
         System.out.println(person.toString());
+        getWriters().add(person);
+        person.getWrittenBooks().add(this);
     }
 
     public void removeWriter(Person person) {
-        System.out.println("removeWriter");
         System.out.println(person.toString());
+        getWriters().remove(person);
+        person.getWrittenBooks().remove(this);
     }
 
     /**

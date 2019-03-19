@@ -12,7 +12,10 @@ import ru.bakhuss.library.error.ResponseErrorException;
 import ru.bakhuss.library.person.dao.PersonDao;
 import ru.bakhuss.library.person.model.Person;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -44,6 +47,11 @@ public class BookServiceImpl implements BookService {
                         ("Book by id = " + id + " not found")
                 ));
         log.info(book.toString());
+        System.out.println("1 ----------------");
+        for (Person p : book.getWriters()) {
+            System.out.println(p);
+        }
+        System.out.println("2 ----------------");
         return book;
     }
 
@@ -75,12 +83,19 @@ public class BookServiceImpl implements BookService {
                 .orElseThrow(() -> new ResponseErrorException(
                         "Not found book by id " + bookId
                 ));
-        Person person = personDao.findById(personId)
-                .orElseThrow(() -> new ResponseErrorException(
-                        "Not found person by id " + personId
-                ));
-        Set<Person> writers = book.getWriters();
-        System.out.println("size: " + writers.size());
+
+        boolean hasWriter = book.getWriters().stream()
+                .map(Person::getId)
+                .collect(Collectors.toList())
+                .contains(personId);
+
+        if (!hasWriter) {
+            Person person = personDao.findById(personId)
+                    .orElseThrow(() -> new ResponseErrorException(
+                            "Not found person by id " + personId
+                    ));
+            book.addWriter(person);
+        } else log.warn("Book by id " + bookId + " has writer by person id " + personId);
         return true;
     }
 }

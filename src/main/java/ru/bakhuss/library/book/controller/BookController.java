@@ -3,6 +3,9 @@ package ru.bakhuss.library.book.controller;
 import ru.bakhuss.library.book.view.BookView;
 import ru.bakhuss.library.common.view.ResponseView;
 
+/**
+ * Контроллер для Book
+ */
 public interface BookController {
     ResponseView addBook(BookView view);
 

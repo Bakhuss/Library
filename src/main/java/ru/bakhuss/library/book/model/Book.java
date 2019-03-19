@@ -55,7 +55,7 @@ public class Book {
      */
     @OneToMany(mappedBy = "book",
             cascade = CascadeType.ALL,
-//            orphanRemoval = true,
+            orphanRemoval = true,
             fetch = FetchType.LAZY)
     private List<Catalog> catalogs;
 

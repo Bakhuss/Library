@@ -1,1 +1,1 @@
-test.bakhuss.ru
+http://test.bakhuss.ru

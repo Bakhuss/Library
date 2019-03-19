@@ -3,8 +3,6 @@ package ru.bakhuss.library.book.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bakhuss.library.book.dao.BookDao;
@@ -16,9 +14,7 @@ import ru.bakhuss.library.error.ResponseErrorException;
 import ru.bakhuss.library.person.dao.PersonDao;
 import ru.bakhuss.library.person.model.Person;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -157,15 +153,22 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(readOnly = true)
     public List<Person> getAllWriters(Long bookId) {
-//        List<Person> writers = bookDao.getWriters(bookId)
-//                .orElseThrow(() -> new ResponseErrorException(
-//                        "Not found book by id " + bookId
-//                ));
         List<Person> writers = bookDao.getWriters(bookId);
         if (writers == null)
             throw new ResponseErrorException(
                     "Not found writers by book id " + bookId
             );
         return writers;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Catalog> getAllCatalogs(Long bookId) {
+        List<Catalog> catalogs = bookDao.getCatalogs(bookId);
+        if (catalogs == null)
+            throw new ResponseErrorException(
+                    "Not found catalogs by book id " + bookId
+            );
+        return catalogs;
     }
 }

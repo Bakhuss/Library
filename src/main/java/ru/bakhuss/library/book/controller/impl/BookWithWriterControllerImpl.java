@@ -32,13 +32,10 @@ public class BookWithWriterControllerImpl implements BookWithWriterController {
     private final Logger log = LoggerFactory.getLogger(BookWithWriterControllerImpl.class);
 
     private final BookService bookService;
-    private final PersonController personController;
 
     @Autowired
-    public BookWithWriterControllerImpl(BookService bookService,
-                                        PersonController personController) {
+    public BookWithWriterControllerImpl(BookService bookService) {
         this.bookService = bookService;
-        this.personController = personController;
     }
 
     @Override

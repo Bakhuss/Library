@@ -3,6 +3,7 @@ package ru.bakhuss.library.book.controller.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,13 +29,10 @@ public class BookControllerImpl implements BookController {
     private final Logger log = LoggerFactory.getLogger(BookControllerImpl.class);
 
     private final BookService bookService;
-    private final PersonService personService;
 
     @Autowired
-    public BookControllerImpl(BookService bookService,
-                              PersonService personService) {
+    public BookControllerImpl(BookService bookService) {
         this.bookService = bookService;
-        this.personService = personService;
     }
 
     @Override
@@ -75,26 +73,6 @@ public class BookControllerImpl implements BookController {
     public ResponseView deleteBook(@RequestBody BookView view) {
         Long longId = parseLongFromString(view.getId());
         bookService.deleteBook(longId);
-        return new ResponseView(true);
-    }
-
-    @Override
-    @PostMapping(value = "/{id}/add-catalog")
-    public ResponseView addCatalog(@PathVariable String id,
-                                   @RequestBody CatalogView catalogView) {
-        Long bookId = parseLongFromString(id);
-        Long catalogId = parseLongFromString(catalogView.getId());
-        bookService.addCatalog(bookId, catalogId);
-        return new ResponseView(true);
-    }
-
-    @Override
-    @DeleteMapping(value = "/{id}/remove-catalog")
-    public ResponseView removeCatalog(@PathVariable String id,
-                                      @RequestBody CatalogView catalogView) {
-        Long bookId = parseLongFromString(id);
-        Long catalogId = parseLongFromString(catalogView.getId());
-        bookService.removeCatalog(bookId, catalogId);
         return new ResponseView(true);
     }
 }

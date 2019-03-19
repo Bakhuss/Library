@@ -14,8 +14,8 @@ import ru.bakhuss.library.book.controller.BookController;
 import ru.bakhuss.library.book.model.Book;
 import ru.bakhuss.library.book.service.BookService;
 import ru.bakhuss.library.book.view.BookView;
+import ru.bakhuss.library.catalog.view.CatalogView;
 import ru.bakhuss.library.common.view.ResponseView;
-import ru.bakhuss.library.person.model.Person;
 import ru.bakhuss.library.person.service.PersonService;
 import ru.bakhuss.library.person.view.PersonView;
 
@@ -95,6 +95,26 @@ public class BookControllerImpl implements BookController {
         Long bookId = parseLongFromString(id);
         Long personId = parseLongFromString(personView.getId());
         bookService.removeWriter(bookId, personId);
+        return new ResponseView(true);
+    }
+
+    @Override
+    @PostMapping(value = "/{id}/add-catalog")
+    public ResponseView addCatalog(@PathVariable String id,
+                                   @RequestBody CatalogView catalogView) {
+        Long bookId = parseLongFromString(id);
+        Long catalogId = parseLongFromString(catalogView.getId());
+        bookService.addCatalog(bookId, catalogId);
+        return new ResponseView(true);
+    }
+
+    @Override
+    @DeleteMapping(value = "/{id}/remove-catalog")
+    public ResponseView removeCatalog(@PathVariable String id,
+                                      @RequestBody CatalogView catalogView) {
+        Long bookId = parseLongFromString(id);
+        Long catalogId = parseLongFromString(catalogView.getId());
+        bookService.removeCatalog(bookId, catalogId);
         return new ResponseView(true);
     }
 }

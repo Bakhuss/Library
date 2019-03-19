@@ -12,4 +12,14 @@ public class Util {
         }
         return longFromString;
     }
+
+    public static Integer parseIntegerFromString(String str) {
+        Integer integerFromString;
+        try {
+            integerFromString = Integer.parseInt(str);
+        } catch (NumberFormatException ex) {
+            throw new ResponseErrorException("Id must be a number(" + str + ")");
+        }
+        return integerFromString;
+    }
 }

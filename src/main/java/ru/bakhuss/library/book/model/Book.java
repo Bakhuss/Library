@@ -55,9 +55,9 @@ public class Book {
      */
     @OneToMany(mappedBy = "book",
             cascade = CascadeType.ALL,
-            orphanRemoval = true,
+//            orphanRemoval = true,
             fetch = FetchType.LAZY)
-    private Collection<Catalog> catalogs;
+    private List<Catalog> catalogs;
 
     /**
      * Автор(-ы)
@@ -73,13 +73,12 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id")
     )
-//    @ManyToMany(mappedBy = "writtenBooks")
     private List<Person> writers;
+
 
     public void updateState(Book book) {
         setName(book.getName());
     }
-
 
     public List<Person> getWriters() {
         if (writers == null) {
@@ -95,6 +94,22 @@ public class Book {
     public void removeWriter(Person person) {
         getWriters().remove(person);
         person.getWrittenBooks().remove(this);
+    }
+
+    public List<Catalog> getCatalogs() {
+        if (catalogs == null)
+            catalogs = new ArrayList<>();
+        return catalogs;
+    }
+
+    public void addCatalog(Catalog catalog) {
+        getCatalogs().add(catalog);
+        catalog.setBook(this);
+    }
+
+    public void removeCatalog(Catalog catalog) {
+        getCatalogs().remove(catalog);
+        catalog.setBook(null);
     }
 
     /**

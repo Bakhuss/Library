@@ -14,4 +14,8 @@ public interface BookService {
     boolean addWriter(Long bookId, Long personId);
 
     boolean removeWriter(Long bookId, Long personId);
+
+    boolean addCatalog(Long bookId, Long catalogId);
+
+    boolean removeCatalog(Long bookId, Long catalogId);
 }

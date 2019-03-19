@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.bakhuss.library.book.dao.BookDao;
 import ru.bakhuss.library.book.model.Book;
 import ru.bakhuss.library.book.service.BookService;
+import ru.bakhuss.library.catalog.dao.CatalogDao;
+import ru.bakhuss.library.catalog.model.Catalog;
 import ru.bakhuss.library.error.ResponseErrorException;
 import ru.bakhuss.library.person.dao.PersonDao;
 import ru.bakhuss.library.person.model.Person;
@@ -23,12 +25,15 @@ public class BookServiceImpl implements BookService {
 
     private final BookDao bookDao;
     private final PersonDao personDao;
+    private final CatalogDao catalogDao;
 
     @Autowired
     public BookServiceImpl(BookDao bookDao,
-                           PersonDao personDao) {
+                           PersonDao personDao,
+                           CatalogDao catalogDao) {
         this.bookDao = bookDao;
         this.personDao = personDao;
+        this.catalogDao = catalogDao;
     }
 
     @Override
@@ -106,6 +111,44 @@ public class BookServiceImpl implements BookService {
                         "Not found person by id " + personId
                 ));
         book.removeWriter(person);
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean addCatalog(Long bookId, Long catalogId) {
+        Book book = bookDao.findById(bookId)
+                .orElseThrow(() -> new ResponseErrorException(
+                        "Not found book by id " + bookId
+                ));
+
+        boolean hasCatalog = book.getCatalogs().stream()
+                .map(Catalog::getId)
+                .collect(Collectors.toList())
+                .contains(catalogId);
+
+        if (!hasCatalog) {
+            Catalog catalog = catalogDao.findById(catalogId)
+                    .orElseThrow(() -> new ResponseErrorException(
+                            "Not found catalog by id " + catalogId
+                    ));
+            book.addCatalog(catalog);
+        } else log.warn("Book by id " + bookId + " has catalog by id " + catalogId);
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean removeCatalog(Long bookId, Long catalogId) {
+        Book book = bookDao.findById(bookId)
+                .orElseThrow(() -> new ResponseErrorException(
+                        "Not found book by id " + bookId
+                ));
+        Catalog catalog = catalogDao.findById(catalogId)
+                .orElseThrow(() -> new ResponseErrorException(
+                        "Not found catalog by id " + catalogId
+                ));
+        book.removeCatalog(catalog);
         return true;
     }
 }

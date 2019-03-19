@@ -2,7 +2,6 @@ package ru.bakhuss.library.catalog.view;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import ru.bakhuss.library.view.PersonView;
 
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 @Data

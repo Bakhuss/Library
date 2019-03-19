@@ -15,10 +15,6 @@ public interface BookController {
 
     ResponseView deleteBook(BookView view);
 
-//    ResponseView addWriter(String id, PersonView personView);
-//
-//    ResponseView removeWriter(String id, PersonView personView);
-
     ResponseView addCatalog(String id, CatalogView catalogView);
 
     ResponseView removeCatalog(String id, CatalogView catalogView);

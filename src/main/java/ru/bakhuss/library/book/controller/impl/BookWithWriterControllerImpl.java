@@ -69,6 +69,7 @@ public class BookWithWriterControllerImpl implements BookWithWriterController {
         List<PersonView> writers = allWriters.stream()
                 .map(PersonConverterUtil::personToPersonView)
                 .collect(Collectors.toList());
+        log.info(writers.toString());
         return new ResponseView(writers);
     }
 }

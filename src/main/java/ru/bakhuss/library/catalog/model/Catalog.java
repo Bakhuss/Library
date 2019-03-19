@@ -57,6 +57,13 @@ public class Catalog {
     @JoinColumn(name = "book_id")
     private Book book;
 
+
+    public void updateState(Catalog catalog) {
+        setIsbn(catalog.getIsbn());
+        setDescription(catalog.getDescription());
+        setTotalCount(catalog.getTotalCount());
+    }
+
     /**
      * {@inheritDoc}
      */

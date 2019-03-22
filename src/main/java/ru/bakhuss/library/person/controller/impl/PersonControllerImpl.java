@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.bakhuss.library.book.view.BookView;
 import ru.bakhuss.library.person.controller.PersonController;
 import ru.bakhuss.library.person.model.Person;
 import ru.bakhuss.library.person.service.PersonService;
@@ -67,26 +66,6 @@ public class PersonControllerImpl implements PersonController {
     public ResponseView deletePerson(@RequestBody PersonView view) {
         Long id = parseLongFromString(view.getId());
         personService.deletePerson(id);
-        return new ResponseView(true);
-    }
-
-    @Override
-    @PostMapping(value = "/{id}/add-book")
-    public ResponseView addWrittenBook(@PathVariable String id,
-                                       @RequestBody BookView bookView) {
-        Long personId = parseLongFromString(id);
-        Long bookId = parseLongFromString(bookView.getId());
-        personService.addWrittenBook(personId, bookId);
-        return new ResponseView(true);
-    }
-
-    @Override
-    @DeleteMapping(value = "/{id}/remove-written-book")
-    public ResponseView removeWrittenBook(@PathVariable String id,
-                                          @RequestBody BookView bookView) {
-        Long personId = parseLongFromString(id);
-        Long bookId = parseLongFromString(bookView.getId());
-        personService.removeWrittenBook(personId, bookId);
         return new ResponseView(true);
     }
 }

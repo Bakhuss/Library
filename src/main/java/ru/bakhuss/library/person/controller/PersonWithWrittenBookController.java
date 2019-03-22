@@ -10,4 +10,6 @@ public interface PersonWithWrittenBookController {
     ResponseView addWrittenBook(String personId, BookView bookView);
 
     ResponseView removeWrittenBook(String personId, BookView bookView);
+
+    ResponseView getAllWrittenBooks(String personId);
 }

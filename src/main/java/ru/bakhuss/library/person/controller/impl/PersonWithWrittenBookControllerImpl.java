@@ -4,15 +4,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.bakhuss.library.book.model.Book;
+import ru.bakhuss.library.book.util.converter.BookConverterUtil;
 import ru.bakhuss.library.book.view.BookView;
 import ru.bakhuss.library.common.view.ResponseView;
 import ru.bakhuss.library.person.controller.PersonWithWrittenBookController;
 import ru.bakhuss.library.person.service.PersonService;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static ru.bakhuss.library.common.Util.parseLongFromString;
@@ -51,5 +57,17 @@ public class PersonWithWrittenBookControllerImpl implements PersonWithWrittenBoo
         log.info(bookView.toString());
         personService.removeWrittenBook(longPersonId, bookId);
         return new ResponseView(true);
+    }
+
+    @Override
+    @GetMapping(value = "/all-written-books")
+    public ResponseView getAllWrittenBooks(@PathVariable("id") String personId) {
+        Long id = parseLongFromString(personId);
+        List<Book> allWrittenBooks = personService.getAllWrittenBooks(id);
+        List<BookView> writtenBooks = allWrittenBooks.stream()
+                .map(BookConverterUtil::bookToBookView)
+                .collect(Collectors.toList());
+        log.info(writtenBooks.toString());
+        return new ResponseView(writtenBooks);
     }
 }

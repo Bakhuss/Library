@@ -12,6 +12,7 @@ import ru.bakhuss.library.person.dao.PersonDao;
 import ru.bakhuss.library.person.model.Person;
 import ru.bakhuss.library.person.service.PersonService;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -103,5 +104,16 @@ public class PersonServiceImpl implements PersonService {
                 ));
         person.removeBook(book);
         return true;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Book> getAllWrittenBooks(Long personId) {
+        List<Book> books = personDao.getWrittenBooks(personId);
+        if (books == null)
+            throw new ResponseErrorException(
+              "Not found written books by person id " + personId
+            );
+        return books;
     }
 }

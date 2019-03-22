@@ -29,4 +29,18 @@ public class PersonConverterUtil {
         pV.setDescription(person.getDescription());
         return pV;
     }
+
+    public static PersonView personToPersonViewWithId(Person person) {
+        PersonView pV = new PersonView();
+        pV.setId(person.getId().toString());
+        pV.setId(person.getId().toString());
+        pV.setFirstName(person.getFirstName());
+        pV.setSecondName(person.getSecondName());
+        pV.setSurname(person.getSurname());
+        pV.setBirthday(person.getBirthday());
+        pV.setPhone(person.getPhone());
+        pV.setEmail(person.getEmail());
+        pV.setDescription(person.getDescription());
+        return pV;
+    }
 }

@@ -65,7 +65,7 @@ public class PersonWithWrittenBookControllerImpl implements PersonWithWrittenBoo
         Long id = parseLongFromString(personId);
         List<Book> allWrittenBooks = personService.getAllWrittenBooks(id);
         List<BookView> writtenBooks = allWrittenBooks.stream()
-                .map(BookConverterUtil::bookToBookView)
+                .map(BookConverterUtil::bookToBookViewWithId)
                 .collect(Collectors.toList());
         log.info(writtenBooks.toString());
         return new ResponseView(writtenBooks);

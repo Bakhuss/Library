@@ -62,6 +62,7 @@ public class BookWithCatalogControllerImpl implements BookWithCatalogController 
         List<Catalog> allCatalogs = bookService.getAllCatalogs(id);
         List<CatalogView> catalogs = allCatalogs.stream()
                 .map(CatalogConverterUtil::catalogToCatalogView)
+                .peek(c -> c.setBookId(null))
                 .collect(Collectors.toList());
         log.info(catalogs.toString());
         return new ResponseView(catalogs);

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import ru.bakhuss.library.book.model.Book;
+import ru.bakhuss.library.image.model.Image;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
@@ -83,6 +85,13 @@ public class Person {
     private String description;
 
     /**
+     * Основное изображение
+     */
+    @OneToOne
+    @JoinColumn(name = "main_image_id")
+    private Image image;
+
+    /**
      * Книги, написанные человеком
      */
     @ManyToMany(
@@ -98,7 +107,6 @@ public class Person {
     )
     private List<Book> writtenBooks;
 
-
     public List<Book> getWrittenBooks() {
         if (writtenBooks == null) {
             writtenBooks = new ArrayList<>();
@@ -112,7 +120,7 @@ public class Person {
 
     public void removeBook(Book book) {
         getWrittenBooks().remove(book);
-        book.getWriters().remove(this);
+//        book.getWriters().remove(this);
     }
 
     public void updateState(Person person) {

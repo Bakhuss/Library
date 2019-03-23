@@ -3,7 +3,6 @@ package ru.bakhuss.library.book.controller.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,10 +14,7 @@ import ru.bakhuss.library.book.controller.BookController;
 import ru.bakhuss.library.book.model.Book;
 import ru.bakhuss.library.book.service.BookService;
 import ru.bakhuss.library.book.view.BookView;
-import ru.bakhuss.library.catalog.view.CatalogView;
 import ru.bakhuss.library.common.view.ResponseView;
-import ru.bakhuss.library.person.service.PersonService;
-import ru.bakhuss.library.person.view.PersonView;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static ru.bakhuss.library.common.Util.parseLongFromString;

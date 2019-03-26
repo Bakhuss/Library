@@ -7,7 +7,7 @@
     <groupId>ru.bakhuss</groupId>
     <artifactId>library</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>Library</name>
 

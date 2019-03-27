@@ -4,17 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ru.bakhuss</groupId>
-    <artifactId>library</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
-
-    <name>Library</name>
-
     <properties>
         <java.version>1.8</java.version>
         <encoding>UTF-8</encoding>
+        <package.type>jar</package.type>
     </properties>
+
+    <groupId>ru.bakhuss</groupId>
+    <artifactId>library</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>${package.type}</packaging>
+
+    <name>Library</name>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -42,8 +43,8 @@
             <scope>provided</scope>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-security</artifactId>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-security</artifactId>-->
         <!--</dependency>-->
 
         <dependency>

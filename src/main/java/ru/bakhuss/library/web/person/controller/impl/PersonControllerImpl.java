@@ -1,5 +1,9 @@
 package ru.bakhuss.library.web.person.controller.impl;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +28,7 @@ import static ru.bakhuss.library.core.person.util.converter.PersonConverterUtil.
 
 @RestController
 @RequestMapping(value = "/api/person", produces = APPLICATION_JSON_VALUE)
+@Api(value = "PersonControllerApi", produces = APPLICATION_JSON_VALUE)
 public class PersonControllerImpl implements PersonController {
     private final Logger log = LoggerFactory.getLogger(PersonControllerImpl.class);
 
@@ -43,6 +48,8 @@ public class PersonControllerImpl implements PersonController {
 
     @Override
     @GetMapping(value = "/{id}")
+    @ApiOperation("Gets the person with specific id")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "OK", response = Person.class)})
     public ResponseView getPerson(@PathVariable("id") Person person,
                                   @PathVariable String id) {
         if (person == null) throw new ResponseErrorException("Person by id " + id + " not found");

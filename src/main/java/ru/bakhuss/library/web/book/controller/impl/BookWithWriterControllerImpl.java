@@ -1,5 +1,6 @@
 package ru.bakhuss.library.web.book.controller.impl;
 
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import static ru.bakhuss.library.common.Util.parseLongFromString;
 
 @RestController
 @RequestMapping(value = "/api/book/{id}", produces = APPLICATION_JSON_VALUE)
+@Api(value = "BookWithWriterControllerApi", produces = APPLICATION_JSON_VALUE)
 public class BookWithWriterControllerImpl implements BookWithWriterController {
     private final Logger log = LoggerFactory.getLogger(BookWithWriterControllerImpl.class);
 

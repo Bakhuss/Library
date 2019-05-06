@@ -34,7 +34,6 @@ public class PersonControllerImpl implements PersonController {
         this.personService = personService;
     }
 
-
     @Override
     @PostMapping(value = "/save")
     public ResponseView addPerson(@RequestBody PersonView view) {
@@ -44,8 +43,9 @@ public class PersonControllerImpl implements PersonController {
 
     @Override
     @GetMapping(value = "/{id}")
-    public ResponseView getPerson(@PathVariable("id") Person person) {
-        if (person == null) throw new ResponseErrorException("Person not found");
+    public ResponseView getPerson(@PathVariable("id") Person person,
+                                  @PathVariable String id) {
+        if (person == null) throw new ResponseErrorException("Person by id " + id + " not found");
         PersonView view = personToPersonView(person);
         view.setId(person.getId().toString());
         System.out.println(person);

@@ -8,6 +8,7 @@
         <java.version>1.8</java.version>
         <encoding>UTF-8</encoding>
         <package.type>jar</package.type>
+        <swagger.version>2.9.2</swagger.version>
     </properties>
 
     <groupId>ru.bakhuss</groupId>
@@ -71,6 +72,16 @@
             <artifactId>itext7-core</artifactId>
             <version>7.1.6</version>
             <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
 
         <dependency>

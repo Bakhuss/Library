@@ -6,3 +6,6 @@ user: lib
 password:
 
 без webapp;
+
+swagger:     
+/swagger-ui.html

@@ -28,7 +28,7 @@ import static ru.bakhuss.library.core.person.util.converter.PersonConverterUtil.
 
 @RestController
 @RequestMapping(value = "/api/person", produces = APPLICATION_JSON_VALUE)
-@Api(value = "PersonControllerApi", description = "Person Controller main", produces = APPLICATION_JSON_VALUE)
+@Api(value = "PersonControllerApi", description = "Person Controller Main")
 public class PersonControllerImpl implements PersonController {
     private final Logger log = LoggerFactory.getLogger(PersonControllerImpl.class);
 

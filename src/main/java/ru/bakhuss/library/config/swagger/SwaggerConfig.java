@@ -1,5 +1,6 @@
 package ru.bakhuss.library.config.swagger;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -20,6 +21,8 @@ public class SwaggerConfig {
     private static final String LICENSE_TEXT = "License";
     private static final String title = "Library REST API";
     private static final String description = "RESTful api for Library";
+    @Value("${swagger.host}")
+    private String host;
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
@@ -35,9 +38,11 @@ public class SwaggerConfig {
         return new Docket(SWAGGER_2)
                 .apiInfo(apiInfo())
                 .pathMapping("/")
+                .host(host)
+                .enableUrlTemplating(false)
                 .select()
-		.apis(RequestHandlerSelectors
-			.basePackage("ru.bakhuss.library.web"))
+                .apis(RequestHandlerSelectors
+                        .basePackage("ru.bakhuss.library.web"))
                 .paths(PathSelectors.regex("/api.*"))
                 .build();
     }

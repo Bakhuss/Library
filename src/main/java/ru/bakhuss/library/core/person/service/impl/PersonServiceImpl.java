@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bakhuss.library.core.book.dao.BookDao;
 import ru.bakhuss.library.core.book.model.Book;
-import ru.bakhuss.library.error.ResponseErrorException;
 import ru.bakhuss.library.core.person.dao.PersonDao;
 import ru.bakhuss.library.core.person.model.Person;
 import ru.bakhuss.library.core.person.service.PersonService;
+import ru.bakhuss.library.error.ResponseErrorException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -112,7 +112,7 @@ public class PersonServiceImpl implements PersonService {
         List<Book> books = personDao.getWrittenBooks(personId);
         if (books == null)
             throw new ResponseErrorException(
-              "Not found written books by person id " + personId
+                    "Not found written books by person id " + personId
             );
         return books;
     }

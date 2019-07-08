@@ -4,12 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ru.bakhuss</groupId>
-    <artifactId>library</artifactId>
+    <groupId>ru.bakhuss.library</groupId>
+    <artifactId>library-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>${packaging}</packaging>
+    <packaging>pom</packaging>
+    <name>Library parent</name>
 
-    <name>Library</name>
+    <modules>
+        <module>core</module>
+        <module>web</module>
+    </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -21,7 +25,6 @@
     <properties>
         <java.version>1.8</java.version>
         <encoding>UTF-8</encoding>
-        <packaging>jar</packaging>
         <swagger.version>2.9.2</swagger.version>
     </properties>
 
@@ -37,10 +40,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
@@ -105,10 +104,6 @@
         </resources>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
@@ -116,6 +111,19 @@
                     <target>${java.version}</target>
                     <encoding>${encoding}</encoding>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.1.0</version>
+                <!--                <executions>-->
+                <!--                    <execution>-->
+                <!--                        <phase>package</phase>-->
+                <!--                        <goals>-->
+                <!--                            <goal>check</goal>-->
+                <!--                        </goals>-->
+                <!--                    </execution>-->
+                <!--                </executions>-->
             </plugin>
         </plugins>
     </build>

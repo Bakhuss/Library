@@ -7,7 +7,7 @@ public interface CatalogService {
 
     Catalog getCatalog(Long id);
 
-    boolean updateCatalog(Catalog catalog);
+    void updateCatalog(Catalog catalog);
 
-    boolean deleteCatalog(Long id);
+    void deleteCatalog(Long id);
 }

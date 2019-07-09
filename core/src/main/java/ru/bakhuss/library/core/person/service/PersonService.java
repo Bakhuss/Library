@@ -10,13 +10,13 @@ public interface PersonService {
 
     Person getPerson(Long id);
 
-    boolean updatePerson(Person person);
+    void updatePerson(Person person);
 
-    boolean deletePerson(Long id);
+    void deletePerson(Long id);
 
-    boolean addWrittenBook(Long personId, Long bookId);
+    void addWrittenBook(Long personId, Long bookId);
 
-    boolean removeWrittenBook(Long personId, Long bookId);
+    void removeWrittenBook(Long personId, Long bookId);
 
     List<Book> getAllWrittenBooks(Long personId);
 }

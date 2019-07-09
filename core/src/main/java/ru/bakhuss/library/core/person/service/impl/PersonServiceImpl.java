@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class PersonServiceImpl implements PersonService {
     private final Logger log = LoggerFactory.getLogger(PersonServiceImpl.class);
 
@@ -29,7 +30,6 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    @Transactional
     public Long addPerson(Person person) {
         Person newPerson = personDao.save(person);
         log.info(newPerson.toString());
@@ -48,28 +48,23 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    @Transactional
-    public boolean updatePerson(Person person) {
+    public void updatePerson(Person person) {
         Person updatedPerson = personDao.save(person);
         log.info(updatedPerson.toString());
-        return true;
     }
 
     @Override
-    @Transactional
-    public boolean deletePerson(Long id) {
+    public void deletePerson(Long id) {
         if (!personDao.existsById(id))
             throw new RuntimeException("Not found person by id " + id);
         else {
             personDao.deleteById(id);
             log.info("Deleted person by id " + id);
         }
-        return true;
     }
 
     @Override
-    @Transactional
-    public boolean addWrittenBook(Long personId, Long bookId) {
+    public void addWrittenBook(Long personId, Long bookId) {
         Person person = personDao.findById(personId)
                 .orElseThrow(() -> new RuntimeException(
                         "Not found person by id " + personId
@@ -87,12 +82,10 @@ public class PersonServiceImpl implements PersonService {
                     ));
             person.addBook(book);
         } else log.warn("Person by id " + personId + " has written book by id " + bookId);
-        return true;
     }
 
     @Override
-    @Transactional
-    public boolean removeWrittenBook(Long personId, Long bookId) {
+    public void removeWrittenBook(Long personId, Long bookId) {
         Person person = personDao.findById(personId)
                 .orElseThrow(() -> new RuntimeException(
                         "Not found person by id " + personId
@@ -102,7 +95,6 @@ public class PersonServiceImpl implements PersonService {
                         "Not found book by id " + bookId
                 ));
         person.removeBook(book);
-        return true;
     }
 
     @Override

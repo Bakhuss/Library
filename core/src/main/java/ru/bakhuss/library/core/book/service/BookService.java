@@ -11,17 +11,17 @@ public interface BookService {
 
     Book getBook(Long id);
 
-    boolean updateBook(Book book);
+    void updateBook(Book book);
 
-    boolean deleteBook(Long id);
+    void deleteBook(Long id);
 
-    boolean addWriter(Long bookId, Long personId);
+    void addWriter(Long bookId, Long personId);
 
-    boolean removeWriter(Long bookId, Long personId);
+    void removeWriter(Long bookId, Long personId);
 
-    boolean addCatalog(Long bookId, Long catalogId);
+    void addCatalog(Long bookId, Long catalogId);
 
-    boolean removeCatalog(Long bookId, Long catalogId);
+    void removeCatalog(Long bookId, Long catalogId);
 
     List<Person> getAllWriters(Long bookId);
 

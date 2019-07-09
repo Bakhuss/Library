@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class BookServiceImpl implements BookService {
     private final Logger log = LoggerFactory.getLogger(BookServiceImpl.class);
 
@@ -25,16 +26,15 @@ public class BookServiceImpl implements BookService {
     private final CatalogDao catalogDao;
 
     @Autowired
-    public BookServiceImpl(BookDao bookDao,
-                           PersonDao personDao,
-                           CatalogDao catalogDao) {
+    public BookServiceImpl(PersonDao personDao,
+                           CatalogDao catalogDao,
+                           BookDao bookDao) {
         this.bookDao = bookDao;
         this.personDao = personDao;
         this.catalogDao = catalogDao;
     }
 
     @Override
-    @Transactional
     public Long addBook(Book book) {
         Book newBook = bookDao.save(book);
         log.info(newBook.toString());
@@ -53,16 +53,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
-    public boolean updateBook(Book book) {
+    public void updateBook(Book book) {
         Book updatedBook = bookDao.save(book);
         log.info(updatedBook.toString());
-        return true;
     }
 
     @Override
-    @Transactional
-    public boolean deleteBook(Long id) {
+    public void deleteBook(Long id) {
         Book book = bookDao.findById(id)
                 .orElseThrow(() -> new RuntimeException(
                         "Not found book by id " + id
@@ -70,12 +67,10 @@ public class BookServiceImpl implements BookService {
         book.setWriters(null);
         bookDao.deleteById(id);
         log.info("Deleted book by id " + id);
-        return true;
     }
 
     @Override
-    @Transactional
-    public boolean addWriter(Long bookId, Long personId) {
+    public void addWriter(Long bookId, Long personId) {
         Book book = bookDao.findById(bookId)
                 .orElseThrow(() -> new RuntimeException(
                         "Not found book by id " + bookId
@@ -93,12 +88,10 @@ public class BookServiceImpl implements BookService {
                     ));
             book.addWriter(person);
         } else log.warn("Book by id " + bookId + " has writer by person id " + personId);
-        return true;
     }
 
     @Override
-    @Transactional
-    public boolean removeWriter(Long bookId, Long personId) {
+    public void removeWriter(Long bookId, Long personId) {
         Book book = bookDao.findById(bookId)
                 .orElseThrow(() -> new RuntimeException(
                         "Not found book by id " + bookId
@@ -108,12 +101,10 @@ public class BookServiceImpl implements BookService {
                         "Not found person by id " + personId
                 ));
         book.removeWriter(person);
-        return true;
     }
 
     @Override
-    @Transactional
-    public boolean addCatalog(Long bookId, Long catalogId) {
+    public void addCatalog(Long bookId, Long catalogId) {
         Book book = bookDao.findById(bookId)
                 .orElseThrow(() -> new RuntimeException(
                         "Not found book by id " + bookId
@@ -131,12 +122,10 @@ public class BookServiceImpl implements BookService {
                     ));
             book.addCatalog(catalog);
         } else log.warn("Book by id " + bookId + " has catalog by id " + catalogId);
-        return true;
     }
 
     @Override
-    @Transactional
-    public boolean removeCatalog(Long bookId, Long catalogId) {
+    public void removeCatalog(Long bookId, Long catalogId) {
         Book book = bookDao.findById(bookId)
                 .orElseThrow(() -> new RuntimeException(
                         "Not found book by id " + bookId
@@ -146,7 +135,6 @@ public class BookServiceImpl implements BookService {
                         "Not found catalog by id " + catalogId
                 ));
         book.removeCatalog(catalog);
-        return true;
     }
 
     @Override

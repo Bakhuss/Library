@@ -10,6 +10,7 @@ import ru.bakhuss.library.core.catalog.model.Catalog;
 import ru.bakhuss.library.core.catalog.service.CatalogService;
 
 @Service
+@Transactional
 public class CatalogServiceImpl implements CatalogService {
     private final Logger log = LoggerFactory.getLogger(CatalogServiceImpl.class);
 
@@ -22,7 +23,6 @@ public class CatalogServiceImpl implements CatalogService {
 
 
     @Override
-    @Transactional
     public Long addCatalog(Catalog catalog) {
         Catalog newCatalog = catalogDao.save(catalog);
         log.info(newCatalog.toString());
@@ -41,22 +41,18 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
-    @Transactional
-    public boolean updateCatalog(Catalog catalog) {
+    public void updateCatalog(Catalog catalog) {
         Catalog updatedCatalog = catalogDao.save(catalog);
         log.info(updatedCatalog.toString());
-        return true;
     }
 
     @Override
-    @Transactional
-    public boolean deleteCatalog(Long id) {
+    public void deleteCatalog(Long id) {
         if (!catalogDao.existsById(id))
             throw new RuntimeException("Not found catalog by id " + id);
         else {
             catalogDao.deleteById(id);
             log.info("Deleted catalog by id " + id);
         }
-        return true;
     }
 }

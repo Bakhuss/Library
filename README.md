@@ -1,4 +1,4 @@
-http://test.bakhuss.ru
+http://lib.test.bakhuss.ru
 
 /h2-console     
 name: mem:lib_db    

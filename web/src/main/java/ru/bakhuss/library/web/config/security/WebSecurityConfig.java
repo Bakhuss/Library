@@ -14,10 +14,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		    .authorizeRequests()
 				.antMatchers("/**")
 					.permitAll()
+				.antMatchers("/h2-console/**")
+					.permitAll()
 				.anyRequest()
 					.authenticated()
 				.and()
-				.formLogin()
+					.headers().frameOptions().disable()
+				.and()
+					.formLogin()
 				.and()
 				.logout().permitAll();
 	}

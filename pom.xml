@@ -26,6 +26,9 @@
         <java.version>1.8</java.version>
         <encoding>UTF-8</encoding>
         <swagger.version>2.9.2</swagger.version>
+        <itext7.version>7.1.6</itext7.version>
+        <checkstyle.plugin.version>3.1.0</checkstyle.plugin.version>
+        <flatten.plugin.version>1.1.0</flatten.plugin.version>
     </properties>
 
     <dependencies>
@@ -52,7 +55,7 @@
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itext7-core</artifactId>
-            <version>7.1.6</version>
+            <version>${itext7.version}</version>
             <type>pom</type>
         </dependency>
 
@@ -88,7 +91,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>${checkstyle.plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>${flatten.plugin.version}</version>
             </plugin>
         </plugins>
     </build>

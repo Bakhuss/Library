@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface PersonDao extends JpaRepository<Person, Long> {
 
-    @Query("select p.writtenBooks from Person p where p.id =:personId")
+    @Query(name = "Person.getWrittenBooks")
     List<Book> getWrittenBooks(Long personId);
 }

@@ -12,9 +12,9 @@ import java.util.List;
 @Repository
 public interface BookDao extends JpaRepository<Book, Long> {
 
-    @Query("select b.writers from Book b where b.id =:bookId")
+    @Query(name = "Book.getWriters")
     List<Person> getWriters(Long bookId);
 
-    @Query("select b.catalogs from Book b where b.id =:bookId")
+    @Query(name = "Book.getCatalogs")
     List<Catalog> getCatalogs(Long bookId);
 }

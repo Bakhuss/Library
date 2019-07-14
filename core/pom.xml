@@ -5,12 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>ru.bakhuss.library</groupId>
-        <artifactId>library-parent</artifactId>
+        <artifactId>parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>library-core</artifactId>
+    <artifactId>core</artifactId>
     <packaging>jar</packaging>
-    <name>Library core</name>
 
     <dependencies>
         <dependency>

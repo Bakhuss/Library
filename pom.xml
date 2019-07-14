@@ -5,10 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.bakhuss.library</groupId>
-    <artifactId>library-parent</artifactId>
+    <artifactId>parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Library parent</name>
 
     <modules>
         <module>core</module>
@@ -67,6 +66,9 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+            </properties>
             <dependencies>
                 <dependency>
                     <groupId>com.h2database</groupId>
@@ -75,8 +77,12 @@
                 </dependency>
             </dependencies>
         </profile>
+
         <profile>
             <id>prod</id>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+            </properties>
             <dependencies>
                 <dependency>
                     <groupId>mysql</groupId>
@@ -84,16 +90,32 @@
                     <scope>provided</scope>
                 </dependency>
             </dependencies>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <excludes>
+                            <exclude>**/sql/**</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration combine.self="override">
+                            <excludes>
+                                <exclude>**/sql/**</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
+        <finalName>library-${project.artifactId}-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -104,11 +126,13 @@
                     <encoding>${encoding}</encoding>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>${checkstyle.plugin.version}</version>
             </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>

@@ -5,16 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>ru.bakhuss.library</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>library-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>web</artifactId>
+    <artifactId>library-web</artifactId>
     <packaging>war</packaging>
 
     <dependencies>
         <dependency>
             <groupId>ru.bakhuss.library</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>library-core</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
@@ -40,6 +40,7 @@
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}-${spring.profiles.active}-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -47,6 +48,16 @@
                 <configuration>
                     <mainClass>ru.bakhuss.library.web.ApplicationWeb</mainClass>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-install</id>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

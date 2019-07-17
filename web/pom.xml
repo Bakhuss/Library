@@ -11,6 +11,10 @@
     <artifactId>library-web</artifactId>
     <packaging>war</packaging>
 
+    <properties>
+        <maven.install.phase>none</maven.install.phase>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>ru.bakhuss.library</groupId>
@@ -48,16 +52,6 @@
                 <configuration>
                     <mainClass>ru.bakhuss.library.web.ApplicationWeb</mainClass>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>default-install</id>
-                        <phase>none</phase>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

@@ -25,6 +25,7 @@
     <properties>
         <java.version>1.8</java.version>
         <encoding>UTF-8</encoding>
+        <maven.install.phase>install</maven.install.phase>
         <swagger.version>2.9.2</swagger.version>
         <itext7.version>7.1.6</itext7.version>
         <checkstyle.plugin.version>3.1.0</checkstyle.plugin.version>
@@ -115,6 +116,17 @@
                     <target>${java.version}</target>
                     <encoding>${encoding}</encoding>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-install</id>
+                        <phase>${maven.install.phase}</phase>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>

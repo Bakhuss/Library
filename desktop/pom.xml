@@ -4,24 +4,34 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>library-parent</artifactId>
         <groupId>ru.bakhuss.library</groupId>
+        <artifactId>library-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>library-desktop</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <maven.install.phase>none</maven.install.phase>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>default-install</id>
-                        <phase>none</phase>
-                    </execution>
-                </executions>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>ru.bakhuss.library.desktop.ApplicationDesktop</mainClass>
+                    <excludeGroupIds>
+                        com.itextpdf
+                        ,org.springframework
+                        ,com.h2database
+                        ,mysql
+                        ,org.springframework
+                        ,org.springframework.boot
+                        ,org.springframework.security
+                    </excludeGroupIds>
+                </configuration>
             </plugin>
         </plugins>
     </build>

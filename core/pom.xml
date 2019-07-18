@@ -6,7 +6,7 @@
     <parent>
         <groupId>ru.bakhuss.library</groupId>
         <artifactId>library-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <artifactId>library-core</artifactId>
     <packaging>jar</packaging>

@@ -6,7 +6,7 @@
 
     <groupId>ru.bakhuss.library</groupId>
     <artifactId>library-parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -25,6 +25,7 @@
     <properties>
         <java.version>1.8</java.version>
         <encoding>UTF-8</encoding>
+        <revision>1.0-SNAPSHOT</revision>
         <maven.install.phase>install</maven.install.phase>
         <swagger.version>2.9.2</swagger.version>
         <itext7.version>7.1.6</itext7.version>
@@ -75,7 +76,7 @@
                 <dependency>
                     <groupId>com.h2database</groupId>
                     <artifactId>h2</artifactId>
-                    <scope>provided</scope>
+                    <scope>runtime</scope>
                 </dependency>
             </dependencies>
         </profile>

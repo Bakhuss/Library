@@ -24,7 +24,6 @@
                     <mainClass>ru.bakhuss.library.desktop.ApplicationDesktop</mainClass>
                     <excludeGroupIds>
                         com.itextpdf
-                        ,org.springframework
                         ,com.h2database
                         ,mysql
                         ,org.springframework

@@ -20,7 +20,6 @@
             <groupId>ru.bakhuss.library</groupId>
             <artifactId>library-core</artifactId>
             <version>${revision}</version>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -40,6 +39,11 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>${swagger.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
     </dependencies>
 

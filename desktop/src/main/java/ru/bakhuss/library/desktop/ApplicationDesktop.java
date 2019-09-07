@@ -28,7 +28,7 @@ public class ApplicationDesktop extends Application {
     private void method() throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(ApplicationDesktop.class.getResource("/view/fxml/main.fxml"));
-        AnchorPane mainView = (AnchorPane) loader.load();
+        AnchorPane mainView = loader.load();
         Scene scene = new Scene(mainView);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Library");

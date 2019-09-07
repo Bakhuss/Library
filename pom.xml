@@ -8,7 +8,7 @@
     <artifactId>library-parent</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
-
+    
     <modules>
         <module>core</module>
         <module>web</module>
@@ -18,7 +18,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.7.RELEASE</version>
+        <version>2.1.8.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -28,7 +28,7 @@
         <revision>1.0-SNAPSHOT</revision>
         <maven.install.phase>install</maven.install.phase>
         <swagger.version>2.9.2</swagger.version>
-        <itext7.version>7.1.6</itext7.version>
+        <itext7.version>7.1.7</itext7.version>
         <checkstyle.plugin.version>3.1.0</checkstyle.plugin.version>
         <flatten.plugin.version>1.1.0</flatten.plugin.version>
     </properties>

@@ -8,7 +8,7 @@
     <artifactId>library-parent</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
-
+<!-- modules -->
     <modules>
         <module>core</module>
         <module>web</module>

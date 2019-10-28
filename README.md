@@ -5,7 +5,7 @@ name: mem:lib_db
 user: lib   
 password:
 
-без webapp;
+без web front;
 
 swagger:     
 /swagger-ui.html

@@ -11,6 +11,8 @@
     <artifactId>library-desktop</artifactId>
     <packaging>jar</packaging>
 
+<!-- desktop module -->
+
     <properties>
         <maven.install.phase>none</maven.install.phase>
     </properties>
